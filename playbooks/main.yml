@@ -16,11 +16,11 @@
           - "ansible_distribution == 'Ubuntu'"
         msg: "This playbook only supports Ubuntu systems"    
         
-    - name: Check that we're running Ubuntu 15 or newer distribution
+    - name: Check that we're running Ubuntu 18.04 or newer distribution
       assert:
         that:
-          - "ansible_distribution_version|int >= 15"
-        msg: "This playbook only supports Ubuntu 15 and new distributions"          
+          - "ansible_distribution_version|int >= 18"
+        msg: "This playbook only supports Ubuntu 18.04 and newer distributions"          
 
 - import_playbook: ubuntu.yml
 - import_playbook: tools.yml
