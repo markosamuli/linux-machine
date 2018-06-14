@@ -4,14 +4,28 @@
   hosts: all
   tasks:
 
-  - name: Install Atom
-    homebrew_cask:
-      name: atom
+  - stat:
+      path: /snap/bin/vscode
+    register: vscode_st
+
+  - name: Install Visual Studio Code via snap package
+    command: snap install vscode --classic
+    when: not vscode_st.stat.exists
     tags:
     - editors
 
-  - name: Install Visual Studio Code
-    homebrew_cask:
-      name: visual-studio-code
-    tags:
-    - editors
+  - name: Install vim
+    package:
+      name: vim
+
+#   - name: Install Atom
+#     homebrew_cask:
+#       name: atom
+#     tags:
+#     - editors
+
+#   - name: Install Visual Studio Code
+#     homebrew_cask:
+#       name: visual-studio-code
+#     tags:
+#     - editors

@@ -8,10 +8,18 @@
     package:
       name: wget
 
+  - name: Install cURL
+    package:
+      name: curl
+
   - name: Install jq command-line JSON processor
     package:
       name: jq
   
   - name: Install The Silver Searcher code searcing utility
+    apt:
+      name: silversearcher-ag
+
+  - name: Install htop
     package:
-      name: ag
+      name: htop

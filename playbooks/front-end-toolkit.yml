@@ -2,6 +2,7 @@
 
 - name: NVM and Node.js
   hosts: all
+  become: False
   roles:
 
   - role: markosamuli.nvm
@@ -14,6 +15,6 @@
 
   - name: Install Yarn
     package:
-      name: "yarn"
+      name: yarn
     tags:
     - yarn

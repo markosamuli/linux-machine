@@ -8,6 +8,10 @@
     package:
       name: python
 
+  - name: Install pip
+    package:
+      name: python-pip
+
   - name: Install virtualenv
     pip:
       name: virtualenv

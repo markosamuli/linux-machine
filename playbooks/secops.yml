@@ -1,11 +1,11 @@
 ---
 
-- name: Install SecOps tools
-  hosts: all
-  tasks:
+# - name: Install SecOps tools
+#   hosts: all
+#   tasks:
 
-    - name: Install nmap with Homebrew
-      package:
-        name: nmap
-        state: latest
-      tags: nmap
+#     - name: Install nmap
+#       package:
+#         name: nmap
+#         state: latest
+#       tags: nmap

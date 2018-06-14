@@ -5,7 +5,6 @@ syntax_check=0
 
 install_roles=1
 install_ansible=1
-install_homebrew=1
 
 deploy_env="local"
 
@@ -39,7 +38,6 @@ while getopts ":hcnqlsvt:" opt; do
     q)
       install_roles=0
       install_ansible=0
-      install_homebrew=0
       ;;
     l)
       list_tags=1
@@ -68,28 +66,19 @@ while getopts ":hcnqlsvt:" opt; do
 done
 
 if test "$(uname)" = "Darwin"; then
-  if [ "$install_homebrew" == "1" ]; then
-    if test ! $(which gcc); then
-      echo "*** Installing Xcode Command Line Tools..."
-      xcode-select --install \
-        || { echo "*** ERROR: Failed to install Xcode Command Line Tools"; exit 1; }
-    fi
-    if test ! "$(which brew)"; then
-      echo "*** Installing Homebrew..."
-      ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" \
-        || { echo "*** ERROR: Failed to install Homebrew"; exit 1; }
-    fi
-  fi
-  if [ "$install_ansible" == "1" ]; then
-    if test ! "$(which ansible)"; then
-      echo "*** Installing Ansible with Homebrew..."
-      brew install ansible \
-        || { echo "*** ERROR: Failed to install Ansible"; exit 1; }
-    fi
-  fi
-elif test "$(uname)" = "Linux"; then
-  echo "*** ERROR: Linux is not currently supported."
+  echo "*** ERROR: macOS is not currently supported."
   exit 1
+elif test "$(uname)" = "Linux"; then
+  if [ "$install_ansible" == "1" ]; then
+    if test -f /etc/lsb-release -a ! "$(which ansible)"; then
+      echo "Installing ansible..."
+      sudo apt-get install -y software-properties-common
+      sudo apt-add-repository -y ppa:ansible/ansible
+      sudo apt-get update
+      sudo apt-get install -y ansible
+    fi
+  fi
+  ansible_become=1
 fi
 
 if test ! "$(which ansible)"; then
@@ -129,6 +118,11 @@ elif [ "$run_playbook" == "1" ]; then
   if [ "$ansible_tags" != "" ]; then
     ansible_opts="--tags=${ansible_tags} ${ansible_opts}"
   fi
+
+  if [ "$ansible_become" == "1" ]; then
+    ansible_opts="--become $ansible_opts"
+    sudo true || exit 1
+  fi  
 
   ansible-playbook ${ansible_playbook} $ansible_opts
 

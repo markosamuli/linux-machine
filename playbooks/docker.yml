@@ -4,7 +4,29 @@
   hosts: all
   tasks:
 
-  - name: Install Docker for Mac
-    homebrew_cask:
-      name: docker
-    tags: docker
+  - name: Remove old versions of Docker
+    apt:
+      name: "{{ item }}"
+      state: absent
+    with_items:
+    - docker 
+    - docker-engine 
+    - docker.io
+
+  - name: Add Google Cloud apt GPG key
+    apt_key:
+      url: https://packages.cloud.google.com/apt/doc/apt-key.gpg 
+
+  - name: Add Docker apt GPG key
+    apt_key: 
+      id: 0EBFCD88
+      url: https://download.docker.com/linux/ubuntu/gpg
+
+  - name: Add Docker repository
+    apt_repository:
+      repo: 'deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} test'
+      filename: docker
+
+  - name: Install Docker CE
+    apt:
+      name: docker-ce

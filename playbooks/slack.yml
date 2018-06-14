@@ -4,6 +4,12 @@
   hosts: all
   tasks:
 
-  - name: Install Slack
-    homebrew_cask:
-      name: slack
+  - stat:
+      path: /snap/bin/slack
+    register: slack_st
+
+  - name: Install Slack via snap package
+    command: snap install slack --classic
+    when: not slack_st.stat.exists
+    tags:
+    - slack

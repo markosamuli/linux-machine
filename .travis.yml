@@ -1,28 +1,24 @@
 language: generic
-sudo: required
 python: 2.7
-os: osx
+
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+      sudo: required
 
 notifications:
   email: false
 
 before_install:
-  # Uninstall existing Homebrew installation
-  - ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"
-
   # Cleanup existing NVM installation
   - unset NVM_CD_FLAGS
   - unset NVM_DIR
   - unset NVM_BIN
-  - rm -rf /Users/travis/.nvm
+  - rm -rf /home/travis/.nvm
   - rm -rf /etc/profile.d/travis-nvm.sh
 
-  # Fix https://github.com/travis-ci/travis-ci/issues/6307
-  - rvm get stable
-
 script:
-  #- git config --global user.name "Test name"
-  #- git config --global user.email "test@localhost"
 
   # Test setup script
   - ./setup -n

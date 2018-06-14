@@ -1,3 +1,0 @@
----
-
-bash_home: "{{ ansible_env.HOME }}"

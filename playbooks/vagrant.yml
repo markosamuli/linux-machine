@@ -1,8 +1,8 @@
 ---
 
-- name: Vagrant
-  hosts: all
-  roles:
-  - role: markosamuli.vagrant
-    tags: vagrant
+# - name: Vagrant
+#   hosts: all
+#   roles:
+#   - role: markosamuli.vagrant
+#     tags: vagrant
 
