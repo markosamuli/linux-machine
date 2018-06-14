@@ -1,17 +1,16 @@
-Development macOS Setup
-=======================
+Development Ubuntu Linux Setup
+==============================
 
-[![Build Status](https://travis-ci.org/markosamuli/macos-machine.svg?branch=master)](https://travis-ci.org/markosamuli/macos-machine)
+[![Build Status](https://travis-ci.org/markosamuli/linux-machine.svg?branch=master)](https://travis-ci.org/markosamuli/linux-machine)
 
-This is a collection of Ansible roles and tasks to setup a new developer machine on macOS.
+This is a collection of Ansible roles and tasks to setup a new developer machine on Ubuntu Linux.
 
-This setup has only been tested on the macOS Sierra and not against existing installations.
+This setup has only been tested on the Ubuntu 18.04 LTS and not against existing installations.
 
 Requirements
 ------------
 
-- OS X 10.10 or higher
-- Xcode installed
+- Ubuntu 18.04 LTS or higher
 - Git installed
 
 Install
@@ -20,7 +19,7 @@ Install
 You can run the installer script that will clone the code from GitHub and run the `setup` script.
 
 ```
-curl -s https://raw.githubusercontent.com/markosamuli/macos-machine/master/install.sh | bash -
+curl -s https://raw.githubusercontent.com/markosamuli/linux-machine/master/install.sh | bash -
 ```
 
 Getting Started
@@ -29,8 +28,8 @@ Getting Started
 Clone this project locally and run the `./setup` script.
 
 ```bash
-git clone https://github.com/markosamuli/macos-machine
-cd macos-machine
+git clone https://github.com/markosamuli/linux-machine
+cd linux-machine
 ./setup
 ```
 
