@@ -2,6 +2,8 @@
 
 - name: Setup variables and check requirements
   hosts: all
+  tags:
+    - always
   tasks:
 
     - name: Check that we're running Linux
@@ -14,13 +16,13 @@
       assert:
         that:
           - "ansible_distribution == 'Ubuntu'"
-        msg: "This playbook only supports Ubuntu systems"    
-        
-    - name: Check that we're running Ubuntu 18.04 or newer distribution
+        msg: "This playbook only supports Ubuntu systems"
+
+    - name: Check that we're running Ubuntu 16.04 or newer distribution
       assert:
         that:
-          - "ansible_distribution_version|int >= 18"
-        msg: "This playbook only supports Ubuntu 18.04 and newer distributions"          
+          - "ansible_distribution_version|int >= 16"
+        msg: "This playbook only supports Ubuntu 16.04 and newer distributions"
 
 - import_playbook: ubuntu.yml
 - import_playbook: tools.yml
