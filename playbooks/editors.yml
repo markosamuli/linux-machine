@@ -2,17 +2,13 @@
 
 - name: Editors
   hosts: all
+  tags:
+  - editors
+
   tasks:
 
-  - stat:
-      path: /snap/bin/vscode
-    register: vscode_st
-
-  - name: Install Visual Studio Code via snap package
-    command: snap install vscode --classic
-    when: not vscode_st.stat.exists
-    tags:
-    - editors
+  - include: tasks/vscode.yml
+    tags: vscode
 
   - name: Install vim
     package:

@@ -1,0 +1,21 @@
+---
+
+- name: Remove tagplus5 Visual Studio Code PPA repository
+  apt_repository:
+    repo: 'deb https://tagplus5.github.io/vscode-ppa/ubuntu ./'
+    state: absent
+
+- name: Check if Visual Studio Code snap package exists
+  stat:
+    path: /snap/bin/vscode
+  register: vscode_st
+  changed_when: False
+
+- name: Install Visual Studio Code via snap package
+  command: snap install vscode --classic
+  when: not vscode_st.stat.exists
+
+- name: Remove Visual Studio Code if installed via APT
+  apt:
+    package: code
+    state: absent
