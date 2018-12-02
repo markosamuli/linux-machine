@@ -6,6 +6,9 @@ matrix:
     - os: linux
       dist: trusty
       sudo: required
+    - os: linux
+      dist: xenial
+      sudo: required
 
 notifications:
   email: false
