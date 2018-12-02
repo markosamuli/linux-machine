@@ -7,4 +7,6 @@
   - name: Installing Git
     package:
       name: git
-    tags: git
+    tags:
+    - git
+    - frontend

@@ -8,8 +8,12 @@
   tasks:
 
   - include: tasks/vscode.yml
-    tags: vscode
+    tags:
+    - vscode
+    - frontend
 
   - name: Install vim
     package:
       name: vim
+    tags:
+    - vim

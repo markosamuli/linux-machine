@@ -8,6 +8,7 @@
   - role: markosamuli.nvm
     tags:
     - nvm
+    - frontend
 
 - name: Yarn
   hosts: all
@@ -18,3 +19,4 @@
       name: yarn
     tags:
     - yarn
+    - frontend
