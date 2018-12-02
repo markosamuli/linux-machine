@@ -9,14 +9,3 @@
     tags:
     - nvm
     - frontend
-
-- name: Yarn
-  hosts: all
-  tasks:
-
-  - name: Install Yarn
-    package:
-      name: yarn
-    tags:
-    - yarn
-    - frontend
