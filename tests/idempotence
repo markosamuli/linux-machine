@@ -10,17 +10,17 @@ total=0
 function run_playbook {
     local playbook=$1
     echo "*** Playbook: $playbook"
-    $(( total++ ))
+    total=$((total+1))
     ansible-playbook \
         -i inventory/local playbooks/$playbook | \
         grep -q 'changed=0.*failed=0'
     if [ "$?" == "0" ]; then
         echo "Idempotence test: pass on playbook $playbook"
-        $(( passed++ ))
+        passed=$((passed+1))
         return 0
     else
         echo "Idempotence test: fail on playbook $playbook"
-        $(( failed++ ))
+        failed=$((failed+1))
         return 1
     fi
 }
