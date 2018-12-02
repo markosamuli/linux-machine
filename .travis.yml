@@ -4,9 +4,6 @@ python: 2.7
 matrix:
   include:
     - os: linux
-      dist: trusty
-      sudo: required
-    - os: linux
       dist: xenial
       sudo: required
 
