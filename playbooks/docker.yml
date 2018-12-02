@@ -2,6 +2,9 @@
 
 - name: Docker
   hosts: all
+  tags:
+  - docker
+
   tasks:
 
   - name: Remove old versions of Docker
@@ -9,16 +12,16 @@
       name: "{{ item }}"
       state: absent
     with_items:
-    - docker 
-    - docker-engine 
+    - docker
+    - docker-engine
     - docker.io
 
   - name: Add Google Cloud apt GPG key
     apt_key:
-      url: https://packages.cloud.google.com/apt/doc/apt-key.gpg 
+      url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
 
   - name: Add Docker apt GPG key
-    apt_key: 
+    apt_key:
       id: 0EBFCD88
       url: https://download.docker.com/linux/ubuntu/gpg
 

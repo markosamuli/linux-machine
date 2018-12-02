@@ -2,6 +2,8 @@
 
 - name: Tools
   hosts: all
+  tags:
+  - tools
   tasks:
 
   - name: Install wget
@@ -15,7 +17,7 @@
   - name: Install jq command-line JSON processor
     package:
       name: jq
-  
+
   - name: Install The Silver Searcher code searcing utility
     apt:
       name: silversearcher-ag

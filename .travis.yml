@@ -4,11 +4,8 @@ python: 2.7
 matrix:
   include:
     - os: linux
-      dist: trusty
+      dist: xenial
       sudo: required
-
-notifications:
-  email: false
 
 before_install:
   # Cleanup existing NVM installation
