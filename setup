@@ -15,115 +15,129 @@ ansible_verbose=0
 ansible_become=0
 list_tags=0
 
+###
+# Print error into STDERR
+###
+function error {
+    echo "$@" 1>&2
+}
+
+###
+# Print usage help
+###
 function show_help {
-  echo "Usage: $0"
-  echo " -h         Show this help"
-  echo " -v         Verbose mode"
-  echo " -n         Do not run Ansible playbook"
-  echo " -q         Do not install Ansible requirements"
-  echo " -l         List available Ansible tags"
-  echo " -s         Ansible playbook syntax check"
-  echo " -t TAGS    Run Ansible with the given comma separated list of tags"
+    echo "Usage: $0"
+    echo " -h         Show this help"
+    echo " -v         Verbose mode"
+    echo " -n         Do not run Ansible playbook"
+    echo " -q         Do not install Ansible requirements"
+    echo " -l         List available Ansible tags"
+    echo " -s         Ansible playbook syntax check"
+    echo " -t TAGS    Run Ansible with the given comma separated list of tags"
 }
 
 while getopts ":hcnqlsvt:" opt; do
-  case $opt in
-    h)
-      show_help
-      exit 0
-      ;;
-    n)
-      run_playbook=0
-      ;;
-    q)
-      install_roles=0
-      install_ansible=0
-      ;;
-    l)
-      list_tags=1
-      run_playbook=0
-      ;;
-    s)
-      syntax_check=1
-      run_playbook=0
-      ;;
-    v)
-      ansible_verbose=1
-      ;;
-    t)
-      ansible_tags=$OPTARG
-      ;;
-    \?)
-      echo "Invalid option: -$OPTARG" >&2
-      show_help
-      exit 1
-      ;;
-    :)
-      echo "Option -$OPTARG requires an argument." >&2
-      exit 1
-      ;;
-  esac
+    case $opt in
+        h)
+            show_help
+            exit 0
+            ;;
+        n)
+            run_playbook=0
+            ;;
+        q)
+            install_roles=0
+            install_ansible=0
+            ;;
+        l)
+            list_tags=1
+            run_playbook=0
+            ;;
+        s)
+            syntax_check=1
+            run_playbook=0
+            ;;
+        v)
+            ansible_verbose=1
+            ;;
+        t)
+            ansible_tags=$OPTARG
+            ;;
+        \?)
+            error "Invalid option: -$OPTARG"
+            show_help
+            exit 1
+            ;;
+        :)
+            error "Option -$OPTARG requires an argument"
+            exit 1
+            ;;
+    esac
 done
 
 if test "$(uname)" = "Darwin"; then
-  echo "*** ERROR: macOS is not currently supported."
-  exit 1
+    error "macOS is not supported"
+    exit 1
 elif test "$(uname)" = "Linux"; then
-  if [ "$install_ansible" == "1" ]; then
-    if test -f /etc/lsb-release -a ! "$(which ansible)"; then
-      echo "Installing ansible..."
-      sudo apt-get install -y software-properties-common
-      sudo apt-add-repository -y ppa:ansible/ansible
-      sudo apt-get update
-      sudo apt-get install -y ansible
+    if [ "$install_ansible" == "1" ]; then
+        if test -f /etc/lsb-release -a ! "$(which ansible)"; then
+            echo "Installing ansible..."
+            sudo apt-get install -y software-properties-common
+            sudo apt-add-repository -y ppa:ansible/ansible
+            sudo apt-get update
+            sudo apt-get install -y ansible
+        fi
     fi
-  fi
-  ansible_become=1
+    ansible_become=1
 fi
 
 if test ! "$(which ansible)"; then
-  echo "*** ERROR: You system is not supported yet."
-  exit 1
+    error "Your system is not supported"
+    exit 1
 fi
 
 python --version
 ansible --version
 
 if [ "$install_roles" == "1" ]; then
-  echo "*** Installing Ansible roles..."
-  ansible-galaxy install -r requirements.yml -p ${ansible_roles} || { echo "*** ERROR: Failed to install Ansible roles"; exit 1; }
+    echo "*** Installing Ansible roles..."
+    ansible-galaxy install \
+        -r requirements.yml \
+        -p ${ansible_roles} \
+        || { error "Failed to install Ansible roles"; exit 1; }
 fi
 
 if [ "$list_tags" == "1" ]; then
 
-  ansible-playbook ${ansible_playbook} --list-tags
+    ansible-playbook ${ansible_playbook} --list-tags
 
 elif [ "$syntax_check" == "1" ]; then
 
-  ansible-playbook ${ansible_playbook} --syntax-check
+    ansible-playbook ${ansible_playbook} --syntax-check
 
 elif [ "$run_playbook" == "1" ]; then
 
-  ansible_opts=""
+    ansible_opts=""
 
-  if [ "$deploy_env" != "" ]; then
-    [ -e "inventory/${deploy_env}" ] || { echo "*** ERROR: Could not find inventory file for ${deploy_env}"; exit 1; }
-    ansible_opts="-i inventory/${deploy_env} ${ansible_opts}"
-  fi
+    if [ "$deploy_env" != "" ]; then
+        [ -e "inventory/${deploy_env}" ] || {
+        error "Could not find inventory file for ${deploy_env}"; exit 1; }
+        ansible_opts="-i inventory/${deploy_env} ${ansible_opts}"
+    fi
 
-  if [ "$ansible_verbose" == "1" ]; then
-    ansible_opts="-v ${ansible_opts}"
-  fi
+    if [ "$ansible_verbose" == "1" ]; then
+        ansible_opts="-v ${ansible_opts}"
+    fi
 
-  if [ "$ansible_tags" != "" ]; then
-    ansible_opts="--tags=${ansible_tags} ${ansible_opts}"
-  fi
+    if [ "$ansible_tags" != "" ]; then
+        ansible_opts="--tags=${ansible_tags} ${ansible_opts}"
+    fi
 
-  if [ "$ansible_become" == "1" ]; then
-    ansible_opts="--become $ansible_opts"
-    sudo true || exit 1
-  fi  
+    if [ "$ansible_become" == "1" ]; then
+        ansible_opts="--become $ansible_opts"
+        sudo true || exit 1
+    fi
 
-  ansible-playbook ${ansible_playbook} $ansible_opts
+    ansible-playbook ${ansible_playbook} $ansible_opts
 
 fi
