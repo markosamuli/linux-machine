@@ -2,6 +2,8 @@
 
 - name: Install Hashicorp tools
   hosts: all
+  tags:
+  - hashicorp
   roles:
   - role: markosamuli.terraform
     tags: terraform
