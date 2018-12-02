@@ -10,9 +10,6 @@ matrix:
       dist: xenial
       sudo: required
 
-notifications:
-  email: false
-
 before_install:
   # Cleanup existing NVM installation
   - unset NVM_CD_FLAGS
