@@ -32,7 +32,7 @@
 - import_playbook: python.yml
 # - import_playbook: vagrant.yml
 - import_playbook: docker.yml
-# - import_playbook: gcloud.yml
+- import_playbook: gcloud.yml
 # - import_playbook: aws.yml
 - import_playbook: hashicorp.yml
 # - import_playbook: golang.yml
