@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
-MACHINE_REPO=https://github.com/markosamuli/linux-machine.git
-MACHINE=$HOME/.machine
+MACHINE_REPO=${MACHINE_REPO:-https://github.com/markosamuli/linux-machine.git}
+MACHINE=${MACHINE:-$HOME/.machine}
 
+###
+# Download repository with Git
+###
 function download_machine {
     # Do we need to download the machine repository?
     if [ ! -d "$MACHINE" ]; then
@@ -11,6 +14,9 @@ function download_machine {
     fi
 }
 
+###
+# Check that Git is installed
+###
 function setup_git {
     command -v git 1>/dev/null 2>&1 || {
         echo "Git is not installed."
@@ -18,16 +24,16 @@ function setup_git {
     }
 }
 
+###
+# Run setup script
+###
 function setup_machine {
     cd $MACHINE
     ./setup
 }
 
-# Git setup
 setup_git
 
-# Clone repository
 download_machine
 
-# Run setup
 setup_machine
