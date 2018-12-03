@@ -14,11 +14,17 @@ See [markosamuli/macos-machine] for my macOS setup.
 
 ## Requirements
 
-- Ubuntu 16.04, 18.04 or another supported operating system
+- [Ubuntu] or another supported operating system
 - Git installed
 - Bash shell
-- Ansible 2.7
-- Python 2.7 or 3.7 required by Ansible
+- [Ansible] 2.7
+- [Python] 2.7 or 3.7 as required by Ansible
+
+[Ansible] 2.7 will be installed from [ansible/ansible-2.7] PPA if not found on
+the system.
+
+[Ansible]: https://www.ansible.com/
+[ansible/ansible-2.7]: https://launchpad.net/~ansible/+archive/ubuntu/ansible-2.7
 
 ### Ubuntu
 
@@ -104,13 +110,6 @@ Ansible Playbook with `--extra-vars`.
 
 ## Software installed by the playbooks
 
-### Installation tools
-
-The following tools are prequiresites and always installed during setup if not
-already found on the system.
-
-- [Ansible](https://www.ansible.com/) from [Ansible PPA](https://launchpad.net/~ansible/+archive/ubuntu/ansible)
-
 ### Desktop applications
 
 - [Terminator](https://gnometerminator.blogspot.com/p/introduction.html)
@@ -123,7 +122,7 @@ already found on the system.
 - [curl](https://curl.haxx.se/)
 - [jq](https://stedolan.github.io/jq/) command-line JSON processor
 - [The Silver Searcher](https://github.com/ggreer/the_silver_searcher) code
-  searcing utility similar to `ack`
+  searching utility similar to `ack`
 - [htop](https://hisham.hm/htop/)
 
 ### Editors
@@ -264,7 +263,7 @@ from  [caarlos0/machine] to suit my needs.
 
 ## License
 
-[MIT](LICENSE)
+- [MIT](LICENSE)
 
 ## Authors
 
