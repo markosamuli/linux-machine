@@ -104,6 +104,7 @@ if [ "$install_roles" == "1" ]; then
     ansible-galaxy install \
         -r requirements.yml \
         -p ${ansible_roles} \
+        --force \
         || { error "Failed to install Ansible roles"; exit 1; }
 fi
 
