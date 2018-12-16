@@ -4,7 +4,7 @@
 
 This is a collection of Ansible roles and tasks to setup a new developer machine on Ubuntu Linux.
 
-This setup has only been tested on the Ubuntu 18.04 LTS and not against existing installations.
+This setup has been tested on the Ubuntu 16.04 and 18.04 LTS releases.
 
 ## Requirements
 
