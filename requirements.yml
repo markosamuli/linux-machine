@@ -20,6 +20,7 @@
 
 - src: https://github.com/markosamuli/ansible-vagrant
   name: markosamuli.vagrant
+  version: v1.0.0
 
 - src: https://github.com/markosamuli/ansible-golang
   name: markosamuli.golang
