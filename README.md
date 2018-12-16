@@ -6,6 +6,8 @@ This is a collection of Ansible roles and tasks to setup a new developer machine
 
 This setup has been tested on the Ubuntu 16.04 and 18.04 LTS releases.
 
+See [markosamuli/macos-machine](https://github.com/markosamuli/macos-machine) for my macOS setup.
+
 ## Requirements
 
 - Ubuntu 16.04 LTS or higher
