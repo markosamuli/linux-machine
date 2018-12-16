@@ -33,11 +33,14 @@ cd linux-machine
 
 The following external Ansible roles are installed and used:
 
-- [markosamuli.terraform](https://github.com/markosamuli/ansible-terraform)
-- [markosamuli.packer](https://github.com/markosamuli/ansible-packer)
+
 - [markosamuli.aws-tools](https://github.com/markosamuli/ansible-aws-tools)
-- [markosamuli.cloud](https://github.com/markosamuli/ansible-cloud)
+- [markosamuli.gcloud](https://github.com/markosamuli/ansible-gcloud)
+- [markosamuli.golang](https://github.com/markosamuli/ansible-golang)
 - [markosamuli.nvm](https://github.com/markosamuli/ansible-nvm)
+- [markosamuli.packer](https://github.com/markosamuli/ansible-packer)
+- [markosamuli.pyenv](https://github.com/markosamuli/ansible-pyenv)
+- [markosamuli.terraform](https://github.com/markosamuli/ansible-terraform)
 - [markosamuli.vagrant](https://github.com/markosamuli/ansible-vagrant)
 
 ## License

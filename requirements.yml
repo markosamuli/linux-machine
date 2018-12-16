@@ -25,6 +25,7 @@
 
 - src: https://github.com/markosamuli/ansible-golang
   name: markosamuli.golang
+  version: v1.0.0
 
 - src: https://github.com/markosamuli/ansible-pyenv
   name: markosamuli.pyenv
