@@ -9,12 +9,11 @@
 
   - name: Remove old versions of Docker
     apt:
-      name: "{{ item }}"
+      name:
+      - docker
+      - docker-engine
+      - docker.io
       state: absent
-    with_items:
-    - docker
-    - docker-engine
-    - docker.io
 
   - name: Add Google Cloud apt GPG key
     apt_key:
