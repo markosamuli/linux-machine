@@ -15,6 +15,13 @@ See [markosamuli/macos-machine](https://github.com/markosamuli/macos-machine) fo
 
 ## Install
 
+Install Git and curl:
+
+```bash
+sudo apt update
+sudo apt install curl git
+```
+
 You can run the installer script that will clone the code from GitHub and run the `setup` script.
 
 ```bash
