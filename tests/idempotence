@@ -30,7 +30,6 @@ function run_playbook {
 ###
 function get_playbooks {
     grep -e "- include: .*\.yml" playbooks/main.yml | \
-        grep -v front-end-toolkit.yml | \
         sed 's/- include: //'
 }
 
