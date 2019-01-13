@@ -76,7 +76,7 @@ already found on the system.
 - [pyenv](https://github.com/pyenv/pyenv)
 - [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv)
 - [Python](https://www.python.org/) v2.7.15 and v3.7.1 installed with pyenv
-- [Go programming language](https://golang.org/) 
+- [Go programming language](https://golang.org/)
 
 ### Developer tools
 
@@ -110,14 +110,25 @@ backup copies of them before running the script.
 
 The following external Ansible roles are installed and used:
 
-- [markosamuli.aws-tools](https://github.com/markosamuli/ansible-aws-tools)
-- [markosamuli.gcloud](https://github.com/markosamuli/ansible-gcloud)
-- [markosamuli.golang](https://github.com/markosamuli/ansible-golang)
-- [markosamuli.nvm](https://github.com/markosamuli/ansible-nvm)
-- [markosamuli.packer](https://github.com/markosamuli/ansible-packer)
-- [markosamuli.pyenv](https://github.com/markosamuli/ansible-pyenv)
-- [markosamuli.terraform](https://github.com/markosamuli/ansible-terraform)
-- [markosamuli.vagrant](https://github.com/markosamuli/ansible-vagrant)
+| Role | Build status |
+|------|--------------|
+| [markosamuli.aws-tools] | [![Build Status](https://travis-ci.org/markosamuli/ansible-aws-tools.svg?branch=master)](https://travis-ci.orgmarkosamuli/ansible-aws-tools) |
+| [markosamuli.gcloud] | [![Build Status](https://travis-ci.org/markosamuli/ansible-gcloud.svg?branch=master)](https://travis-ci.orgmarkosamuli/ansible-gcloud) |
+| [markosamuli.golang] | [![Build Status](https://travis-ci.org/markosamuli/ansible-golang.svg?branch=master)](https://travis-ci.orgmarkosamuli/ansible-golang) |
+| [markosamuli.nvm] | [![Build Status](https://travis-ci.org/markosamuli/ansible-nvm.svg?branch=master)](https://travis-ci.orgmarkosamuli/ansible-nvm) |
+| [markosamuli.packer] | [![Build Status](https://travis-ci.org/markosamuli/ansible-packer.svg?branch=master)](https://travis-ci.orgmarkosamuli/ansible-packer) |
+| [markosamuli.pyenv] | [![Build Status](https://travis-ci.org/markosamuli/ansible-pyenv.svg?branch=master)](https://travis-ci.orgmarkosamuli/ansible-pyenv) |
+| [markosamuli.terraform] | [![Build Status](https://travis-ci.org/markosamuli/ansible-terraform.svg?branch=master)](https://travis-ci.orgmarkosamuli/ansible-terraform) |
+| [markosamuli.vagrant] | [![Build Status](https://travis-ci.org/markosamuli/ansible-vagrant.svg?branch=master)](https://travis-ci.orgmarkosamuli/ansible-vagrant) |
+
+[markosamuli.aws-tools]: https://github.com/markosamuli/ansible-aws-tools
+[markosamuli.gcloud]: https://github.com/markosamuli/ansible-gcloud
+[markosamuli.golang]: https://github.com/markosamuli/ansible-golang
+[markosamuli.nvm]: https://github.com/markosamuli/ansible-nvm
+[markosamuli.packer]: https://github.com/markosamuli/ansible-packer
+[markosamuli.pyenv]: https://github.com/markosamuli/ansible-pyenv
+[markosamuli.terraform]: https://github.com/markosamuli/ansible-terraform
+[markosamuli.vagrant]: https://github.com/markosamuli/ansible-vagrant
 
 ## References
 
