@@ -22,3 +22,11 @@
   - name: Install software-properties-common
     apt:
       name: software-properties-common
+
+  roles:
+
+  - role: markosamuli.hyper
+    tags:
+    - hyper
+    - terminal
+    when: not ubuntu_wsl

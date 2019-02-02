@@ -66,6 +66,7 @@ already found on the system.
 
 - [Terminator](https://gnometerminator.blogspot.com/p/introduction.html)
 - [Slack](https://snapcraft.io/slack) via Snap package
+- [Hyper](https://hyper.is/)
 
 ### Command line tools
 
@@ -135,6 +136,7 @@ The following external Ansible roles are installed and used:
 | [markosamuli.pyenv] | [![Build Status](https://travis-ci.org/markosamuli/ansible-pyenv.svg?branch=master)](https://travis-ci.orgmarkosamuli/ansible-pyenv) |
 | [markosamuli.terraform] | [![Build Status](https://travis-ci.org/markosamuli/ansible-terraform.svg?branch=master)](https://travis-ci.orgmarkosamuli/ansible-terraform) |
 | [markosamuli.vagrant] | [![Build Status](https://travis-ci.org/markosamuli/ansible-vagrant.svg?branch=master)](https://travis-ci.orgmarkosamuli/ansible-vagrant) |
+| [markosamuli.hyper] | [![Build Status](https://travis-ci.org/markosamuli/ansible-hyper.svg?branch=master)](https://travis-ci.orgmarkosamuli/ansible-hyper) |
 
 [markosamuli.aws-tools]: https://github.com/markosamuli/ansible-aws-tools
 [markosamuli.gcloud]: https://github.com/markosamuli/ansible-gcloud
