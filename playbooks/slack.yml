@@ -15,4 +15,4 @@
 
   - name: Install Slack via snap package
     command: snap install slack --classic
-    when: not slack_st.stat.exists
+    when: not slack_st.stat.exists and not ubuntu_wsl
