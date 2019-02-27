@@ -11,6 +11,7 @@
     tags:
     - vscode
     - frontend
+    when: not ubuntu_wsl
 
   - name: Install vim
     package:

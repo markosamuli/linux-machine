@@ -24,6 +24,22 @@
           - "ansible_distribution_version|int >= 16"
         msg: "This playbook only supports Ubuntu 16.04 and newer distributions"
 
+    - name: Check for Ubuntu on Windows
+      command: "sh -c 'grep -q Microsoft /proc/version && echo yes || echo no'"
+      register: ubuntu_wsl_grep
+      changed_when: False
+      when: "ansible_distribution == 'Ubuntu'"
+
+    - name: Ubuntu on Windows
+      set_fact:
+        ubuntu_wsl: True
+      when: "ansible_distribution == 'Ubuntu' and ubuntu_wsl_grep.stdout == 'yes'"
+
+    - name: Native Linux
+      set_fact:
+        ubuntu_wsl: False
+      when: "ansible_distribution == 'Ubuntu' and ubuntu_wsl_grep.stdout == 'no'"
+
 - import_playbook: ubuntu.yml
 - import_playbook: tools.yml
 - import_playbook: editors.yml
@@ -31,7 +47,11 @@
 - import_playbook: front-end-toolkit.yml
 - import_playbook: python.yml
 - import_playbook: vagrant.yml
+  when: not ubuntu_wsl
+
 - import_playbook: docker.yml
+  when: not ubuntu_wsl
+
 - import_playbook: gcloud.yml
 - import_playbook: aws.yml
 - import_playbook: hashicorp.yml

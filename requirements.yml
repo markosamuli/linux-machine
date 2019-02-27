@@ -22,3 +22,6 @@
 - name: markosamuli.vagrant
   src: https://github.com/markosamuli/ansible-vagrant
   version: v1.0.0
+- name: markosamuli.hyper
+  src: https://github.com/markosamuli/ansible-hyper
+  version: v1.0.0

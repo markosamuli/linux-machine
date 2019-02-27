@@ -2,16 +2,31 @@
 
 [![Build Status](https://travis-ci.org/markosamuli/linux-machine.svg?branch=master)](https://travis-ci.org/markosamuli/linux-machine)
 
-This is a collection of Ansible roles and tasks to setup a new developer machine on Ubuntu Linux.
+This is a collection of Ansible roles and tasks to setup a new developer
+machine on Ubuntu Linux.
 
-This setup has been tested on the Ubuntu 16.04 and 18.04 LTS releases.
+This setup has been tested on the [Ubuntu] 16.04 and 18.04 LTS releases.
 
-See [markosamuli/macos-machine](https://github.com/markosamuli/macos-machine) for my macOS setup.
+See [markosamuli/macos-machine] for my macOS setup.
+
+[Ubuntu]: https://www.ubuntu.com/
+[markosamuli/macos-machine]: https://github.com/markosamuli/macos-machine
 
 ## Requirements
 
 - Ubuntu 16.04 LTS or higher
 - Git installed
+
+### Ubuntu on Windows
+
+I've also used this playbook to install packages on Ubuntu running on
+[Windows Subsystem for Linux] on Windows 10.
+
+Some packages are known not to work (eg. can't install Ubuntu) so I've added
+custom fact `ubuntu_wsl` that can be used to check if we're running
+Ubuntu on Windows and these will be skipped during the set up.
+
+[Windows Subsystem for Linux]: https://docs.microsoft.com/en-us/windows/wsl/install-win10
 
 ## Install
 
@@ -51,6 +66,7 @@ already found on the system.
 
 - [Terminator](https://gnometerminator.blogspot.com/p/introduction.html)
 - [Slack](https://snapcraft.io/slack) via Snap package
+- [Hyper](https://hyper.is/)
 
 ### Command line tools
 
@@ -120,6 +136,7 @@ The following external Ansible roles are installed and used:
 | [markosamuli.pyenv] | [![Build Status](https://travis-ci.org/markosamuli/ansible-pyenv.svg?branch=master)](https://travis-ci.orgmarkosamuli/ansible-pyenv) |
 | [markosamuli.terraform] | [![Build Status](https://travis-ci.org/markosamuli/ansible-terraform.svg?branch=master)](https://travis-ci.orgmarkosamuli/ansible-terraform) |
 | [markosamuli.vagrant] | [![Build Status](https://travis-ci.org/markosamuli/ansible-vagrant.svg?branch=master)](https://travis-ci.orgmarkosamuli/ansible-vagrant) |
+| [markosamuli.hyper] | [![Build Status](https://travis-ci.org/markosamuli/ansible-hyper.svg?branch=master)](https://travis-ci.orgmarkosamuli/ansible-hyper) |
 
 [markosamuli.aws-tools]: https://github.com/markosamuli/ansible-aws-tools
 [markosamuli.gcloud]: https://github.com/markosamuli/ansible-gcloud
