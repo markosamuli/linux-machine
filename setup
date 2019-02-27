@@ -10,6 +10,7 @@ deploy_env="local"
 
 ansible_playbook="playbooks/main.yml"
 ansible_roles="playbooks/roles"
+ansible_roles_opts=""
 ansible_tags=""
 ansible_verbose=0
 ansible_become=0
@@ -28,6 +29,7 @@ function error {
 function show_help {
     echo "Usage: $0"
     echo " -h         Show this help"
+    echo " -f         Force update of Ansible roles"
     echo " -v         Verbose mode"
     echo " -n         Do not run Ansible playbook"
     echo " -q         Do not install Ansible requirements"
@@ -36,11 +38,14 @@ function show_help {
     echo " -t TAGS    Run Ansible with the given comma separated list of tags"
 }
 
-while getopts ":hcnqlsvt:" opt; do
+while getopts ":hfcnqlsvt:" opt; do
     case $opt in
         h)
             show_help
             exit 0
+            ;;
+        f)
+            ansible_roles_opts="${ansible_roles_opts} --force"
             ;;
         n)
             run_playbook=0
@@ -104,6 +109,7 @@ if [ "$install_roles" == "1" ]; then
     ansible-galaxy install \
         -r requirements.yml \
         -p ${ansible_roles} \
+        ${ansible_roles_opts} \
         || { error "Failed to install Ansible roles"; exit 1; }
 fi
 
