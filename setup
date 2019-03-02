@@ -185,9 +185,9 @@ elif [ "$run_playbook" == "1" ]; then
     fi
 
     if [ "${is_wsl}" == "1" ]; then
-        ansible_opts="-e {'is_wsl':'True'} ${ansible_opts}"
+        ansible_opts="-e {'is_wsl':True} ${ansible_opts}"
     else
-        ansible_opts="-e {'is_wsl':'False'} ${ansible_opts}"
+        ansible_opts="-e {'is_wsl':False} ${ansible_opts}"
     fi
 
     ansible-playbook ${ansible_playbook} $ansible_opts

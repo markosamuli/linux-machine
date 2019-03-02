@@ -32,7 +32,7 @@
 
     - name: Set Windows Subsystem for Linux fact
       set_fact:
-        is_wsl: "{{ detect_wsl_grep.stdout }}"
+        is_wsl: "{{ detect_wsl_grep.stdout | bool }}"
       when: "is_wsl is undefined"
 
 - import_playbook: ubuntu.yml
