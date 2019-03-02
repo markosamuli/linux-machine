@@ -23,10 +23,11 @@
     apt:
       name: software-properties-common
 
+- name: Install common Ubuntu applications and packages
+  hosts: all
+  tags: hyper
   roles:
-
   - role: markosamuli.hyper
     tags:
     - hyper
-    - terminal
     when: not is_wsl
