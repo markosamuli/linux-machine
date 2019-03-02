@@ -1,7 +1,7 @@
 ---
 
 # Default Node.js version to install (NVM aliases supported)
-nvm_default_node_version: stable
+nvm_default_node_version: "lts/*"
 
 # Configure default NPM packages to install
 nvm_npm_global_packages:
