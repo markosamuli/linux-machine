@@ -141,6 +141,7 @@ The following external Ansible roles are installed and used:
 [markosamuli.aws-tools]: https://github.com/markosamuli/ansible-aws-tools
 [markosamuli.gcloud]: https://github.com/markosamuli/ansible-gcloud
 [markosamuli.golang]: https://github.com/markosamuli/ansible-golang
+[markosamuli.hyper]: https://github.com/markosamuli/ansible-hyper
 [markosamuli.nvm]: https://github.com/markosamuli/ansible-nvm
 [markosamuli.packer]: https://github.com/markosamuli/ansible-packer
 [markosamuli.pyenv]: https://github.com/markosamuli/ansible-pyenv
