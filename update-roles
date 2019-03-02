@@ -12,10 +12,14 @@ except:
     from urllib.error import HTTPError
 
 def github_request_url(api):
-    access_token = os.environ['GITHUB_OAUTH_TOKEN']
+    """Get authenticated URL for a GitHub API path"""
     url = "https://api.github.com{api}".format(api=api)
-    if access_token:
-        url += "?access_token={access_token}".format(access_token=access_token)
+    try:
+        access_token = os.environ['GITHUB_OAUTH_TOKEN']
+        if access_token:
+            url += "?access_token={access_token}".format(access_token=access_token)
+    except:
+        pass
     return url
 
 def get_latest_version(repository):
@@ -39,6 +43,7 @@ def get_latest_version(repository):
             raise e
 
 def update_roles(roles):
+    """Update role versions in the requirements.yml"""
     roles_updated = 0
     updated_roles = []
     for role in roles:
@@ -55,6 +60,7 @@ def update_roles(roles):
             yaml.safe_dump(updated_roles, f, default_flow_style=False)
 
 def ansible_roles():
+    """Return Ansible roles from the requirements.yml file"""
     roles = []
     role_file = 'requirements.yml'
     with open(role_file, 'r') as f:
