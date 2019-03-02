@@ -19,7 +19,7 @@ ansible_become=0
 list_tags=0
 print_versions=0
 
-ubuntu_wsl=0
+is_wsl=0
 
 required_ansible_version="2.4"
 
@@ -110,11 +110,12 @@ if test "$(uname)" = "Darwin"; then
     exit 1
 elif test "$(uname)" = "Linux"; then
     if grep -q Microsoft /proc/version; then
-        ubuntu_wsl=1
+        echo "*** Windows Subsystem for Linux detected"
+        is_wsl=1
     fi
     if [ "$install_ansible" == "1" ]; then
         if test -f /etc/lsb-release -a ! "$(which ansible)"; then
-            echo "Installing ansible..."
+            echo "*** Installing ansible..."
             sudo apt-get install -y software-properties-common
             sudo apt-add-repository -y ppa:ansible/ansible
             sudo apt-get update
@@ -181,6 +182,12 @@ elif [ "$run_playbook" == "1" ]; then
     if [ "$ansible_become" == "1" ]; then
         ansible_opts="--become $ansible_opts"
         sudo true || exit 1
+    fi
+
+    if [ "${is_wsl}" == "1" ]; then
+        ansible_opts="-e {'is_wsl':'True'} ${ansible_opts}"
+    else
+        ansible_opts="-e {'is_wsl':'False'} ${ansible_opts}"
     fi
 
     ansible-playbook ${ansible_playbook} $ansible_opts

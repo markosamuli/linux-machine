@@ -11,7 +11,7 @@
       name: terminator
     tags:
     - terminal
-    when: not ubuntu_wsl
+    when: not is_wsl
 
   - name: Add APT support for transport over HTTPS
     apt:
@@ -29,4 +29,4 @@
     tags:
     - hyper
     - terminal
-    when: not ubuntu_wsl
+    when: not is_wsl
