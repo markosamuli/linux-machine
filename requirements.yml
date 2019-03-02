@@ -7,6 +7,9 @@
 - name: markosamuli.golang
   src: https://github.com/markosamuli/ansible-golang
   version: v1.0.0
+- name: markosamuli.hyper
+  src: https://github.com/markosamuli/ansible-hyper
+  version: v1.0.0
 - name: markosamuli.nvm
   src: https://github.com/markosamuli/ansible-nvm
   version: v1.1.0
@@ -21,7 +24,4 @@
   version: v1.1.0
 - name: markosamuli.vagrant
   src: https://github.com/markosamuli/ansible-vagrant
-  version: v1.0.0
-- name: markosamuli.hyper
-  src: https://github.com/markosamuli/ansible-hyper
   version: v1.0.0

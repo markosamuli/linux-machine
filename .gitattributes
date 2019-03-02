@@ -1,0 +1,8 @@
+# Autodetect text files
+* text=auto
+
+# Definitively text files
+*.yml text
+*.yaml text
+*.sh text
+*.md text
