@@ -5,6 +5,7 @@ syntax_check=0
 
 install_roles=1
 install_ansible=1
+force_update_roles=0
 
 deploy_env="local"
 
@@ -14,7 +15,13 @@ ansible_roles_opts=""
 ansible_tags=""
 ansible_verbose=0
 ansible_become=0
+
 list_tags=0
+print_versions=0
+
+ubuntu_wsl=0
+
+required_ansible_version="2.4"
 
 ###
 # Print error into STDERR
@@ -38,6 +45,23 @@ function show_help {
     echo " -t TAGS    Run Ansible with the given comma separated list of tags"
 }
 
+function check_ansible_version {
+    local IFS=.
+    local required=($1)
+    local ansible_version=$(ansible --version | grep "^ansible" | awk '{ print $2 }')
+    if [ -z "$ansible_version" ]; then
+        return 1
+    fi
+    local installed=($ansible_version)
+    if ((${installed[0]} < ${required[0]})); then
+        return 1
+    fi
+    if ((${installed[1]} < ${required[1]})); then
+        return 1
+    fi
+    return 0
+}
+
 while getopts ":hfcnqlsvt:" opt; do
     case $opt in
         h)
@@ -45,7 +69,7 @@ while getopts ":hfcnqlsvt:" opt; do
             exit 0
             ;;
         f)
-            ansible_roles_opts="${ansible_roles_opts} --force"
+            force_update_roles=1
             ;;
         n)
             run_playbook=0
@@ -64,6 +88,7 @@ while getopts ":hfcnqlsvt:" opt; do
             ;;
         v)
             ansible_verbose=1
+            print_versions=1
             ;;
         t)
             ansible_tags=$OPTARG
@@ -84,6 +109,9 @@ if test "$(uname)" = "Darwin"; then
     error "macOS is not supported"
     exit 1
 elif test "$(uname)" = "Linux"; then
+    if grep -q Microsoft /proc/version; then
+        ubuntu_wsl=1
+    fi
     if [ "$install_ansible" == "1" ]; then
         if test -f /etc/lsb-release -a ! "$(which ansible)"; then
             echo "Installing ansible..."
@@ -101,8 +129,19 @@ if test ! "$(which ansible)"; then
     exit 1
 fi
 
-python --version
-ansible --version
+if [ "$print_versions" == "1" ]; then
+    python --version
+    ansible --version
+fi
+
+if ! check_ansible_version $required_ansible_version; then
+    error "Ansible $required_ansible_version required"
+    exit 1
+fi
+
+if [ "$force_update_roles" == "1" ]; then
+    ansible_roles_opts="${ansible_roles_opts} --force"
+fi
 
 if [ "$install_roles" == "1" ]; then
     echo "*** Installing Ansible roles..."
