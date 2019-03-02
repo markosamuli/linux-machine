@@ -9,7 +9,7 @@
   version: v1.0.0
 - name: markosamuli.hyper
   src: https://github.com/markosamuli/ansible-hyper
-  version: v1.0.0
+  version: v1.0.1
 - name: markosamuli.nvm
   src: https://github.com/markosamuli/ansible-nvm
   version: v1.1.1
