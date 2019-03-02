@@ -87,11 +87,11 @@ already found on the system.
 - [Python]((https://www.python.org/)) and [pip](https://pypi.org/project/pip/) from Ubuntu packages
 - [virtualenv](https://virtualenv.pypa.io/en/latest/) from PyPI
 - [Node Version Manager](https://github.com/creationix/nvm) (NVM)
-- [Node.js](https://nodejs.org/en/) stable installed with NMV
+- [Node.js](https://nodejs.org/en/) LTS installed with NMV
 - [virtualenv](https://virtualenv.pypa.io/en/latest/)
 - [pyenv](https://github.com/pyenv/pyenv)
 - [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv)
-- [Python](https://www.python.org/) v2.7.15 and v3.7.1 installed with pyenv
+- [Python](https://www.python.org/) v2.7.15 and v3.7.2 installed with pyenv
 - [Go programming language](https://golang.org/)
 
 ### Developer tools
