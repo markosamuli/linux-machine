@@ -57,12 +57,20 @@ function show_help {
 }
 
 ###
+# Get Ansible version
+###
+function get_ansible_version {
+    ansible --version | grep "^ansible" | awk '{ print $2 }'
+}
+
+###
 # Check Ansible version
 ###
 function check_ansible_version {
     local IFS=.
     local required=($1)
-    local ansible_version=$(ansible --version | grep "^ansible" | awk '{ print $2 }')
+    local ansible_version=""
+    ansible_version=$(get_ansible_version)
     if [ -z "$ansible_version" ]; then
         return 1
     fi
