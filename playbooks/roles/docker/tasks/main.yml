@@ -1,0 +1,27 @@
+---
+
+- name: Remove old versions of Docker
+  apt:
+    name:
+    - docker
+    - docker-engine
+    - docker.io
+    state: absent
+
+- name: Add Google Cloud apt GPG key
+  apt_key:
+    url: "{{ gcloud_apt_key_url }}"
+
+- name: Add Docker apt GPG key
+  apt_key:
+    id: "{{ docker_apt_key_id }}"
+    url: "{{ docker_apt_key_url }}"
+
+- name: Add Docker repository
+  apt_repository:
+    repo: 'deb [arch=amd64] {{ docker_apt_url }} {{ docker_apt_release }} test'
+    filename: docker
+
+- name: Install Docker CE
+  apt:
+    name: docker-ce

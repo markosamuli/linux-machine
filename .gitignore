@@ -3,6 +3,7 @@
 
 # Ansible roles
 playbooks/roles/*
+!playbooks/roles/docker
 
 # IDEs
 .vscode
