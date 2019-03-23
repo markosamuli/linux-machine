@@ -1,28 +1,36 @@
 #!/usr/bin/env bash
 
-run_playbook=1
-syntax_check=0
+# Commands
+run_playbook=1  # Run playbook as default command
+syntax_check=0  # Run command to check syntax
+list_tags=0     # Run command to list tags
 
-install_roles=1
-install_ansible=1
-force_update_roles=0
+# Setup options
+install_roles=1		# Install Ansible roles
+install_ansible=1	# Install Ansible
+print_versions=0 	# Print Python and Ansible versions
+force_update_roles=0	# Force Ansible roles to be updated
 
+# System properties
+is_ubuntu=""    # Ubuntu
+is_wsl=""       # Windows Subsystem for Linux
+
+# Environment configuration
 deploy_env="local"
 
+# Local variables
 local_vars_file="machine.yaml"
 
+# Ansible playbook options
 ansible_playbook="playbooks/main.yml"
 ansible_roles="playbooks/roles"
 ansible_roles_opts=""
 ansible_tags=""
+ansible_skip_tags=""
 ansible_verbose=0
 ansible_become=0
 
-list_tags=0
-print_versions=0
-
-is_wsl=0
-
+# Ansible version test
 required_ansible_version="2.4"
 
 ###
@@ -45,8 +53,12 @@ function show_help {
     echo " -l         List available Ansible tags"
     echo " -s         Ansible playbook syntax check"
     echo " -t TAGS    Run Ansible with the given comma separated list of tags"
+    echo " -i TAGS    Skip the given list of tags"
 }
 
+###
+# Check Ansible version
+###
 function check_ansible_version {
     local IFS=.
     local required=($1)
@@ -64,7 +76,183 @@ function check_ansible_version {
     return 0
 }
 
-while getopts ":hfcnqlsvt:" opt; do
+###
+# Install dependencies on Linux
+###
+function install_linux_dependencies {
+    if [ "$install_ansible" == "1" ]; then
+        install_ansible
+    fi
+}
+
+###
+# Install Ansible
+###
+function install_ansible {
+    if test "$(which ansible)"; then
+        return 0
+    fi
+    if [ "${is_ubuntu}" == "1" ]; then
+        install_ansible_with_apt
+    else
+        error "Your system is not supported"
+        exit 1
+    fi
+}
+
+###
+# Install Ansible with APT on Ubuntu
+###
+function install_ansible_with_apt {
+    echo "*** Installing Ansible..."
+    sudo apt-get install -y software-properties-common
+    sudo apt-add-repository -y ppa:ansible/ansible
+    sudo apt-get update
+    sudo apt-get install -y ansible
+}
+
+###
+# Install Ansible roles
+###
+function install_ansible_roles {
+    local errmsg="Failed to install Ansible roles"
+    echo "*** Installing Ansible roles..."
+    ansible-galaxy install \
+        -r requirements.yml \
+        -p ${ansible_roles} \
+        || { error "${errmsg}"; exit 1; }
+}
+
+###
+# Detect Windows Subsystem for Linux
+###
+function detect_wsl {
+    if grep -q Microsoft /proc/version; then
+        echo "*** Windows Subsystem for Linux detected"
+        is_wsl=1
+    else
+        is_wsl=0
+    fi
+
+}
+
+###
+# Detect Ubuntu
+###
+function detect_ubuntu {
+    if test -f /etc/lsb-release -a "$(grep Ubuntu /etc/lsb-release)"; then
+        echo "*** Ubuntu detected"
+        is_ubuntu=1
+    else
+        is_ubuntu=0
+    fi
+}
+
+###
+# Run Ansible playbook
+###
+function run_ansible_playbook {
+
+    local ansible_opts=""
+
+    if [ -e "${local_vars_file}" ]; then
+        echo "*** Loading variables from ${local_vars_file}"
+        ansible_opts="--extra-vars @${local_vars_file}"
+    fi
+
+    if [ "${ansible_verbose}" == "1" ]; then
+        ansible_opts="-v ${ansible_opts}"
+    fi
+
+    if [ "${ansible_tags}" != "" ]; then
+        ansible_opts="--tags=${ansible_tags} ${ansible_opts}"
+    fi
+
+    if [ "${ansible_skip_tags}" != "" ]; then
+        ansible_opts="--skip-tags=${ansible_skip_tags} ${ansible_opts}"
+    fi
+
+    if [ "${ansible_become}" == "1" ]; then
+        ansible_opts="--become ${ansible_opts}"
+        sudo true || exit 1
+    fi
+
+    if [ "${is_wsl}" == "1" ]; then
+        ansible_opts="-e {'is_wsl':True} ${ansible_opts}"
+    else
+        ansible_opts="-e {'is_wsl':False} ${ansible_opts}"
+    fi
+
+    ansible-playbook ${ansible_playbook} \
+        $(ansible_inventory) \
+        ${ansible_opts}
+
+}
+
+###
+# Check Ansible playbook syntax
+###
+function check_ansible_playbook_syntax {
+    ansible-playbook ${ansible_playbook} \
+        $(ansible_inventory) \
+        --syntax-check
+}
+
+###
+# Ansible inventory options
+###
+function ansible_inventory {
+    local ansible_opts=""
+    if [ "${deploy_env}" != "" ]; then
+        deploy_env_err="Could not find inventory file for ${deploy_env}"
+        [ -e "inventory/${deploy_env}" ] \
+            || { error "${deploy_env_err}"; exit 1; }
+        ansible_opts="-i inventory/${deploy_env} ${ansible_opts}"
+    fi
+    echo ${ansible_opts}
+}
+
+### 
+# List tags available in Ansible playbooks
+###
+function ansible_playbook_list_tags {
+    ansible-playbook ${ansible_playbook} \
+        $(ansible_inventory) \
+        --list-tags
+}
+
+###
+# Setup dependencies
+###
+function setup_dependencies {
+
+    if test "$(uname)" = "Linux"; then
+        install_linux_dependencies
+    elif test "$(uname)" = "Darwin"; then
+        error "macOS is not supported"
+        exit 1
+    else
+        error "Your system is not supported"
+        exit 1
+    fi
+
+    if test ! "$(which ansible)"; then
+        error "Your system is not supported"
+        exit 1
+    fi
+}
+
+###
+# Configuration
+###
+function configure {
+    ansible_become=1
+}
+
+###
+# Parse command line options
+###
+while getopts ":hfcnqlsvt:i:" opt; do
     case $opt in
         h)
             show_help
@@ -92,6 +280,9 @@ while getopts ":hfcnqlsvt:" opt; do
             ansible_verbose=1
             print_versions=1
             ;;
+        i)
+            ansible_skip_tags=$OPTARG
+            ;;
         t)
             ansible_tags=$OPTARG
             ;;
@@ -107,30 +298,15 @@ while getopts ":hfcnqlsvt:" opt; do
     esac
 done
 
-if test "$(uname)" = "Darwin"; then
-    error "macOS is not supported"
-    exit 1
-elif test "$(uname)" = "Linux"; then
-    if grep -q Microsoft /proc/version; then
-        echo "*** Windows Subsystem for Linux detected"
-        is_wsl=1
-    fi
-    if [ "$install_ansible" == "1" ]; then
-        if test -f /etc/lsb-release -a ! "$(which ansible)"; then
-            echo "*** Installing ansible..."
-            sudo apt-get install -y software-properties-common
-            sudo apt-add-repository -y ppa:ansible/ansible
-            sudo apt-get update
-            sudo apt-get install -y ansible
-        fi
-    fi
-    ansible_become=1
-fi
+# Detect system properties
+detect_ubuntu
+detect_wsl
 
-if test ! "$(which ansible)"; then
-    error "Your system is not supported"
-    exit 1
-fi
+# Configure options
+configure
+
+# Setup dependencies
+setup_dependencies
 
 if [ "$print_versions" == "1" ]; then
     python --version
@@ -147,56 +323,13 @@ if [ "$force_update_roles" == "1" ]; then
 fi
 
 if [ "$install_roles" == "1" ]; then
-    echo "*** Installing Ansible roles..."
-    ansible-galaxy install \
-        -r requirements.yml \
-        -p ${ansible_roles} \
-        ${ansible_roles_opts} \
-        || { error "Failed to install Ansible roles"; exit 1; }
+    install_ansible_roles
 fi
 
 if [ "$list_tags" == "1" ]; then
-
-    ansible-playbook ${ansible_playbook} --list-tags
-
+    ansible_playbook_list_tags
 elif [ "$syntax_check" == "1" ]; then
-
-    ansible-playbook ${ansible_playbook} --syntax-check
-
+    check_ansible_playbook_syntax
 elif [ "$run_playbook" == "1" ]; then
-
-    ansible_opts=""
-
-    if [ -e "$local_vars_file" ]; then
-        echo "*** Loading variables from ${local_vars_file}"
-        ansible_opts="--extra-vars @${local_vars_file}"
-    fi
-
-    if [ "$deploy_env" != "" ]; then
-        [ -e "inventory/${deploy_env}" ] || {
-        error "Could not find inventory file for ${deploy_env}"; exit 1; }
-        ansible_opts="-i inventory/${deploy_env} ${ansible_opts}"
-    fi
-
-    if [ "$ansible_verbose" == "1" ]; then
-        ansible_opts="-v ${ansible_opts}"
-    fi
-
-    if [ "$ansible_tags" != "" ]; then
-        ansible_opts="--tags=${ansible_tags} ${ansible_opts}"
-    fi
-
-    if [ "$ansible_become" == "1" ]; then
-        ansible_opts="--become $ansible_opts"
-        sudo true || exit 1
-    fi
-
-    if [ "${is_wsl}" == "1" ]; then
-        ansible_opts="-e {'is_wsl':True} ${ansible_opts}"
-    else
-        ansible_opts="-e {'is_wsl':False} ${ansible_opts}"
-    fi
-
-    ansible-playbook ${ansible_playbook} $ansible_opts
-
+    run_ansible_playbook
 fi
