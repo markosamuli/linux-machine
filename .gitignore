@@ -1,3 +1,4 @@
 *.retry
 playbooks/roles/*
 .vscode
+machine.yaml

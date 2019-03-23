@@ -1,0 +1,5 @@
+# Example configuration to customise local settings
+---
+
+# Use custom Go workspace directory
+# golang_path: "go"

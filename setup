@@ -9,6 +9,8 @@ force_update_roles=0
 
 deploy_env="local"
 
+local_vars_file="machine.yaml"
+
 ansible_playbook="playbooks/main.yml"
 ansible_roles="playbooks/roles"
 ansible_roles_opts=""
@@ -164,6 +166,11 @@ elif [ "$syntax_check" == "1" ]; then
 elif [ "$run_playbook" == "1" ]; then
 
     ansible_opts=""
+
+    if [ -e "$local_vars_file" ]; then
+        echo "*** Loading variables from ${local_vars_file}"
+        ansible_opts="--extra-vars @${local_vars_file}"
+    fi
 
     if [ "$deploy_env" != "" ]; then
         [ -e "inventory/${deploy_env}" ] || {
