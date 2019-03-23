@@ -3,9 +3,15 @@ python: 2.7
 
 matrix:
   include:
-    - os: linux
+    - name: "Ubuntu 16.04 LTS without Ansible"
+      os: linux
       dist: xenial
       sudo: required
+    - name: "Ubuntu 16.04 LTS with Ansible 2.7 PyPI installed"
+      os: linux
+      dist: xenial
+      sudo: required
+      env: ANSIBLE_VERSION='<2.8.0'
 
 branches:
   only:
@@ -22,6 +28,13 @@ before_install:
   - unset NVM_BIN
   - rm -rf /home/travis/.nvm
   - rm -rf /etc/profile.d/travis-nvm.sh
+
+install:
+  # Install Ansible with pip on Ubuntu
+  - >
+    if [[ "$ANSIBLE_VERSION" != "" ]]; then
+      pip install --user ansible${ANSIBLE_VERSION}
+    fi
 
 script:
 
