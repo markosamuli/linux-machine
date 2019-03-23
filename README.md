@@ -16,6 +16,9 @@ See [markosamuli/macos-machine] for my macOS setup.
 
 - Ubuntu 16.04 LTS or higher
 - Git installed
+- Bash shell
+- Ansible 2.4 or newer
+- Python 2.7 or 3.7 required by Ansible
 
 ### Ubuntu on Windows
 
