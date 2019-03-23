@@ -7,6 +7,14 @@ matrix:
       dist: xenial
       sudo: required
 
+branches:
+  only:
+    - master
+    - develop
+    - /^feature\/.*$/
+    - /^bugfix\/.*$/
+    - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
+
 before_install:
   # Cleanup existing NVM installation
   - unset NVM_CD_FLAGS
