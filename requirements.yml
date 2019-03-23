@@ -1,3 +1,5 @@
+---
+
 - name: markosamuli.aws-tools
   src: https://github.com/markosamuli/ansible-aws-tools
   version: v1.0.1

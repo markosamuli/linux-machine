@@ -2,7 +2,7 @@
 * text=auto
 
 # Definitively text files
-*.yml text
-*.yaml text
-*.sh text
-*.md text
+*.yml text eol=lf
+*.yaml text eol=lf
+*.sh text eol=lf
+*.md text eol=lf

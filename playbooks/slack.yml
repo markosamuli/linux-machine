@@ -4,15 +4,13 @@
   hosts: all
   tags:
     - slack
-
   tasks:
+    - name: Check if Slack is installed via snap
+      stat:
+        path: /snap/bin/slack
+      register: slack_st
+      changed_when: False
 
-  - name: Check if Slack is installed via snap
-    stat:
-      path: /snap/bin/slack
-    register: slack_st
-    changed_when: False
-
-  - name: Install Slack via snap package
-    command: snap install slack --classic
-    when: not slack_st.stat.exists and not is_wsl
+    - name: Install Slack via snap package
+      command: snap install slack --classic
+      when: not slack_st.stat.exists and not is_wsl
