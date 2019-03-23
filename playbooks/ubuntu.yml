@@ -6,8 +6,12 @@
   - ubuntu
   tasks:
 
+  - name: Update package cache
+    apt:
+      update_cache: true
+
   - name: Install Terminator
-    package:
+    apt:
       name: terminator
     tags:
     - terminal
