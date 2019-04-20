@@ -1,0 +1,13 @@
+---
+
+- name: Check Pengwin requirements
+  hosts: all
+  tags:
+    - always
+  tasks:
+
+  - name: Check that we're running Pengwin
+    assert:
+      that:
+        - "ansible_distribution == 'Pengwin'"
+      msg: "This playbook only supports Pengwin systems"

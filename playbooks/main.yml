@@ -1,46 +1,25 @@
 ---
 
-- name: Setup variables and check requirements
-  hosts: all
-  tags:
-    - always
-  tasks:
+- import_playbook: linux.yml
 
-    - name: Check that we're running Linux
-      assert:
-        that:
-          - "ansible_system == 'Linux'"
-        msg: "This playbook only supports Linux systems"
-
-    - name: Check that we're running Ubuntu
-      assert:
-        that:
-          - "ansible_distribution == 'Ubuntu'"
-        msg: "This playbook only supports Ubuntu systems"
-
-    - name: Check that we're running Ubuntu 16.04 or newer distribution
-      assert:
-        that:
-          - "ansible_distribution_version|int >= 16"
-        msg: "This playbook only supports Ubuntu 16.04 and newer distributions"
-
-    - name: Detect Windows Subsystem for Linux
-      command: "sh -c 'grep -q Microsoft /proc/version && echo yes || echo no'"
-      register: detect_wsl_grep
-      changed_when: False
-      when: "is_wsl is undefined"
-
-    - name: Set Windows Subsystem for Linux fact
-      set_fact:
-        is_wsl: "{{ detect_wsl_grep.stdout | bool }}"
-      when: "is_wsl is undefined"
+- import_playbook: wsl.yml
+  when: is_wsl is undefined
 
 - import_playbook: ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
+
+- import_playbook: pengwin.yml
+  when: ansible_distribution == 'Pengwin'
+
+- import_playbook: terminals.yml
+  when: not is_wsl
+
 - import_playbook: tools.yml
 - import_playbook: editors.yml
 - import_playbook: git.yml
 - import_playbook: front-end-toolkit.yml
 - import_playbook: python.yml
+
 - import_playbook: vagrant.yml
   when: not is_wsl
 
