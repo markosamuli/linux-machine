@@ -12,8 +12,7 @@
 - name: markosamuli.hyper
   version: v1.0.2
 - name: markosamuli.nvm
-  src: https://github.com/markosamuli/ansible-nvm
-  version: v1.1.1
+  version: v1.3.0
 - name: markosamuli.packer
   src: https://github.com/markosamuli/ansible-packer
   version: v1.0.0
