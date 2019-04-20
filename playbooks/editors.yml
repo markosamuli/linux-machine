@@ -18,3 +18,7 @@
       name: vim
     tags:
     - vim
+
+  - include: tasks/neovim.yml
+    tags:
+    - neovim
