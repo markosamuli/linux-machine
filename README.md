@@ -31,6 +31,26 @@ Ubuntu on Windows and these will be skipped during the set up.
 
 [Windows Subsystem for Linux]: https://docs.microsoft.com/en-us/windows/wsl/install-win10
 
+### Pengwin
+
+I've tried installing some of the packages on [Pengwin] distribution.
+
+Ansible installation should be compatible with [pengwin-setup] as found
+in the `development` branch.
+
+Tested packages:
+
+- Neovim
+- Node.js with NVM
+
+Known conflicts:
+
+- Pengwin installs Node.js with [n npm] instead of NVM
+
+[Pengwin]: https://github.com/WhitewaterFoundry/Pengwin
+[pengwin-setup]: https://github.com/WhitewaterFoundry/pengwin-setup
+[n npm]: https://github.com/tj/n
+
 ## Install
 
 Install Git and curl:
