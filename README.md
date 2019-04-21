@@ -51,7 +51,8 @@ in the `development` branch.
 
 Tested packages:
 
-- [Neovim]
+- Neovim
+- Terraform
 - Node.js with NVM
 
 Known conflicts:
@@ -61,7 +62,6 @@ Known conflicts:
 
 [Pengwin]: https://github.com/WhitewaterFoundry/Pengwin
 [pengwin-setup]: https://github.com/WhitewaterFoundry/pengwin-setup
-[Neovim]: https://neovim.io/
 [n npm]: https://github.com/tj/n
 
 ## Install
