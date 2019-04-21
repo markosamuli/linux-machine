@@ -56,6 +56,7 @@ Tested packages:
 
 Known conflicts:
 
+- Pengwin installs Terraform in `/usr/bin/terraform`
 - Pengwin installs Node.js with [n npm] instead of NVM
 
 [Pengwin]: https://github.com/WhitewaterFoundry/Pengwin

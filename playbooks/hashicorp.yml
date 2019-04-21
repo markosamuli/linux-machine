@@ -1,5 +1,21 @@
 ---
 
+- name: Remove conflicting Hashicorp installations
+  hosts: all
+  tags:
+  - hashicorp
+  tasks:
+  - name: Remove /usr/bin/terraform binary
+    file:
+      path: /usr/bin/terraform
+      state: absent
+    tags: terraform
+  - name: Remove /usr/bin/packer binary
+    file:
+      path: /usr/bin/packer
+      state: absent
+    tags: packer
+
 - name: Install Hashicorp tools
   hosts: all
   tags:
