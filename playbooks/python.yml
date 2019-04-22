@@ -18,7 +18,6 @@
     pip:
       name: virtualenv
 
-
 - name: Python version management
   hosts: all
   become: False

@@ -155,7 +155,6 @@ function detect_wsl {
     else
         is_wsl=0
     fi
-
 }
 
 ###

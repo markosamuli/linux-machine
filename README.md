@@ -54,6 +54,7 @@ Tested packages:
 - Neovim
 - Terraform
 - Node.js with NVM
+- Python
 
 Known conflicts:
 
@@ -131,17 +132,39 @@ already found on the system.
 - [Vim](https://www.vim.org/)
 - [Neovim](https://neovim.io/)
 
-### Programming languages and version managers
+### Python
 
-- [Python]((https://www.python.org/)) and [pip](https://pypi.org/project/pip/) from Ubuntu packages
-- [virtualenv](https://virtualenv.pypa.io/en/latest/) from PyPI
-- [Node Version Manager](https://github.com/creationix/nvm) (NVM)
-- [Node.js](https://nodejs.org/en/) LTS installed with NMV
-- [virtualenv](https://virtualenv.pypa.io/en/latest/)
-- [pyenv](https://github.com/pyenv/pyenv)
-- [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv)
-- [Python](https://www.python.org/) v2.7 and v3.7 installed with pyenv
-- [Go programming language](https://golang.org/)
+Use Ubuntu/Debian packages to install Python on the system:
+
+- [Python] v2.7 with `python` package
+- [pip] with `python-pip` package
+- [virtualenv] from PyPI
+
+Use [pyenv] to install and manage Python versions for the current user:
+
+- [pyenv]
+- [pyenv-virtualenv]
+- [Python] v2.7 and v3.7 installed with pyenv
+
+[Python]: https://www.python.org/
+[pip]: https://pypi.org/project/pip/
+[virtualenv]: https://virtualenv.pypa.io/en/latest/
+[pyenv]: https://github.com/pyenv/pyenv
+[pyenv-virtualenv]: https://github.com/pyenv/pyenv-virtualenv
+
+### Node.js
+
+- [Node Version Manager] (NVM)
+- [Node.js] LTS installed with NMV
+
+[Node Version Manager]: https://github.com/creationix/nvm
+[Node.js]: https://nodejs.org/en/
+
+### Other programming languages
+
+- [Go programming language]
+
+[Go programming language]: https://golang.org/
 
 ### Developer tools
 
