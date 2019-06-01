@@ -1,3 +1,6 @@
+# -*- mode: yaml -*-
+# vim:ts=2:sw=2:ai:si:syntax=yaml
+#
 # Example configuration to customise local settings
 ---
 
@@ -9,3 +12,12 @@
 
 # Make Python 2.7.15 default global version in pyenv
 # pyenv_global: "2.7.15"
+
+# Install asdf plugins
+# asdf_plugins:
+#   - name: terraform
+#     versions:
+#       - "0.11.14"
+#   - name: doctl
+#   - name: kubectl
+#   - name: concourse

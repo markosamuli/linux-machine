@@ -132,6 +132,22 @@ already found on the system.
 - [Vim](https://www.vim.org/)
 - [Neovim](https://neovim.io/)
 
+### asdf version manager
+
+[asdf] version manager is installed without plugin configuration.
+
+To configure plugins, add them into the `machine.yaml` configuration.
+
+```yaml
+asdf_plugins:
+  - name: terraform
+    versions:
+      - "0.11.14"
+  - name: doctl
+  - name: kubectl
+  - name: concourse
+```
+
 ### Python
 
 Use Ubuntu/Debian packages to install Python on the system:
