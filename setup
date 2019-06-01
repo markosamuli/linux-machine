@@ -126,9 +126,11 @@ function install_ansible_on_ubuntu {
 ###
 function install_ansible_on_debian {
     echo "*** Installing Ansible..."
+    local deb_url="http://ppa.launchpad.net/ansible/ansible/ubuntu"
+    local apt_list="/etc/apt/sources.list.d/ansible.list"
     gpg --keyserver keyserver.ubuntu.com --recv 93C4A3FD7BB9C367
     gpg --export --armor 93C4A3FD7BB9C367 | sudo apt-key add -
-    sudo sh -c 'echo "deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main" > /etc/apt/sources.list.d/ansible.list'
+    sudo sh -c "echo 'deb ${deb_url} trusty main' > ${apt_list}"
     sudo apt-get update
     sudo apt-get install -y ansible
 }
