@@ -101,7 +101,9 @@ function install_ansible {
         return 0
     fi
     if [ "${is_ubuntu}" == "1" ]; then
-        install_ansible_with_apt
+        install_ansible_on_ubuntu
+    elif [ "${is_pengwin}" == "1" ]; then
+        install_ansible_on_debian
     else
         error "Your system is not supported"
         exit 1
@@ -111,10 +113,22 @@ function install_ansible {
 ###
 # Install Ansible with APT on Ubuntu
 ###
-function install_ansible_with_apt {
+function install_ansible_on_ubuntu {
     echo "*** Installing Ansible..."
     sudo apt-get install -y software-properties-common
     sudo apt-add-repository -y ppa:ansible/ansible
+    sudo apt-get update
+    sudo apt-get install -y ansible
+}
+
+###
+# Install Ansible with APT on Debian
+###
+function install_ansible_on_debian {
+    echo "*** Installing Ansible..."
+    gpg --keyserver keyserver.ubuntu.com --recv 93C4A3FD7BB9C367
+    gpg --export --armor 93C4A3FD7BB9C367 | sudo apt-key add -
+    sudo sh -c 'echo "deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main" > /etc/apt/sources.list.d/ansible.list'
     sudo apt-get update
     sudo apt-get install -y ansible
 }
@@ -141,18 +155,37 @@ function detect_wsl {
     else
         is_wsl=0
     fi
-
 }
 
 ###
 # Detect Ubuntu
 ###
 function detect_ubuntu {
-    if test -f /etc/lsb-release -a "$(grep Ubuntu /etc/lsb-release)"; then
-        echo "*** Ubuntu detected"
-        is_ubuntu=1
+    if test -f /etc/lsb-release; then
+        if grep -q Ubuntu /etc/lsb-release; then
+            echo "*** Ubuntu detected"
+            is_ubuntu=1
+        else
+            is_ubuntu=0
+        fi
     else
         is_ubuntu=0
+    fi
+}
+
+###
+# Detect Pengwin
+###
+function detect_pengwin {
+    if test -f /etc/os-release; then
+        if grep -q Pengwin /etc/os-release; then
+            echo "*** Pengwin detected"
+            is_pengwin=1
+        else
+            is_pengwin=0
+        fi
+    else
+        is_pengwin=0
     fi
 }
 
@@ -308,6 +341,7 @@ done
 
 # Detect system properties
 detect_ubuntu
+detect_pengwin
 detect_wsl
 
 # Configure options

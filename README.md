@@ -1,35 +1,69 @@
-# Development Ubuntu Linux Setup
+# Development Linux Setup
 
-[![Build Status](https://travis-ci.org/markosamuli/linux-machine.svg?branch=master)](https://travis-ci.org/markosamuli/linux-machine)
+| Branch  | Status |
+|---------|--------|
+| master  | [![Build Status](https://travis-ci.org/markosamuli/linux-machine.svg?branch=master)](https://travis-ci.org/markosamuli/linux-machine)
+| develop | [![Build Status](https://travis-ci.org/markosamuli/linux-machine.svg?branch=develop)](https://travis-ci.org/markosamuli/linux-machine)
 
-This is a collection of Ansible roles and tasks to setup a new developer
-machine on Ubuntu Linux.
-
-This setup has been tested on the [Ubuntu] 16.04 and 18.04 LTS releases.
+This is a collection of Ansible roles and tasks to setup a Linux development
+machine.
 
 See [markosamuli/macos-machine] for my macOS setup.
 
-[Ubuntu]: https://www.ubuntu.com/
 [markosamuli/macos-machine]: https://github.com/markosamuli/macos-machine
 
 ## Requirements
 
-- Ubuntu 16.04 LTS or higher
+- Ubuntu 16.04, 18.04 or another supported operating system
 - Git installed
 - Bash shell
-- Ansible 2.4 or newer
+- Ansible 2.7
 - Python 2.7 or 3.7 required by Ansible
 
-### Ubuntu on Windows
+### Ubuntu
+
+This setup has been tested on the [Ubuntu] [16.04 LTS (Xenial Xerus)]
+and [18.04 LTS (Bionic Beaver)] releases.
+
+Travis CI builds are running on Ubuntu 16.04.
+
+[Ubuntu]: https://www.ubuntu.com/
+[16.04 LTS (Xenial Xerus)]: http://releases.ubuntu.com/16.04/
+[18.04 LTS (Bionic Beaver)]: http://releases.ubuntu.com/18.04/
+
+### Ubuntu on WSL
 
 I've also used this playbook to install packages on Ubuntu running on
 [Windows Subsystem for Linux] on Windows 10.
 
-Some packages are known not to work (eg. can't install Ubuntu) so I've added
-custom fact `ubuntu_wsl` that can be used to check if we're running
-Ubuntu on Windows and these will be skipped during the set up.
+Some packages are known not to work so I've added custom fact `is_wsl`
+that can be used to check if we're running Linux on Windows and these
+will be skipped during the set up.
 
 [Windows Subsystem for Linux]: https://docs.microsoft.com/en-us/windows/wsl/install-win10
+
+### Pengwin on WSL
+
+I've tried installing some of the packages on [Pengwin] distribution.
+
+Ansible installation should be compatible with [pengwin-setup] as found
+in the `development` branch.
+
+Tested packages:
+
+- Neovim
+- Terraform
+- Node.js with NVM
+- Python
+
+Known conflicts:
+
+- Pengwin installs Terraform in `/usr/bin/terraform`
+- Pengwin installs Node.js with [n npm] instead of NVM
+
+[Pengwin]: https://github.com/WhitewaterFoundry/Pengwin
+[pengwin-setup]: https://github.com/WhitewaterFoundry/pengwin-setup
+[n npm]: https://github.com/tj/n
 
 ## Install
 
@@ -96,18 +130,41 @@ already found on the system.
 
 - [Visual Studio Code](https://code.visualstudio.com/) via Snap package
 - [Vim](https://www.vim.org/)
+- [Neovim](https://neovim.io/)
 
-### Programming languages and version managers
+### Python
 
-- [Python]((https://www.python.org/)) and [pip](https://pypi.org/project/pip/) from Ubuntu packages
-- [virtualenv](https://virtualenv.pypa.io/en/latest/) from PyPI
-- [Node Version Manager](https://github.com/creationix/nvm) (NVM)
-- [Node.js](https://nodejs.org/en/) LTS installed with NMV
-- [virtualenv](https://virtualenv.pypa.io/en/latest/)
-- [pyenv](https://github.com/pyenv/pyenv)
-- [pyenv-virtualenv](https://github.com/pyenv/pyenv-virtualenv)
-- [Python](https://www.python.org/) v2.7.15 and v3.7.2 installed with pyenv
-- [Go programming language](https://golang.org/)
+Use Ubuntu/Debian packages to install Python on the system:
+
+- [Python] v2.7 with `python` package
+- [pip] with `python-pip` package
+- [virtualenv] from PyPI
+
+Use [pyenv] to install and manage Python versions for the current user:
+
+- [pyenv]
+- [pyenv-virtualenv]
+- [Python] v2.7 and v3.7 installed with pyenv
+
+[Python]: https://www.python.org/
+[pip]: https://pypi.org/project/pip/
+[virtualenv]: https://virtualenv.pypa.io/en/latest/
+[pyenv]: https://github.com/pyenv/pyenv
+[pyenv-virtualenv]: https://github.com/pyenv/pyenv-virtualenv
+
+### Node.js
+
+- [Node Version Manager] (NVM)
+- [Node.js] LTS installed with NMV
+
+[Node Version Manager]: https://github.com/creationix/nvm
+[Node.js]: https://nodejs.org/en/
+
+### Other programming languages
+
+- [Go programming language]
+
+[Go programming language]: https://golang.org/
 
 ### Developer tools
 
@@ -139,7 +196,8 @@ backup copies of them before running the script.
 
 ## Ansible Roles
 
-The following external Ansible roles are installed and used:
+The following external Ansible roles are installed and used. See
+[requirements.yml] file for the installed versions.
 
 | Role | Build status |
 |------|--------------|
@@ -162,6 +220,7 @@ The following external Ansible roles are installed and used:
 [markosamuli.pyenv]: https://github.com/markosamuli/ansible-pyenv
 [markosamuli.terraform]: https://github.com/markosamuli/ansible-terraform
 [markosamuli.vagrant]: https://github.com/markosamuli/ansible-vagrant
+[requirements.yml]: requirements.yml
 
 ## References
 

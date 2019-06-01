@@ -1,0 +1,19 @@
+---
+
+- name: Check Linux requirements
+  hosts: all
+  tags:
+    - always
+  tasks:
+
+    - name: Check that we're running Linux
+      assert:
+        that:
+          - "ansible_system == 'Linux'"
+        msg: "This playbook only supports Linux systems"
+
+    - name: Check that we're running supported Debian-based distribution
+      assert:
+        that:
+          - "ansible_distribution == 'Ubuntu' or ansible_distribution == 'Pengwin'"
+        msg: "This playbook only supports Ubuntu Pengwin distributions"

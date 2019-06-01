@@ -1,5 +1,22 @@
 ---
 
+- name: Check Ubuntu requirements
+  hosts: all
+  tags:
+    - always
+  tasks:
+  - name: Check that we're running Ubuntu
+    assert:
+      that:
+        - "ansible_distribution == 'Ubuntu'"
+      msg: "This playbook only supports Ubuntu systems"
+
+  - name: Check that we're running Ubuntu 16.04 or newer distribution
+    assert:
+      that:
+        - "ansible_distribution_version|int >= 16"
+      msg: "This playbook only supports Ubuntu 16.04 and newer distributions"
+
 - name: Install common Ubuntu applications and packages
   hosts: all
   tags:
@@ -10,13 +27,6 @@
     apt:
       update_cache: true
 
-  - name: Install Terminator
-    apt:
-      name: terminator
-    tags:
-    - terminal
-    when: not is_wsl
-
   - name: Add APT support for transport over HTTPS
     apt:
       name:
@@ -26,12 +36,3 @@
   - name: Install software-properties-common
     apt:
       name: software-properties-common
-
-- name: Install common Ubuntu applications and packages
-  hosts: all
-  tags: hyper
-  roles:
-  - role: markosamuli.hyper
-    tags:
-    - hyper
-    when: not is_wsl
