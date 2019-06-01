@@ -142,6 +142,7 @@ function install_ansible_roles {
     ansible-galaxy install \
         -r requirements.yml \
         -p ${ansible_roles} \
+        ${ansible_roles_opts} \
         || { error "${errmsg}"; exit 1; }
 }
 
