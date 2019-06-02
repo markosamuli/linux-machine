@@ -12,11 +12,13 @@ repos:
     hooks:
       - id: yamllint
 
-  # - repo: https://github.com/ansible/ansible-lint.git
-  #   rev: v4.1.0
-  #   hooks:
-  #     - id: ansible-lint
-  #       files: \.(yaml|yml)$
+  - repo: https://github.com/ansible/ansible-lint.git
+    rev: v4.1.0
+    hooks:
+      - id: ansible-lint
+        files: \.(yaml|yml)$
+        args:
+          - "--exclude=playbooks/roles"
 
   - repo: https://github.com/bemeurer/beautysh.git
     rev: '4.1'
