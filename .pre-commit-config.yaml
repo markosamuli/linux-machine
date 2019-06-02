@@ -17,8 +17,6 @@ repos:
     hooks:
       - id: ansible-lint
         files: \.(yaml|yml)$
-        args:
-          - "--exclude=playbooks/roles"
 
   - repo: https://github.com/bemeurer/beautysh.git
     rev: '4.1'
