@@ -136,7 +136,8 @@ already found on the system.
 
 [asdf] version manager is installed without plugin configuration.
 
-To configure plugins, add them into the `machine.yaml` configuration.
+To configure [asdf plugins] and package versions to install, add them
+into the `machine.yaml` configuration.
 
 ```yaml
 asdf_plugins:
@@ -147,6 +148,8 @@ asdf_plugins:
   - name: kubectl
   - name: concourse
 ```
+
+[asdf plugins]: https://asdf-vm.com/#/plugins-all
 
 ### Python
 
