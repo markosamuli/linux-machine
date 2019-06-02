@@ -132,6 +132,25 @@ already found on the system.
 - [Vim](https://www.vim.org/)
 - [Neovim](https://neovim.io/)
 
+### asdf version manager
+
+[asdf] version manager is installed without plugin configuration.
+
+To configure [asdf plugins] and package versions to install, add them
+into the `machine.yaml` configuration.
+
+```yaml
+asdf_plugins:
+  - name: terraform
+    versions:
+      - "0.11.14"
+  - name: doctl
+  - name: kubectl
+  - name: concourse
+```
+
+[asdf plugins]: https://asdf-vm.com/#/plugins-all
+
 ### Python
 
 Use Ubuntu/Debian packages to install Python on the system:
@@ -201,6 +220,7 @@ The following external Ansible roles are installed and used. See
 
 | Role | Build status |
 |------|--------------|
+| [markosamuli.asdf] | [![Build Status](https://travis-ci.org/markosamuli/ansible-asdf.svg?branch=master)](https://travis-ci.orgmarkosamuli/ansible-asdf) |
 | [markosamuli.aws-tools] | [![Build Status](https://travis-ci.org/markosamuli/ansible-aws-tools.svg?branch=master)](https://travis-ci.orgmarkosamuli/ansible-aws-tools) |
 | [markosamuli.gcloud] | [![Build Status](https://travis-ci.org/markosamuli/ansible-gcloud.svg?branch=master)](https://travis-ci.orgmarkosamuli/ansible-gcloud) |
 | [markosamuli.golang] | [![Build Status](https://travis-ci.org/markosamuli/ansible-golang.svg?branch=master)](https://travis-ci.orgmarkosamuli/ansible-golang) |
@@ -211,6 +231,7 @@ The following external Ansible roles are installed and used. See
 | [markosamuli.vagrant] | [![Build Status](https://travis-ci.org/markosamuli/ansible-vagrant.svg?branch=master)](https://travis-ci.orgmarkosamuli/ansible-vagrant) |
 | [markosamuli.hyper] | [![Build Status](https://travis-ci.org/markosamuli/ansible-hyper.svg?branch=master)](https://travis-ci.orgmarkosamuli/ansible-hyper) |
 
+[markosamuli.asdf]: https://github.com/markosamuli/ansible-asdf
 [markosamuli.aws-tools]: https://github.com/markosamuli/ansible-aws-tools
 [markosamuli.gcloud]: https://github.com/markosamuli/ansible-gcloud
 [markosamuli.golang]: https://github.com/markosamuli/ansible-golang

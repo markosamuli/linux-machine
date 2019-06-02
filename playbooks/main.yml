@@ -1,14 +1,14 @@
 ---
 
-- import_playbook: linux.yml
+- import_playbook: setup/linux.yml
 
-- import_playbook: wsl.yml
+- import_playbook: setup/wsl.yml
   when: is_wsl is undefined
 
-- import_playbook: ubuntu.yml
+- import_playbook: setup/ubuntu.yml
   when: ansible_distribution == 'Ubuntu'
 
-- import_playbook: pengwin.yml
+- import_playbook: setup/pengwin.yml
   when: ansible_distribution == 'Pengwin'
 
 - import_playbook: terminals.yml
@@ -17,6 +17,8 @@
 - import_playbook: tools.yml
 - import_playbook: editors.yml
 - import_playbook: git.yml
+- import_playbook: asdf.yml
+
 - import_playbook: front-end-toolkit.yml
 - import_playbook: python.yml
 
