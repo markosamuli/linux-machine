@@ -243,6 +243,17 @@ The following external Ansible roles are installed and used. See
 [markosamuli.vagrant]: https://github.com/markosamuli/ansible-vagrant
 [requirements.yml]: requirements.yml
 
+## Development
+
+Install [pre-commit] hooks:
+
+```bash
+pre-commit install
+pre-commit install --hook-type pre-push
+```
+
+[pre-commit]: https://pre-commit.com/
+
 ## References
 
 This is based on my previous setup [markosamuli/machine] that was forked off
