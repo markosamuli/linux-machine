@@ -33,6 +33,10 @@ ansible_become=0
 # Ansible version test
 required_ansible_version="2.4"
 
+# Ansible PPA to use
+ansible_version="2.7"
+ansible_ppa="ansible/ansible-2.7"
+
 ###
 # Print error into STDERR
 ###
@@ -69,12 +73,12 @@ function get_ansible_version {
 function check_ansible_version {
     local IFS=.
     local required=($1)
-    local ansible_version=""
-    ansible_version=$(get_ansible_version)
-    if [ -z "$ansible_version" ]; then
+    local installed_ansible_version=""
+    installed_ansible_version=$(get_ansible_version)
+    if [ -z "$installed_ansible_version" ]; then
         return 1
     fi
-    local installed=($ansible_version)
+    local installed=($installed_ansible_version)
     if ((${installed[0]} < ${required[0]})); then
         return 1
     fi
@@ -114,23 +118,42 @@ function install_ansible {
 # Install Ansible with APT on Ubuntu
 ###
 function install_ansible_on_ubuntu {
-    echo "*** Installing Ansible..."
+
+    add_ansible_ppa_key
+
+    echo "*** Add ${ansible_ppa} PPA repository..."
     sudo apt-get install -y software-properties-common
-    sudo apt-add-repository -y ppa:ansible/ansible
+    sudo apt-add-repository -y "ppa:${ansible_ppa}"
     sudo apt-get update
-    sudo apt-get install -y ansible
+
+    echo "*** Installing Ansible ${ansible_version}..."
+    sudo apt-get install -y "ansible=${ansible_version}*"
 }
 
 ###
 # Install Ansible with APT on Debian
 ###
 function install_ansible_on_debian {
-    echo "*** Installing Ansible..."
+
+    add_ansible_ppa_key
+
+    echo "*** Add ${ansible_ppa} PPA repository..."
+    local deb_url="http://ppa.launchpad.net/${ansible_ppa}/ubuntu"
+    local apt_list="/etc/apt/sources.list.d/ansible.list"
+    sudo sh -c "echo 'deb ${deb_url} trusty main' > ${apt_list}"
+    sudo apt-get update
+
+    echo "*** Installing Ansible ${ansible_version}..."
+    sudo apt-get install -y "ansible=${ansible_version}*"
+}
+
+###
+# Add Ansible PPA signing key
+###
+function add_ansible_ppa_key {
+    echo "*** Add Ansible PPA signing key..."
     gpg --keyserver keyserver.ubuntu.com --recv 93C4A3FD7BB9C367
     gpg --export --armor 93C4A3FD7BB9C367 | sudo apt-key add -
-    sudo sh -c 'echo "deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main" > /etc/apt/sources.list.d/ansible.list'
-    sudo apt-get update
-    sudo apt-get install -y ansible
 }
 
 ###
@@ -142,6 +165,7 @@ function install_ansible_roles {
     ansible-galaxy install \
         -r requirements.yml \
         -p ${ansible_roles} \
+        ${ansible_roles_opts} \
         || { error "${errmsg}"; exit 1; }
 }
 
