@@ -10,7 +10,7 @@
   src: https://github.com/markosamuli/ansible-golang
   version: v1.0.0
 - name: markosamuli.hyper
-  version: v1.0.2
+  version: v1.1.0
 - name: markosamuli.nvm
   version: v1.3.0
 - name: markosamuli.packer
