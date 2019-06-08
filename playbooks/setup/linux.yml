@@ -16,4 +16,4 @@
       assert:
         that:
           - "ansible_distribution == 'Ubuntu' or ansible_distribution == 'Pengwin'"
-        msg: "This playbook only supports Ubuntu Pengwin distributions"
+        msg: "This playbook only supports Ubuntu and Pengwin distributions"
