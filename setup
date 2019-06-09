@@ -6,10 +6,11 @@ syntax_check=0  # Run command to check syntax
 list_tags=0     # Run command to list tags
 
 # Setup options
-install_roles=1		# Install Ansible roles
-install_ansible=1	# Install Ansible
-print_versions=0 	# Print Python and Ansible versions
-force_update_roles=0	# Force Ansible roles to be updated
+install_roles=1         # Install Ansible roles
+install_ansible=1       # Install Ansible
+install_roles_force=0	# Force overwriting existing Ansible roles
+update_roles=0          # Update Ansible roles to the latest versions
+print_versions=0        # Print Python and Ansible versions
 
 # System properties
 is_ubuntu=""    # Ubuntu
@@ -50,12 +51,13 @@ function error {
 function show_help {
     echo "Usage: $0"
     echo " -h         Show this help"
-    echo " -f         Force update of Ansible roles"
+    echo " -f         Force overwriting existing Ansible roles"
     echo " -v         Verbose mode"
     echo " -n         Do not run Ansible playbook"
     echo " -q         Do not install Ansible requirements"
     echo " -l         List available Ansible tags"
     echo " -s         Ansible playbook syntax check"
+    echo " -u         Update Ansible roles to the latest versions"
     echo " -t TAGS    Run Ansible with the given comma separated list of tags"
     echo " -i TAGS    Skip the given list of tags"
 }
@@ -167,6 +169,17 @@ function install_ansible_roles {
         -p ${ansible_roles} \
         ${ansible_roles_opts} \
         || { error "${errmsg}"; exit 1; }
+}
+
+###
+# Update Ansible roles
+###
+function update_ansible_roles {
+    local errmsg="Failed to update Ansible roles"
+    echo "*** Installing Python requirements..."
+    pip install -r requirements.txt
+    echo "*** Updating Ansible roles..."
+    ./update-roles || { error "${errmsg}"; exit 1; }
 }
 
 ###
@@ -317,14 +330,14 @@ function configure {
 ###
 # Parse command line options
 ###
-while getopts ":hfcnqlsvt:i:" opt; do
+while getopts ":hfcnqlsvut:i:" opt; do
     case $opt in
         h)
             show_help
             exit 0
             ;;
         f)
-            force_update_roles=1
+            install_roles_force=1
             ;;
         n)
             run_playbook=0
@@ -344,6 +357,9 @@ while getopts ":hfcnqlsvt:i:" opt; do
         v)
             ansible_verbose=1
             print_versions=1
+            ;;
+        u)
+            update_roles=1
             ;;
         i)
             ansible_skip_tags=$OPTARG
@@ -374,28 +390,32 @@ configure
 # Setup dependencies
 setup_dependencies
 
-if [ "$print_versions" == "1" ]; then
+if [ "${print_versions}" == "1" ]; then
     python --version
     ansible --version
 fi
 
-if ! check_ansible_version $required_ansible_version; then
-    error "Ansible $required_ansible_version required"
+if ! check_ansible_version ${required_ansible_version}; then
+    error "Ansible ${required_ansible_version} required"
     exit 1
 fi
 
-if [ "$force_update_roles" == "1" ]; then
+if [ "${update_roles}" == "1" ]; then
+    update_ansible_roles
+fi
+
+if [ "${install_roles_force}" == "1" ]; then
     ansible_roles_opts="${ansible_roles_opts} --force"
 fi
 
-if [ "$install_roles" == "1" ]; then
+if [ "${install_roles}" == "1" ]; then
     install_ansible_roles
 fi
 
-if [ "$list_tags" == "1" ]; then
+if [ "${list_tags}" == "1" ]; then
     ansible_playbook_list_tags
-elif [ "$syntax_check" == "1" ]; then
+elif [ "${syntax_check}" == "1" ]; then
     check_ansible_playbook_syntax
-elif [ "$run_playbook" == "1" ]; then
+elif [ "${run_playbook}" == "1" ]; then
     run_ansible_playbook
 fi
