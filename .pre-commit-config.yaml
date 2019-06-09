@@ -1,3 +1,8 @@
+# -*- mode: yaml -*-
+# vim:ts=2:sw=2:ai:si:syntax=yaml
+#
+# pre-commit hook configuration
+# https://pre-commit.com/
 ---
 
 minimum_pre_commit_version: 1.16.1
@@ -6,6 +11,7 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks.git
     rev: v2.2.3
     hooks:
+      - id: check-executables-have-shebangs
       - id: trailing-whitespace
       - id: check-yaml
 
@@ -29,3 +35,8 @@ repos:
     rev: '0.6.0'
     hooks:
       - id: bashate
+
+  - repo: https://github.com/igorshubovych/markdownlint-cli.git
+    rev: 'v0.16.0'
+    hooks:
+      - id: markdownlint
