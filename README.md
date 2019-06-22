@@ -205,7 +205,9 @@ pyenv_init_shell: false
 
 - [Terraform](https://www.terraform.io/)
 - [Packer](https://packer.io/)
-- [Google Cloud SDK](https://cloud.google.com/sdk/)
+
+### Amazon Web Services
+
 - [AWS CLI](https://aws.amazon.com/cli/)
 - [aws-shell](https://github.com/awslabs/aws-shell) - interactive shell for
   AWS CLI
@@ -214,10 +216,30 @@ pyenv_init_shell: false
 - [cli53](https://github.com/barnybug/cli53) - command line tool for Amazon
   Route 53
 
-## Changes to existing configuration
+### Google Cloud Platform
 
-The installer creates empty `~/.bash_profile` and `~/.bashrc` files and makes
-sure `~/.bashrc` is loaded from `~/.bash_profile`.
+- [Google Cloud SDK] installed from the archive file under user home directory
+
+The [markosamuli.gcloud] role will modify your `.bashrc` and `.zshrc` files.
+To disable this and manage the configuration yourself, disable the following
+configuration option in the `machine.yaml` file.
+
+```yaml
+# Do not set up Cloud SDK shell when using existing dotfiles
+gcloud_setup_shell: false
+```
+
+If you prefer to install Google Cloud SDK using package manager, enable it in
+the `machine.yaml` configuration file:
+
+```yaml
+# Install Cloud SDK from package manager
+gcloud_install_from_package_manager: true
+```
+
+[Google Cloud SDK]: https://cloud.google.com/sdk/
+
+## Changes to existing configuration
 
 The installer makes changes to your `~/.bashrc` and `~/.zshrc` files, so take
 backup copies of them before running the script.

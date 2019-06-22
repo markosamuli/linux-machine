@@ -2,6 +2,7 @@
 
 - name: Install Google Cloud SDK
   hosts: all
+  become: False
   roles:
 
   - role: markosamuli.gcloud
