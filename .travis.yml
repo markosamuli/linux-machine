@@ -9,6 +9,10 @@ matrix:
       os: linux
       dist: xenial
       sudo: required
+    - name: "Ubuntu 18.04 LTS without Ansible"
+      os: linux
+      dist: bionic
+      sudo: required
     - name: "Ubuntu 16.04 LTS with Ansible 2.7 PyPI installed"
       os: linux
       dist: xenial
