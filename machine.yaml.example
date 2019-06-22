@@ -13,6 +13,9 @@
 # Make Python 2.7.15 default global version in pyenv
 # pyenv_global: "2.7.15"
 
+# Do not configure pyenv shell when using existing dotfiles
+# pyenv_init_shell: false
+
 # Install asdf plugins
 # asdf_plugins:
 #   - name: terraform

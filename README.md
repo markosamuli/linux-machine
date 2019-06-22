@@ -80,7 +80,8 @@ sudo apt update
 sudo apt install curl git
 ```
 
-You can run the installer script that will clone the code from GitHub and run the `setup` script.
+You can run the installer script that will clone the code from GitHub and run
+the `setup` script.
 
 ```bash
 curl -s https://raw.githubusercontent.com/markosamuli/linux-machine/master/install.sh | bash -
@@ -163,6 +164,15 @@ Use [pyenv] to install and manage Python versions for the current user:
 - [pyenv]
 - [pyenv-virtualenv]
 - [Python] v2.7 and v3.7 installed with pyenv
+
+The [markosamuli.pyenv] role will modify your `.bashrc` and `.zshrc` files
+during the setup. If you want to disable this, edit `machine.yaml` configuration
+and disable the following configuration option.
+
+```yaml
+# Do not configure pyenv shell when using existing dotfiles
+pyenv_init_shell: false
+```
 
 [Python]: https://www.python.org/
 [pip]: https://pypi.org/project/pip/
