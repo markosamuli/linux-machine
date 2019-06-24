@@ -1,7 +1,7 @@
 ---
 
 - name: Terminals
-  hosts: al
+  hosts: all
   tasks:
     - name: Install Terminator
       apt:
