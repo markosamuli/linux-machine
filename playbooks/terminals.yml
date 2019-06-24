@@ -1,17 +1,15 @@
 ---
 
 - name: Terminals
-  hosts: all
+  hosts: al
   tasks:
-  - name: Install Terminator
-    apt:
-      name: terminator
-    tags:
-    - terminal
+    - name: Install Terminator
+      apt:
+        name: terminator
+      tags: terminal
 
 - name: Terminals
   hosts: all
   roles:
-  - role: markosamuli.hyper
-    tags:
-    - hyper
+    - role: markosamuli.hyper
+      tags: hyper

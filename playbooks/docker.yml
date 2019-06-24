@@ -3,5 +3,5 @@
 - name: Docker
   hosts: all
   roles:
-  - role: docker
-    tags: docker
+    - role: docker
+      tags: docker

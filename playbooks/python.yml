@@ -2,26 +2,25 @@
 
 - name: Python
   hosts: all
-  tags:
-  - python
+  tags: python
   tasks:
 
-  - name: Install Python
-    package:
-      name: python
+    - name: Install Python
+      package:
+        name: python
 
-  - name: Install pip
-    package:
-      name: python-pip
+    - name: Install pip
+      package:
+        name: python-pip
 
-  - name: Install virtualenv
-    pip:
-      name: virtualenv
+    - name: Install virtualenv
+      pip:
+        name: virtualenv
 
 - name: Python version management
   hosts: all
-  become: False
+  become: false
   roles:
 
-  - role: markosamuli.pyenv
-    tags: pyenv
+    - role: markosamuli.pyenv
+      tags: pyenv
