@@ -16,6 +16,9 @@
 # Do not configure pyenv shell when using existing dotfiles
 # pyenv_init_shell: false
 
+# Google Cloud SDK version
+# gcloud_version: "236.0.0"
+
 # Install Cloud SDK from package manager
 # gcloud_install_from_package_manager: true
 
