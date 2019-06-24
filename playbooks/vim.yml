@@ -1,0 +1,11 @@
+---
+
+- name: vim
+  hosts: all
+  tags:
+    - vim
+    - editors
+  tasks:
+    - name: Install vim
+      package:
+        name: vim
