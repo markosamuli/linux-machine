@@ -5,31 +5,32 @@
   tags: terraform
   tasks:
 
-  - name: Check if Terraform is installed with asdf
-    stat:
-      path: "{{ ansible_env.HOME }}/.asdf/installs/terraform"
-    register: asdf_terraform_install
+    - name: Check if Terraform is installed with asdf
+      stat:
+        path: "{{ ansible_env.HOME }}/.asdf/installs/terraform"
+      register: asdf_terraform_install
+      become: false
 
-  - name: Remove /usr/bin/terraform binary
-    file:
-      path: /usr/bin/terraform
-      state: absent
+    - name: Remove /usr/bin/terraform binary
+      file:
+        path: /usr/bin/terraform
+        state: absent
 
-  - name: Remove /usr/local/bin/terraform binary
-    file:
-      path: /usr/local/bin/terraform
-      state: absent
-    when: asdf_terraform_install.stat.exists
+    - name: Remove /usr/local/bin/terraform binary
+      file:
+        path: /usr/local/bin/terraform
+        state: absent
+      when: asdf_terraform_install.stat.exists
 
-  - name: Remove /opt/terraform directory
-    file:
-      path: /opt/terraform
-      state: absent
-    when: asdf_terraform_install.stat.exists
+    - name: Remove /opt/terraform directory
+      file:
+        path: /opt/terraform
+        state: absent
+      when: asdf_terraform_install.stat.exists
 
 - name: Install Terraform if not installed with asdf
   hosts: all
   tags: terraform
   roles:
-  - role: markosamuli.terraform
-    when: not asdf_terraform_install.stat.exists
+    - role: markosamuli.terraform
+      when: not asdf_terraform_install.stat.exists
