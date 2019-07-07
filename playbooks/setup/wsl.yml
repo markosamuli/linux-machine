@@ -4,6 +4,7 @@
   hosts: all
   tags:
     - always
+    - wsl
   tasks:
 
     - name: Detect Windows Subsystem for Linux

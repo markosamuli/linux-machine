@@ -3,6 +3,6 @@
 - name: asdf version manager
   hosts: all
   become: false
+  tags: asdf
   roles:
     - role: markosamuli.asdf
-      tags: asdf
