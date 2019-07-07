@@ -29,3 +29,6 @@
 - name: markosamuli.vagrant
   src: https://github.com/markosamuli/ansible-vagrant
   version: v1.0.0
+- name: markosamuli.linuxbrew
+  src: https://github.com/markosamuli/ansible-linuxbrew
+  version: v1.0.0

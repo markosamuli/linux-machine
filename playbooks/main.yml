@@ -2,6 +2,8 @@
 
 - import_playbook: setup.yml
 
+- import_playbook: linuxbrew.yml
+
 - import_playbook: terminals.yml
   when: not is_wsl
 
