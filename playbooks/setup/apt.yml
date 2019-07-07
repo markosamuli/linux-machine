@@ -1,0 +1,13 @@
+---
+
+- name: Update APT package cache
+  hosts: all
+  become: true
+  tags:
+    - always
+    - apt
+  tasks:
+    - name: Update APT package cache
+      apt:
+        update_cache: true
+        cache_valid_time: 3600
