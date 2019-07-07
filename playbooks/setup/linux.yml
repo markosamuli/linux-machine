@@ -4,8 +4,8 @@
   hosts: all
   tags:
     - always
+    - linux
   tasks:
-
     - name: Check that we're running Linux
       assert:
         that:
@@ -15,5 +15,11 @@
     - name: Check that we're running supported Debian-based distribution
       assert:
         that:
-          - "ansible_distribution == 'Ubuntu' or ansible_distribution == 'Pengwin'"
+          - "ansible_distribution == 'Ubuntu'
+             or ansible_distribution == 'Pengwin'"
         msg: "This playbook only supports Ubuntu and Pengwin distributions"
+
+    - name: Update APT package cache
+      become: true
+      apt:
+        update_cache: true

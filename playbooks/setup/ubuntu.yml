@@ -4,39 +4,35 @@
   hosts: all
   tags:
     - always
+    - ubuntu
   tasks:
-  - name: Check that we're running Ubuntu
-    assert:
-      that:
-        - "ansible_distribution == 'Ubuntu'"
-      msg: "This playbook only supports Ubuntu systems"
+    - name: Check that we're running Ubuntu
+      assert:
+        that:
+          - "ansible_distribution == 'Ubuntu'"
+        msg: "This playbook only supports Ubuntu systems"
 
-  - name: Check that we're running Ubuntu 16.04 or newer distribution
-    assert:
-      that:
-        - "ansible_distribution_version|int >= 16"
-      msg: "This playbook only supports Ubuntu 16.04 and newer distributions"
+    - name: Check that we're running Ubuntu 16.04 or newer distribution
+      assert:
+        that:
+          - "ansible_distribution_version|int >= 16"
+        msg: "This playbook only supports Ubuntu 16.04 and newer distributions"
 
 - name: Install common Ubuntu applications and packages
   hosts: all
   tags:
-  - ubuntu
+    - ubuntu
   tasks:
+    - name: Install aptitude
+      apt:
+        name: aptitude
 
-  - name: Update package cache
-    apt:
-      update_cache: true
+    - name: Add APT support for transport over HTTPS
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
 
-  - name: Install aptitude
-    apt:
-      name: aptitude
-
-  - name: Add APT support for transport over HTTPS
-    apt:
-      name:
-      - apt-transport-https
-      - ca-certificates
-
-  - name: Install software-properties-common
-    apt:
-      name: software-properties-common
+    - name: Install software-properties-common
+      apt:
+        name: software-properties-common
