@@ -1,7 +1,16 @@
+# -*- mode: yaml -*-
+# vim:ts=2:sw=2:ai:si:syntax=yaml
+#
+# Travis CI configuration
+# https://docs.travis-ci.com/
 ---
 
+# Run tests against pull requests and main branches only
+if: |
+  type = pull_request OR \
+  branch IN (master, develop)
+
 language: generic
-python: 2.7
 
 matrix:
   include:
@@ -24,14 +33,6 @@ matrix:
       sudo: required
       env: ANSIBLE_VERSION='<2.9.0'
 
-branches:
-  only:
-    - master
-    - develop
-    - /^feature\/.*$/
-    - /^bugfix\/.*$/
-    - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
-
 before_install:
   # Cleanup existing NVM installation
   - unset NVM_CD_FLAGS
@@ -48,7 +49,6 @@ install:
     fi
 
 script:
-
   # Test setup script
   - ./setup -n
 

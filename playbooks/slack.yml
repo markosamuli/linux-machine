@@ -2,14 +2,13 @@
 
 - name: Slack
   hosts: all
-  tags:
-    - slack
+  tags: slack
   tasks:
     - name: Check if Slack is installed via snap
       stat:
         path: /snap/bin/slack
       register: slack_st
-      changed_when: False
+      changed_when: false
 
     - name: Install Slack via snap package
       command: snap install slack --classic

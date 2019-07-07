@@ -4,12 +4,13 @@
   hosts: all
   tags:
     - always
+    - wsl
   tasks:
 
     - name: Detect Windows Subsystem for Linux
       command: "sh -c 'grep -q Microsoft /proc/version && echo yes || echo no'"
       register: detect_wsl_grep
-      changed_when: False
+      changed_when: false
 
     - name: Set Windows Subsystem for Linux fact
       set_fact:

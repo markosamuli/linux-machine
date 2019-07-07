@@ -1,0 +1,40 @@
+---
+
+- name: Remove conflicting Packer installations
+  hosts: all
+  tags: packer
+  tasks:
+
+    - name: Set asdf install directory
+      set_fact:
+        asdf_installs_dir: "{{ user_home }}/.asdf/installs"
+
+    - name: Check if Packer is installed with asdf
+      stat:
+        path: "{{ asdf_installs_dir }}/packer"
+      register: asdf_packer_install
+      become: false
+
+    - name: Remove /usr/bin/packer binary
+      file:
+        path: /usr/bin/packer
+        state: absent
+
+    - name: Remove /usr/local/bin/packer binary
+      file:
+        path: /usr/local/bin/packer
+        state: absent
+      when: asdf_packer_install.stat.exists
+
+    - name: Remove /opt/packer directory
+      file:
+        path: /opt/packer
+        state: absent
+      when: asdf_packer_install.stat.exists
+
+- name: Install Packer if not installed with asdf
+  hosts: all
+  tags: packer
+  roles:
+    - role: markosamuli.packer
+      when: not asdf_packer_install.stat.exists

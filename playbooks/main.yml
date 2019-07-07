@@ -1,26 +1,24 @@
 ---
 
-- import_playbook: setup/linux.yml
-
-- import_playbook: setup/wsl.yml
-  when: is_wsl is undefined
-
-- import_playbook: setup/ubuntu.yml
-  when: ansible_distribution == 'Ubuntu'
-
-- import_playbook: setup/pengwin.yml
-  when: ansible_distribution == 'Pengwin'
+- import_playbook: setup.yml
 
 - import_playbook: terminals.yml
   when: not is_wsl
 
 - import_playbook: tools.yml
-- import_playbook: editors.yml
+
+- import_playbook: vim.yml
+- import_playbook: neovim.yml
+
+- import_playbook: vscode.yml
+  when: not is_wsl
+
 - import_playbook: git.yml
 - import_playbook: asdf.yml
 
-- import_playbook: front-end-toolkit.yml
+- import_playbook: nodejs.yml
 - import_playbook: python.yml
+- import_playbook: golang.yml
 
 - import_playbook: vagrant.yml
   when: not is_wsl
@@ -30,5 +28,6 @@
 
 - import_playbook: gcloud.yml
 - import_playbook: aws.yml
-- import_playbook: hashicorp.yml
-- import_playbook: golang.yml
+
+- import_playbook: packer.yml
+- import_playbook: terraform.yml

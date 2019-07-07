@@ -6,6 +6,7 @@ syntax_check=0  # Run command to check syntax
 list_tags=0     # Run command to list tags
 
 # Setup options
+check_os_upgrades=1     # Check for OS upgrades
 install_roles=1         # Install Ansible roles
 install_ansible=1       # Install Ansible
 install_roles_force=0	# Force overwriting existing Ansible roles
@@ -385,6 +386,8 @@ function run_ansible_playbook {
         fi
     fi
 
+    ansible_opts="-e {'user_home':'$HOME'} ${ansible_opts}"
+
     $(ansible_bin_prefix)ansible-playbook ${ansible_playbook} \
         $(ansible_inventory) \
         ${ansible_opts}
@@ -454,10 +457,49 @@ function setup_dependencies {
 # Configuration
 ###
 function configure {
+
     if [ "${is_macos}" == "1" ]; then
         ansible_become=0
     elif [ "${is_linux}" == "1" ]; then
         ansible_become=1
+    fi
+}
+
+###
+# Check for upgrades
+###
+function check_upgrades {
+    if [ "${check_os_upgrades}" != "1" ]; then
+        return 0
+    fi
+    if [ "${is_ubuntu}" == "1" ]; then
+        check_dist_upgrades
+    elif [ "${is_pengwin}" == "1" ]; then
+        check_dist_upgrades
+        check_pengwin_upgrades
+    fi
+}
+
+###
+# Check for distribution upgrades on Debian-based systems
+###
+function check_dist_upgrades {
+    echo "*** Checking for distribution upgrade..."
+    if [ -f "/etc/apt/.dist-upgrade" ] ; then
+        echo "A distribution upgrade is available."
+    fi
+}
+
+###
+# Check for Pengwin core upgrades
+###
+function check_pengwin_upgrades {
+    echo "*** Checking for Pengwin core upgrades..."
+    local upgrades=""
+    upgrades="$(apt-get -s upgrade --show-upgraded --assume-no | grep pengwin)"
+    if [[ "${upgrades}" == *"pengwin"* ]] ; then
+        echo "Pengwin core package upgrades found."
+        echo "Use 'pengwin-setup' to upgrade them."
     fi
 }
 
@@ -477,6 +519,7 @@ while getopts ":hfcnqlsvut:i:" opt; do
             run_playbook=0
             ;;
         q)
+            check_os_upgrades=0
             install_roles=0
             install_ansible=0
             install_homebrew=0
@@ -522,6 +565,9 @@ configure
 
 # Setup dependencies
 setup_dependencies
+
+# Check for upgrades
+check_upgrades
 
 if [ "${print_versions}" == "1" ]; then
     python --version

@@ -2,11 +2,8 @@
 
 - name: Git
   hosts: all
+  tags: git
   tasks:
-
-  - name: Installing Git
-    package:
-      name: git
-    tags:
-    - git
-    - frontend
+    - name: Installing Git
+      package:
+        name: git

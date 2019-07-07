@@ -2,26 +2,24 @@
 
 - name: Tools
   hosts: all
-  tags:
-  - tools
+  tags: tools
   tasks:
+    - name: Install wget
+      package:
+        name: wget
 
-  - name: Install wget
-    package:
-      name: wget
+    - name: Install cURL
+      package:
+        name: curl
 
-  - name: Install cURL
-    package:
-      name: curl
+    - name: Install jq command-line JSON processor
+      package:
+        name: jq
 
-  - name: Install jq command-line JSON processor
-    package:
-      name: jq
+    - name: Install The Silver Searcher code searcing utility
+      apt:
+        name: silversearcher-ag
 
-  - name: Install The Silver Searcher code searcing utility
-    apt:
-      name: silversearcher-ag
-
-  - name: Install htop
-    package:
-      name: htop
+    - name: Install htop
+      package:
+        name: htop

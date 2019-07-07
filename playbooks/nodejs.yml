@@ -1,0 +1,8 @@
+---
+
+- name: NVM and Node.js
+  hosts: all
+  become: false
+  tags: nvm
+  roles:
+    - role: markosamuli.nvm
