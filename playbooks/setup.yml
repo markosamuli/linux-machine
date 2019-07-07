@@ -1,0 +1,12 @@
+---
+
+- import_playbook: setup/linux.yml
+
+- import_playbook: setup/wsl.yml
+  when: is_wsl is undefined
+
+- import_playbook: setup/ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
+
+- import_playbook: setup/pengwin.yml
+  when: ansible_distribution == 'Pengwin'
