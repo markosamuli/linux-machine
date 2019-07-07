@@ -14,6 +14,8 @@ repos:
       - id: check-executables-have-shebangs
       - id: trailing-whitespace
       - id: check-yaml
+      - id: check-ast
+      - id: flake8
 
   - repo: https://github.com/adrienverge/yamllint.git
     rev: v1.15.0
