@@ -6,6 +6,7 @@ syntax_check=0  # Run command to check syntax
 list_tags=0     # Run command to list tags
 
 # Setup options
+check_os_upgrades=1     # Check for OS upgrades
 install_roles=1         # Install Ansible roles
 install_ansible=1       # Install Ansible
 install_roles_force=0	# Force overwriting existing Ansible roles
@@ -468,6 +469,9 @@ function configure {
 # Check for upgrades
 ###
 function check_upgrades {
+    if [ "${check_os_upgrades}" != "1" ]; then
+        return 0
+    fi
     if [ "${is_ubuntu}" == "1" ]; then
         check_dist_upgrades
     elif [ "${is_pengwin}" == "1" ]; then
@@ -515,6 +519,7 @@ while getopts ":hfcnqlsvut:i:" opt; do
             run_playbook=0
             ;;
         q)
+            check_os_upgrades=0
             install_roles=0
             install_ansible=0
             install_homebrew=0
