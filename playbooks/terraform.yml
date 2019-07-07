@@ -5,10 +5,17 @@
   tags: terraform
   tasks:
 
+    - name: Check if asdf is installed
+      stat:
+        path: "{{ ansible_env.HOME }}/.asdf"
+      register: asdf_st
+      become: false
+
     - name: Check if Terraform is installed with asdf
       stat:
         path: "{{ ansible_env.HOME }}/.asdf/installs/terraform"
       register: asdf_terraform_install
+      when: asdf_st.stat.exists
       become: false
 
     - name: Remove /usr/bin/terraform binary
