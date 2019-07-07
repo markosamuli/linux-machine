@@ -385,6 +385,8 @@ function run_ansible_playbook {
         fi
     fi
 
+    ansible_opts="-e {'user_home':'$HOME'} ${ansible_opts}"
+
     $(ansible_bin_prefix)ansible-playbook ${ansible_playbook} \
         $(ansible_inventory) \
         ${ansible_opts}
@@ -454,6 +456,7 @@ function setup_dependencies {
 # Configuration
 ###
 function configure {
+
     if [ "${is_macos}" == "1" ]; then
         ansible_become=0
     elif [ "${is_linux}" == "1" ]; then

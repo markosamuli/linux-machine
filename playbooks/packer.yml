@@ -5,17 +5,14 @@
   tags: packer
   tasks:
 
-    - name: Check if asdf is installed
-      stat:
-        path: "{{ ansible_env.HOME }}/.asdf"
-      register: asdf_st
-      become: false
+    - name: Set asdf install directory
+      set_fact:
+        asdf_installs_dir: "{{ user_home }}/.asdf/installs"
 
     - name: Check if Packer is installed with asdf
       stat:
-        path: "{{ ansible_env.HOME }}/.asdf/installs/packer"
+        path: "{{ asdf_installs_dir }}/packer"
       register: asdf_packer_install
-      when: asdf_st.stat.exists
       become: false
 
     - name: Remove /usr/bin/packer binary
