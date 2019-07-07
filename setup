@@ -462,6 +462,41 @@ function configure {
 }
 
 ###
+# Check for upgrades
+###
+function check_upgrades {
+    if [ "${is_ubuntu}" == "1" ]; then
+        check_dist_upgrades
+    elif [ "${is_pengwin}" == "1" ]; then
+        check_dist_upgrades
+        check_pengwin_upgrades
+    fi
+}
+
+###
+# Check for distribution upgrades on Debian-based systems
+###
+function check_dist_upgrades {
+    echo "*** Checking for distribution upgrade..."
+    if [ -f "/etc/apt/.dist-upgrade" ] ; then
+        echo "A distribution upgrade is available."
+    fi
+}
+
+###
+# Check for Pengwin core upgrades
+###
+function check_pengwin_upgrades {
+    echo "*** Checking for Pengwin core upgrades..."
+    local upgrades=""
+    upgrades="$(apt-get --just-print upgrade --show-upgraded --assume-no | grep pengwin)"
+    if [[ "${upgrades}" == *"pengwin"* ]] ; then
+        echo "Pengwin core package upgrades found."
+        echo "Use 'pengwin-setup' to upgrade them."
+    fi
+}
+
+###
 # Parse command line options
 ###
 while getopts ":hfcnqlsvut:i:" opt; do
@@ -522,6 +557,9 @@ configure
 
 # Setup dependencies
 setup_dependencies
+
+# Check for upgrades
+check_upgrades
 
 if [ "${print_versions}" == "1" ]; then
     python --version
