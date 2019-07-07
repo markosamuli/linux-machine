@@ -35,7 +35,7 @@ function run_setup {
 # Parse tags from the main.yml playbook file
 ###
 function get_playbook_tags {
-    ./tests/playbook-tags playbooks/main.yml
+    ./tests/playbook-tags playbooks/main.yml || exit 1
 }
 
 cd ${PROJECT_ROOT}
