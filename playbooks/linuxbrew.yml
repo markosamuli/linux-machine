@@ -3,7 +3,6 @@
 - name: Install Linuxbrew
   hosts: all
   become: false
+  tags: linuxbrew
   roles:
-
     - role: markosamuli.linuxbrew
-      tags: linuxbrew
