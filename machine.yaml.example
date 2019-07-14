@@ -47,4 +47,8 @@
 #       - "1.4.1"
 #   - name: minikube
 #     versions:
-#      - "1.1.0"
+#       - "1.1.0"
+#   - name: aws-vault
+#     repository: https://github.com/virtualstaticvoid/asdf-aws-vault.git
+#     versions:
+#       - "4.6.2"
