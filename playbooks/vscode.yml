@@ -33,6 +33,10 @@
       register: code_st
       changed_when: false
 
-    - name: Install Visual Studio Code via code snap package
+    - name: Install Visual Studio Code if not running on WSL
       command: snap install code --classic
-      when: not code_st.stat.exists
+      when: not code_st.stat.exists and not is_wsl
+
+    - name: Uninstall Visual Studio Code if running on WSL
+      command: snap remove code
+      when: code_st.stat.exists and is_wsl

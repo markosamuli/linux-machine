@@ -11,9 +11,7 @@
 
 - import_playbook: vim.yml
 - import_playbook: neovim.yml
-
 - import_playbook: vscode.yml
-  when: not is_wsl
 
 - import_playbook: git.yml
 - import_playbook: asdf.yml
