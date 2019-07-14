@@ -6,9 +6,8 @@
 
 - name: markosamuli.asdf
   version: v1.0.0
-- name: markosamuli.aws-tools
-  src: https://github.com/markosamuli/ansible-aws-tools
-  version: v1.0.1
+- name: markosamuli.aws_tools
+  version: v2.0.0
 - name: markosamuli.gcloud
   version: v2.0.0
 - name: markosamuli.golang

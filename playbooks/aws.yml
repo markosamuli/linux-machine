@@ -3,5 +3,6 @@
 - name: Install AWS tools
   hosts: all
   tags: aws
+  become: false
   roles:
-    - role: markosamuli.aws-tools
+    - role: markosamuli.aws_tools
