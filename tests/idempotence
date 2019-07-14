@@ -58,4 +58,3 @@ if [ "$passed" -lt "$total" ]; then
 fi
 
 echo "All $passed / $total idempotence tests passed"
-

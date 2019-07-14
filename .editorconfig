@@ -9,7 +9,7 @@ trim_trailing_whitespace = true
 charset = utf-8
 
 # Shell scripts without extension
-[{setup}]
+[{setup,tests/idempotence}]
 indent_style = space
 indent_size = 4
 
@@ -45,6 +45,6 @@ indent_style = tab
 indent_size = 2
 
 # Python scripts without extension
-[{update-roles}]
+[{update-roles,tests/playbook-tags}]
 indent_style = space
 indent_size = 4
