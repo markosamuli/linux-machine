@@ -30,3 +30,5 @@
   version: v1.0.0
 - name: markosamuli.linuxbrew
   version: v1.1.0
+- name: zzet.rbenv
+  version: "3.4.4"

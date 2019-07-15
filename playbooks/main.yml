@@ -19,6 +19,7 @@
 - import_playbook: nodejs.yml
 - import_playbook: python.yml
 - import_playbook: golang.yml
+- import_playbook: ruby.yml
 
 - import_playbook: vagrant.yml
   when: not is_wsl

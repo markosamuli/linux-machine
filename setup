@@ -386,7 +386,7 @@ function run_ansible_playbook {
         fi
     fi
 
-    ansible_opts="-e {'user_home':'$HOME'} ${ansible_opts}"
+    ansible_opts="-e {'user_home':'$HOME','user_name':'$USER'} ${ansible_opts}"
 
     $(ansible_bin_prefix)ansible-playbook ${ansible_playbook} \
         $(ansible_inventory) \

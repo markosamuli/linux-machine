@@ -1,0 +1,10 @@
+---
+
+- name: rbenv
+  hosts: all
+  become: false
+  tags: rbenv
+  roles:
+    - role: zzet.rbenv
+      rbenv_users:
+        - "{{ user_name }}"

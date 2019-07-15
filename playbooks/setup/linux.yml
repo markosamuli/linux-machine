@@ -19,8 +19,14 @@
              or ansible_distribution == 'Pengwin'"
         msg: "This playbook only supports Ubuntu and Pengwin distributions"
 
-    - name: Check that 'user_home' is defined and not set to /root
+    - name: Check that 'user_home' is defined and not set to '/root'
       assert:
         that:
           - user_home is defined
           - user_home != '/root'
+
+    - name: Check that 'user_name' is defined and not set to 'root'
+      assert:
+        that:
+          - user_name is defined
+          - user_name != 'root'

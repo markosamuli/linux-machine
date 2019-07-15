@@ -2,3 +2,11 @@
 
 # Do not install Cloud SDK from package manager
 gcloud_install_from_package_manager: false
+
+# Install rbenv for the current user
+rbenv:
+  env: user
+  version: v1.1.2
+  default_ruby: 2.6.3
+  rubies:
+    - version: 2.6.3
