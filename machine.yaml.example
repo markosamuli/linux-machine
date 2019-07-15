@@ -49,6 +49,6 @@
 #     versions:
 #       - "1.1.0"
 #   - name: aws-vault
-#     repository: https://github.com/virtualstaticvoid/asdf-aws-vault.git
+#     repository: https://github.com/markosamuli/asdf-aws-vault.git
 #     versions:
 #       - "4.6.2"
