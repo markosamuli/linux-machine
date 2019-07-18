@@ -8,8 +8,11 @@
 This is a collection of Ansible roles and tasks to setup a Linux development
 machine.
 
+Read my [Machine Setup Guide][machine-setup-guide] for instructions.
+
 See [markosamuli/macos-machine] for my macOS setup.
 
+[machine-setup-guide]: https://machine.msk.io/
 [markosamuli/macos-machine]: https://github.com/markosamuli/macos-machine
 
 ## Requirements
