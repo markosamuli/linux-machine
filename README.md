@@ -10,10 +10,7 @@ machine.
 
 Read my [Machine Setup Guide][machine-setup-guide] for instructions.
 
-See [markosamuli/macos-machine] for my macOS setup.
-
 [machine-setup-guide]: https://machine.msk.io/
-[markosamuli/macos-machine]: https://github.com/markosamuli/macos-machine
 
 ## Requirements
 
@@ -26,8 +23,11 @@ See [markosamuli/macos-machine] for my macOS setup.
 [Ansible] 2.7 will be installed from [ansible/ansible-2.7] PPA if not found on
 the system.
 
+See [markosamuli/macos-machine] for my macOS setup.
+
 [Ansible]: https://www.ansible.com/
 [ansible/ansible-2.7]: https://launchpad.net/~ansible/+archive/ubuntu/ansible-2.7
+[markosamuli/macos-machine]: https://github.com/markosamuli/macos-machine
 
 ### Ubuntu
 
