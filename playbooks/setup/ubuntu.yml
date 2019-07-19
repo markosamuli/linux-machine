@@ -36,3 +36,16 @@
     - name: Install software-properties-common
       apt:
         name: software-properties-common
+
+- name: Install Ubuntu on Windows tools
+  hosts: all
+  tags:
+    - ubuntu
+    - wsl
+  tasks:
+    - name: Install Ubuntu on Windows tools
+      apt:
+        name:
+          - ubuntu-wsl
+          - wslu
+      when: is_wsl
