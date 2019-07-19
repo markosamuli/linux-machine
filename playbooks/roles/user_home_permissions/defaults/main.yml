@@ -19,6 +19,7 @@ user_home_group_readable:
   - ~/.siege
   - ~/.terraform.d
   - ~/.yarn
+  - ~/opt
 
 # Directories that should be user readable only
 user_home_user_readable:
