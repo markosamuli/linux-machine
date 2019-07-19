@@ -8,3 +8,8 @@
     - role: zzet.rbenv
       rbenv_users:
         - "{{ user_name }}"
+    - role: user_home_permissions
+      user_home_group_readable:
+        - "~/.rbenv"
+      user_home_user_readable: []
+      user_home_fix_permissions: true

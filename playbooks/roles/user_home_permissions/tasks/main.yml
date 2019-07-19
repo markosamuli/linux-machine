@@ -1,0 +1,5 @@
+---
+
+- name: Fix insecure permissions in user home directory
+  include_tasks: fix_permissions.yml
+  when: user_home_fix_permissions | bool
