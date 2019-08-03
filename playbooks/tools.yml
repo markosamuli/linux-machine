@@ -23,3 +23,7 @@
     - name: Install htop
       package:
         name: htop
+
+    - name: Install pass (password manager)
+      package:
+        name: pass
