@@ -25,6 +25,9 @@
 # Do not set up Cloud SDK shell when using existing dotfiles
 # gcloud_setup_shell: false
 
+# Do not configure Linuxbew shell when using existing dotfiles
+# linuxbrew_init_shell: false
+
 # Fix permissions in user home directory
 # user_home_fix_permissions: true
 

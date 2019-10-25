@@ -29,6 +29,6 @@
   src: https://github.com/markosamuli/ansible-vagrant
   version: v1.0.0
 - name: markosamuli.linuxbrew
-  version: v1.1.0
+  version: v1.2.0
 - name: zzet.rbenv
   version: "3.4.4"
