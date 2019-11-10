@@ -26,7 +26,7 @@ jobs:
           pip install virtualenv==16.3.0
           pip install pre-commit
           sudo snap install shfmt
-          sudo apt-get install -y shellcheck
+          sudo snap install shellcheck
           gem install travis
       - name: Cache pre-commit dependencies
         uses: actions/cache@preview
