@@ -15,7 +15,7 @@ update:
 	@./update-roles
 
 .PHONY: lint
-lint: pre-commit travis-lint
+lint: pre-commit
 
 .PHONY: pre-commit
 pre-commit: install-git-hooks
@@ -33,11 +33,7 @@ endif
 
 .PHONY: travis-lint
 travis-lint:
-ifndef TRAVIS
-	$(error "travis CLI not found, try: 'gem install travis'")
-else
-	@travis lint
-endif
+	@pre-commit run -a travis-lint -v
 
 .PHONY: install-git-hooks
 install-git-hooks: $(PRE_COMMIT_HOOKS) $(PRE_PUSH_HOOKS) $(COMMIT_MSG_HOOKS)
