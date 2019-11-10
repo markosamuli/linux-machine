@@ -45,6 +45,9 @@ install:
     fi
 
 script:
+  # Use Travis test configuration
+  - cp machine.travis.yaml machine.yaml
+
   # Test setup script
   - ./setup -n
 
@@ -54,5 +57,9 @@ script:
   # Run playbooks without installing roles
   - ./setup -q
 
-  # Run idempotence tests for each playbook
-  - ./tests/idempotence
+  # Run idempotence tests
+  - >
+    ./setup -q \
+      | grep -q 'changed=0.*failed=0' \
+      && (echo 'Idempotence test: pass' && exit 0) \
+      || (echo 'Idempotence test: fail' && exit 1)
