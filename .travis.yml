@@ -57,6 +57,10 @@ script:
   # Run playbooks without installing roles
   - ./setup -q
 
+  # Avoid updating apt cache during idempotence tests
+  - >
+    echo "update_apt_cache: false" >> machine.yaml
+
   # Run idempotence tests
   - >
     ./setup -q \
