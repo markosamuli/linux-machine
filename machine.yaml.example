@@ -4,6 +4,9 @@
 # Example configuration to customise local settings
 ---
 
+# Do not update apt-cache
+# update_apt_cache: false
+
 # Use custom Go workspace directory
 # golang_path: "go"
 

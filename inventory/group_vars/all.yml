@@ -1,5 +1,8 @@
 ---
 
+# Update apt cache when running playbooks
+update_apt_cache: true
+
 # Do not install Cloud SDK from package manager
 gcloud_install_from_package_manager: false
 

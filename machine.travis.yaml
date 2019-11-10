@@ -2,6 +2,9 @@
 # vim:ts=2:sw=2:ai:si:syntax=yaml
 ---
 
+# Do not update apt-cache
+update_apt_cache: false
+
 # Install asdf plugins
 asdf_plugins:
   - name: doctl
