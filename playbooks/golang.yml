@@ -3,5 +3,6 @@
 - name: Install Go programming language
   hosts: all
   tags: golang
+  become: false
   roles:
     - role: markosamuli.golang

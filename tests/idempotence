@@ -1,48 +1,56 @@
 #!/usr/bin/env bash
 
-DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-PROJECT_ROOT=$(dirname $DIR)
+DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+PROJECT_ROOT=$(dirname "$DIR")
 
 total=0
 passed=0
 failed=0
 
-###
+# Print error into STDERR
+error() {
+    echo "$@" 1>&2
+}
+
 # Run setup without installing roles or dependencies
-###
-function run_setup {
+run_setup() {
     local tag=$1
+    local success=0
     printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
     echo "Run setup with tag: ${tag}"
     printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
-    total=$((total+1))
-    ./setup -q -t ${tag} | \
-        tee /dev/tty | \
-        grep -q 'changed=0.*failed=0'
+    total=$((total + 1))
+    ./setup -q -t "${tag}" |
+        tee /dev/tty |
+        grep -q 'changed=0.*failed=0' && success=1
     printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -
-    if [ "$?" == "0" ]; then
+    if [ "${success}" -eq "1" ]; then
         echo "Idempotence test: pass with tag ${tag}"
-        passed=$((passed+1))
+        passed=$((passed + 1))
         return 0
     else
         echo "Idempotence test: fail with tag ${tag}"
-        failed=$((failed+1))
+        failed=$((failed + 1))
         return 1
     fi
 }
 
-###
 # Parse tags from the main.yml playbook file
-###
-function get_playbook_tags {
-    ./tests/playbook-tags playbooks/main.yml || exit 1
+get_playbook_tags() {
+    ./tests/playbook-tags playbooks/main.yml || {
+        error "Something went wrong while trying to get playbook tags"
+        exit 1
+    }
 }
 
-cd ${PROJECT_ROOT}
+cd "${PROJECT_ROOT}" || {
+    error "Couldn't find ${PROJECT_ROOT}"
+    exit 1
+}
 
 PLAYBOOK_TAGS=$(get_playbook_tags)
 for tag in ${PLAYBOOK_TAGS}; do
-    run_setup $tag
+    run_setup "$tag"
 done
 
 printf '%*s\n' "${COLUMNS:-$(tput cols)}" '' | tr ' ' -

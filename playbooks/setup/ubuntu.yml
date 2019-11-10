@@ -48,4 +48,4 @@
         name:
           - ubuntu-wsl
           - wslu
-      when: is_wsl
+      when: is_wsl | bool
