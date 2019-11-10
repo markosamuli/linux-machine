@@ -10,6 +10,8 @@
 - name: markosamuli.hyper
   src: https://github.com/markosamuli/ansible-hyper
   version: v1.2.0
+- name: markosamuli.linuxbrew
+  version: v1.2.0
 - name: markosamuli.nvm
   version: v1.4.1
 - name: markosamuli.packer
@@ -22,7 +24,5 @@
 - name: markosamuli.vagrant
   src: https://github.com/markosamuli/ansible-vagrant
   version: v1.0.0
-- name: markosamuli.linuxbrew
-  version: v1.2.0
 - name: zzet.rbenv
   version: "3.4.4"
