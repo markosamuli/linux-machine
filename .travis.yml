@@ -24,10 +24,10 @@ matrix:
       os: linux
       dist: xenial
       env: ANSIBLE_VERSION='<2.8.0'
-    - name: "Ubuntu 16.04 LTS with Ansible 2.8 PyPI installed"
+    - name: "Ubuntu 16.04 LTS with Ansible 2.8.5 PyPI installed"
       os: linux
       dist: xenial
-      env: ANSIBLE_VERSION='<2.9.0'
+      env: ANSIBLE_VERSION='==2.8.5'
 
 before_install:
   # Cleanup existing NVM installation
