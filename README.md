@@ -2,8 +2,8 @@
 
 | Branch  | Status |
 |---------|--------|
-| master  | [![Build Status](https://travis-ci.org/markosamuli/linux-machine.svg?branch=master)](https://travis-ci.org/markosamuli/linux-machine)
-| develop | [![Build Status](https://travis-ci.org/markosamuli/linux-machine.svg?branch=develop)](https://travis-ci.org/markosamuli/linux-machine)
+| master  | [![Build Status](https://travis-ci.org/markosamuli/linux-machine.svg?branch=master)](https://travis-ci.org/markosamuli/linux-machine/branches)
+| develop | [![Build Status](https://travis-ci.org/markosamuli/linux-machine.svg?branch=develop)](https://travis-ci.org/markosamuli/linux-machine/branches)
 
 This is a collection of Ansible roles and tasks to setup a Linux development
 machine.
