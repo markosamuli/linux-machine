@@ -152,6 +152,7 @@ asdf_plugins:
   - name: concourse
 ```
 
+[asdf]: https://asdf-vm.com/
 [asdf plugins]: https://asdf-vm.com/#/plugins-all
 
 ### Python
