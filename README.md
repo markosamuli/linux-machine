@@ -277,7 +277,7 @@ install_nodejs: false
 [Node Version Manager]: https://github.com/creationix/nvm
 [Node.js]: https://nodejs.org/en/
 
-### Other programming languages
+### Go
 
 [Go programming language] installed using [markosamuli.golang]
 Ansible role.
@@ -291,9 +291,11 @@ install_golang: false
 
 [Go programming language]: https://golang.org/
 
-### Developer tools
+### Git
 
-- [Git](https://git-scm.com/)
+Latest version of [Git] will be installed.
+
+[Git]: https://git-scm.com/
 
 ### Vagrant and VirtualBox
 
