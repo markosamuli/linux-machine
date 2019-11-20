@@ -502,6 +502,12 @@ make update
 
 ## Development
 
+Fix ansible-lint installation issues:
+
+```bash
+pip install virtualenv==16.3.0
+```
+
 Install [pre-commit] hooks:
 
 ```bash
