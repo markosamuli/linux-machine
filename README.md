@@ -118,9 +118,18 @@ Ansible Playbook with `--extra-vars`.
 
 ### Desktop applications
 
+Installed on all environments:
+
 - [Terminator](https://gnometerminator.blogspot.com/p/introduction.html)
-- [Slack](https://snapcraft.io/slack) via Snap package
 - [Hyper](https://hyper.is/)
+
+To install [Slack] desktop application via Snap package:
+
+```yaml
+install_slack: true
+```
+
+[Slack]: https://snapcraft.io/slack
 
 ### Command line tools
 

@@ -7,6 +7,9 @@
 - import_playbook: terminals.yml
   when: not is_wsl
 
+- import_playbook: slack.yml
+  when: install_slack | bool
+
 - import_playbook: tools.yml
 
 - import_playbook: vim.yml

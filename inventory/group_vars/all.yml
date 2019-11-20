@@ -12,6 +12,9 @@ install_python: true
 # Install Go programming language
 install_golang: true
 
+# Install Slack
+install_slack: false
+
 # Install Vagrant and VirtualBox
 install_vagrant: false
 
