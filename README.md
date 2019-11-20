@@ -161,9 +161,24 @@ install_slack: true
 
 ### Editors
 
-- [Visual Studio Code](https://code.visualstudio.com/) via Snap package
-- [Vim](https://www.vim.org/)
-- [Neovim](https://neovim.io/)
+[Visual Studio Code] will be installed on non-WSL environments via Snap package.
+
+See [Developing on WSL] for instructions how to install and use Visual Studio
+Code [Remote - WSL] extension.
+
+Latest version of [Vim] will be installed using the package manager.
+
+To install [Neovim] enable it in `machine.yaml`:
+
+```yaml
+install_neovim: true
+```
+
+[Visual Studio Code]: https://code.visualstudio.com/
+[Developing on WSL]: https://code.visualstudio.com/docs/remote/wsl
+[Remote - WSL]: https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl
+[Vim]: https://www.vim.org/
+[Neovim]: https://neovim.io/
 
 ### asdf version manager
 

@@ -13,7 +13,10 @@
 - import_playbook: tools.yml
 
 - import_playbook: vim.yml
+
 - import_playbook: neovim.yml
+  when: install_neovim | bool
+
 - import_playbook: vscode.yml
 
 - import_playbook: git.yml

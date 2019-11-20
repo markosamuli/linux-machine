@@ -6,6 +6,9 @@ install_linuxbrew: false
 # Install asdf-vm
 install_asdf: false
 
+# Install Neovim
+install_neovim: false
+
 # Install Node.js programming language
 install_nodejs: true
 
