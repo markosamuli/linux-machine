@@ -55,7 +55,7 @@ endif
 
 .PHONY: update
 update:
-	@./update-roles
+	@./scripts/update-roles.py
 
 .PHONY: lint
 lint: pre-commit
