@@ -13,12 +13,12 @@ def get_tags_from_playbook(playbook_file):
         playbook = yaml.safe_load(f)
         for item in playbook:
             if 'import_playbook' in item:
-                import_playbook = os.path.join(
-                    playbook_path, item['import_playbook'])
+                import_playbook = os.path.join(playbook_path,
+                                               item['import_playbook'])
                 imported_tags = get_tags_from_playbook(import_playbook)
                 tags.extend(imported_tags)
             elif 'tags' in item:
-                if isinstance(item['tags'], (list,)):
+                if isinstance(item['tags'], (list, )):
                     tags.extend(item['tags'])
                 else:
                     tags.append(item['tags'])
