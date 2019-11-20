@@ -258,7 +258,15 @@ install_nodejs: false
 
 ### Other programming languages
 
-- [Go programming language]
+[Go programming language] installed using [markosamuli.golang]
+Ansible role.
+
+You can disable installation by adding the following option to
+your [`machine.yaml`][machine.yaml]:
+
+```yaml
+install_golang: false
+```
 
 [Go programming language]: https://golang.org/
 
