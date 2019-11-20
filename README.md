@@ -461,6 +461,12 @@ backup copies of them before running the script.
 The following external Ansible roles are installed and used. See
 [requirements.yml] file for the installed versions.
 
+To update roles to the latest release versions, you can run:
+
+```bash
+make update
+```
+
 | Role | Build status |
 |------|--------------|
 | [markosamuli.asdf] | [![Build Status](https://travis-ci.org/markosamuli/ansible-asdf.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-asdf) |
@@ -493,8 +499,13 @@ The following external Ansible roles are installed and used. See
 Install [pre-commit] hooks:
 
 ```bash
-pre-commit install
-pre-commit install --hook-type pre-push
+make install-git-hooks
+```
+
+Lint code and configuration:
+
+```bash
+make lint
 ```
 
 [pre-commit]: https://pre-commit.com/
