@@ -1,16 +1,18 @@
 ---
 
-- name: Terminals
+- name: Terminator
   hosts: all
   tags: terminal
   tasks:
     - name: Install Terminator
       apt:
         name: terminator
+      when: not is_wsl
 
-- name: Terminals
+- name: Hyper
   hosts: all
   tags: terminal
   roles:
     - role: markosamuli.hyper
       tags: hyper
+      when: not is_wsl

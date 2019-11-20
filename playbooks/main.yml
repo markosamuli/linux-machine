@@ -6,7 +6,6 @@
   when: install_linuxbrew | bool
 
 - import_playbook: terminals.yml
-  when: not is_wsl
 
 - import_playbook: slack.yml
   when: install_slack | bool
