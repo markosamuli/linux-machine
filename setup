@@ -467,6 +467,8 @@ check_upgrades() {
     elif [ "${is_pengwin}" == "1" ]; then
         check_dist_upgrades
         check_pengwin_upgrades
+    elif [ "${is_macos}" == "1" ]; then
+        check_brew_upgrades
     fi
 }
 
@@ -489,6 +491,17 @@ check_pengwin_upgrades() {
     fi
 }
 
+# Check for Homebrew upgrades
+check_brew_upgrades() {
+    local outdated
+    outdated="$(brew outdated -q)"
+    if [ -n "${outdated}" ]; then
+        echo "Outdated Homebrew packages found"
+        echo "Run 'brew outdated' to list them and 'brew upgrade' to upgrade"
+    fi
+}
+
+# Check user is not root
 check_user() {
     if [ "$USER" == "root" ]; then
         error "FAILED: USER is root"
