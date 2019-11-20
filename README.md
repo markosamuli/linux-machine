@@ -319,10 +319,25 @@ install_docker: false
 
 [Docker]: https://docs.docker.com/engine/
 
-### DevOps and Cloud tools
+### Packer
 
-- [Terraform](https://www.terraform.io/)
-- [Packer](https://packer.io/)
+To install [Packer] add:
+
+```yaml
+install_packer: true
+```
+
+[Packer]: https://packer.io/
+
+### Terraform
+
+Disable [Terraform] installation with:
+
+```yaml
+install_terraform: false
+```
+
+[Terraform]: https://www.terraform.io/
 
 ### Amazon Web Services
 
