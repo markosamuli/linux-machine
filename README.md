@@ -239,6 +239,13 @@ fi
 - [Node Version Manager] (NVM)
 - [Node.js] LTS installed with NMV
 
+You can disable installation by adding the following option to
+your [`machine.yaml`][machine.yaml]:
+
+```yaml
+install_nodejs: false
+```
+
 [Node Version Manager]: https://github.com/creationix/nvm
 [Node.js]: https://nodejs.org/en/
 

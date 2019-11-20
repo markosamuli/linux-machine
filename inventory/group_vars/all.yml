@@ -3,6 +3,9 @@
 # Install asdf-vm
 install_asdf: false
 
+# Install Node.js programming language
+install_nodejs: true
+
 # Install Vagrant and VirtualBox
 install_vagrant: false
 

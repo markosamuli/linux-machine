@@ -19,6 +19,8 @@
   when: install_asdf | bool
 
 - import_playbook: nodejs.yml
+  when: install_nodejs | bool
+
 - import_playbook: python.yml
 - import_playbook: golang.yml
 - import_playbook: ruby.yml
