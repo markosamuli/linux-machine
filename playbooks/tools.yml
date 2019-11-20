@@ -16,7 +16,7 @@
       package:
         name: jq
 
-    - name: Install The Silver Searcher code searcing utility
+    - name: Install The Silver Searcher code searching utility
       apt:
         name: silversearcher-ag
 

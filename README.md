@@ -103,7 +103,7 @@ cd linux-machine
 ## Local options
 
 You can pass custom variables to the Ansible playbook and roles by creating
-a `machine.yaml` file to customise your configuration.
+a [`machine.yaml`][machine.yaml] file to customise your configuration.
 
 ```bash
 cp machine.yaml.example machine.yaml
@@ -111,6 +111,8 @@ cp machine.yaml.example machine.yaml
 
 The `setup` script will detect if this file exists and passes it to the
 Ansible Playbook with `--extra-vars`.
+
+[machine.yaml]: machine.yaml
 
 ## Software installed by the playbooks
 
@@ -122,12 +124,19 @@ Ansible Playbook with `--extra-vars`.
 
 ### Command line tools
 
-- [GNU Wget](https://www.gnu.org/software/wget/)
-- [curl](https://curl.haxx.se/)
-- [jq](https://stedolan.github.io/jq/) command-line JSON processor
-- [The Silver Searcher](https://github.com/ggreer/the_silver_searcher) code
-  searching utility similar to `ack`
-- [htop](https://hisham.hm/htop/)
+- [GNU Wget]
+- [curl]
+- [jq] command-line JSON processor
+- [The Silver Searcher] (`ag` command) code searching utility similar to `ack`
+- [htop] process viewer for console
+- [pass] — the standard unix password manager
+
+[GNU Wget]: https://www.gnu.org/software/wget/
+[curl]: https://curl.haxx.se/
+[jq]: https://stedolan.github.io/jq/
+[htop]: https://hisham.hm/htop/
+[The Silver Searcher]: https://github.com/ggreer/the_silver_searcher
+[pass]: https://www.passwordstore.org/
 
 ### Editors
 

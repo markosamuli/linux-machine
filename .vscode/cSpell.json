@@ -1,6 +1,7 @@
 {
   "version": "0.1",
   "words": [
+    "ag",
     "asdf",
     "caarlos",
     "debian",
@@ -16,6 +17,7 @@
     "playbooks",
     "rbenv",
     "setup",
+    "silversearcher",
     "vars",
     "xenial",
     "xerus",
