@@ -193,8 +193,16 @@ pyenv_init_shell: false
 
 ### Ruby
 
-- [rbenv] installed using [zzet.rbenv] role
-- [Ruby] version 2.6.3 installed with rbenv
+To install Ruby for development, enable it in your `machine.yaml` configuration:
+
+```yaml
+install_ruby: true
+```
+
+This will install:
+
+- [rbenv] using [zzet.rbenv] role
+- [Ruby] version 2.6.3 with rbenv
 
 To change the installed rubies and default version, add the following to your
 `machine.yaml` file and customize it to your needs:
@@ -206,6 +214,20 @@ rbenv:
   default_ruby: 2.6.3
   rubies:
     - version: 2.6.3
+```
+
+The role doesn't update your `.bashrc` or `.zshrc` files but adds a global
+initialization script in `/etc/profile.d/rbenv.sh`. If this doesn't work on
+your environment, add something like below to initialize rbenv in your shell:
+
+```bash
+if [ -z "${RBENV_ROOT}" ]; then
+  if [ -d "$HOME/.rbenv" ]; then
+    export PATH=$HOME/.rbenv/bin:$PATH;
+    export RBENV_ROOT=$HOME/.rbenv;
+    eval "$(rbenv init -)";
+  fi
+fi
 ```
 
 [zzet.rbenv]: https://github.com/zzet/ansible-rbenv-role

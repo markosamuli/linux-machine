@@ -22,6 +22,7 @@
 - import_playbook: python.yml
 - import_playbook: golang.yml
 - import_playbook: ruby.yml
+  when: install_ruby | bool
 
 - import_playbook: vagrant.yml
   when: install_vagrant | bool
