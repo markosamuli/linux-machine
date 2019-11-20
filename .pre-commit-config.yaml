@@ -30,6 +30,11 @@ repos:
     hooks:
       - id: autopep8
 
+  - repo: https://github.com/pre-commit/mirrors-yapf.git
+    rev: v0.28.0
+    hooks:
+      - id: yapf
+
   - repo: https://github.com/pre-commit/pre-commit-hooks.git
     rev: v2.2.3
     hooks:
