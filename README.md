@@ -321,6 +321,37 @@ fi
 [rbenv]: https://github.com/rbenv/rbenv
 [Ruby]: https://www.ruby-lang.org/en/
 
+### Rust
+
+Install [Rust] programming language with [markosamuli.rust] role.
+
+Enable with:
+
+```yaml
+install_rust: true
+```
+
+To avoid modifying path during install:
+
+```yaml
+rust_modify_path: false
+```
+
+Run Rust playbook:
+
+```bash
+make rust
+```
+
+To uninstall Rust, run:
+
+```bash
+rustup self uninstall
+```
+
+[Rust]: https://www.rust-lang.org/
+[markosamuli.rust]: https://github.com/markosamuli/ansible-rust
+
 ### Node.js
 
 - [Node Version Manager] (NVM)

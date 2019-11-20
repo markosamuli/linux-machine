@@ -151,6 +151,13 @@ gcloud:  ## install Google Cloud SDK
 docker:  ## install Docker
 	@./setup -q -t docker
 
+.PHONY: rust
+rust: playbooks/roles/markosamuli.rust  ## install Rust
+	@./setup -q -t rust
+
+playbooks/roles/markosamuli.%:
+	@./setup -n
+
 .PHONY: permissions
 permissions:  ## fix permissions in user home directory
 	@USER_HOME_FIX_PERMISSIONS=true ./setup -q -t permissions

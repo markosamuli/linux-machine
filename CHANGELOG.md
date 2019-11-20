@@ -29,6 +29,13 @@
 [rbenv]: https://github.com/rbenv/rbenv
 [Ruby]: https://www.ruby-lang.org/en/
 
+#### Rust
+
+* Install [Rust] programming language with [markosamuli.rust]
+
+[Rust]: https://www.rust-lang.org/
+[markosamuli.rust]: https://github.com/markosamuli/ansible-rust
+
 ### Changed
 
 #### Ansible
