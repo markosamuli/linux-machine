@@ -22,7 +22,7 @@
 - import_playbook: ruby.yml
 
 - import_playbook: vagrant.yml
-  when: not is_wsl
+  when: install_vagrant | bool
 
 - import_playbook: docker.yml
   when: not is_wsl

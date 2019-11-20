@@ -1,5 +1,8 @@
 ---
 
+# Install Vagrant and VirtualBox
+install_vagrant: false
+
 # Update apt cache when running playbooks
 update_apt_cache: true
 

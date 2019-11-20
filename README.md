@@ -179,17 +179,14 @@ Use [pyenv] to install and manage Python versions for the current user:
 - [Python] v2.7 and v3.7 installed with pyenv
 
 The [markosamuli.pyenv] role will modify your `.bashrc` and `.zshrc` files
-during the setup. If you want to disable this, edit `machine.yaml` configuration
+during the setup. If you want to disable this, edit `machine.yaml` file
 and disable the following configuration option.
 
 ```yaml
-# Do not configure pyenv shell when using existing dotfiles
 pyenv_init_shell: false
 ```
 
 [Python]: https://www.python.org/
-[pip]: https://pypi.org/project/pip/
-[virtualenv]: https://virtualenv.pypa.io/en/latest/
 [pyenv]: https://github.com/pyenv/pyenv
 [pyenv-virtualenv]: https://github.com/pyenv/pyenv-virtualenv
 
@@ -232,8 +229,18 @@ rbenv:
 
 - [Git](https://git-scm.com/)
 - [Docker Engine](https://docs.docker.com/engine/) Community Edition
-- [VirtualBox](https://www.virtualbox.org/)
-- [Vagrant](https://www.vagrantup.com/)
+
+### Vagrant and VirtualBox
+
+[Vagrant] and [VirtualBox] are no longer installed by default, but you can
+enable them by adding:
+
+```yaml
+install_vagrant: true
+```
+
+[Vagrant]: https://www.vagrantup.com/
+[VirtualBox]: https://www.virtualbox.org/
 
 ### DevOps and Cloud tools
 
