@@ -221,6 +221,12 @@ Use [pyenv] to install and manage Python versions for the current user:
 - [pyenv-virtualenv]
 - [Python] v2.7 and v3.7 installed with pyenv
 
+Run Python playbook:
+
+```bash
+make python
+```
+
 You can disable installation by adding the following option to
 your [`machine.yaml`][machine.yaml]:
 
@@ -315,17 +321,17 @@ install_nodejs: false
 [Go programming language] installed using [markosamuli.golang]
 Ansible role.
 
+Run Go playbook:
+
+```bash
+make golang
+```
+
 You can disable installation by adding the following option to
 your [`machine.yaml`][machine.yaml]:
 
 ```yaml
 install_golang: false
-```
-
-Run Go playbook:
-
-```bash
-make golang
 ```
 
 [Go programming language]: https://golang.org/
