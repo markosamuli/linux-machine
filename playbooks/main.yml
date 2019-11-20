@@ -22,6 +22,8 @@
   when: install_nodejs | bool
 
 - import_playbook: python.yml
+  when: install_python | bool
+
 - import_playbook: golang.yml
 - import_playbook: ruby.yml
   when: install_ruby | bool

@@ -6,6 +6,9 @@ install_asdf: false
 # Install Node.js programming language
 install_nodejs: true
 
+# Install Python programming language
+install_python: true
+
 # Install Vagrant and VirtualBox
 install_vagrant: false
 

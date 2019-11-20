@@ -179,6 +179,13 @@ Use [pyenv] to install and manage Python versions for the current user:
 - [pyenv-virtualenv]
 - [Python] v2.7 and v3.7 installed with pyenv
 
+You can disable installation by adding the following option to
+your [`machine.yaml`][machine.yaml]:
+
+```yaml
+install_python: false
+```
+
 The [markosamuli.pyenv] role will modify your `.bashrc` and `.zshrc` files
 during the setup. If you want to disable this, edit `machine.yaml` file
 and disable the following configuration option.
