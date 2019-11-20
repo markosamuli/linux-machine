@@ -14,7 +14,9 @@
 - import_playbook: vscode.yml
 
 - import_playbook: git.yml
+
 - import_playbook: asdf.yml
+  when: install_asdf | bool
 
 - import_playbook: nodejs.yml
 - import_playbook: python.yml

@@ -1,5 +1,8 @@
 ---
 
+# Install asdf-vm
+install_asdf: false
+
 # Install Vagrant and VirtualBox
 install_vagrant: false
 

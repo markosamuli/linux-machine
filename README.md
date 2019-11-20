@@ -146,22 +146,23 @@ Ansible Playbook with `--extra-vars`.
 
 ### asdf version manager
 
-[asdf] version manager is installed without plugin configuration.
+You can install [asdf] version manager by adding the following
+option to your [`machine.yaml`][machine.yaml]:
+
+```yaml
+install_asdf: true
+```
 
 To configure [asdf plugins] and package versions to install, add them
-into the `machine.yaml` configuration.
+into your [`machine.yaml`][machine.yaml] configuration.
 
 ```yaml
 asdf_plugins:
-  - name: terraform
-    versions:
-      - "0.11.14"
-  - name: doctl
   - name: kubectl
   - name: concourse
 ```
 
-[asdf]: https://asdf-vm.com/
+[asdf]: https://asdf-vm.com
 [asdf plugins]: https://asdf-vm.com/#/plugins-all
 
 ### Python
