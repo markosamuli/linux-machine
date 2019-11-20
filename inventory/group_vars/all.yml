@@ -1,5 +1,8 @@
 ---
 
+# Install Linuxbrew
+install_linuxbrew: false
+
 # Install asdf-vm
 install_asdf: false
 

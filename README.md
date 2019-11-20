@@ -116,6 +116,18 @@ Ansible Playbook with `--extra-vars`.
 
 ## Software installed by the playbooks
 
+### Homebrew on Linux (aka Linuxbrew)
+
+[Homebrew] can be installed on Linux by enabled the following option:
+
+```yaml
+install_linuxbrew: true
+```
+
+Installation will be done using [markosamuli.linuxbrew] Ansible role.
+
+[Homebrew]: https://docs.brew.sh/Homebrew-on-Linux
+
 ### Desktop applications
 
 Installed on all environments:
@@ -358,9 +370,10 @@ The following external Ansible roles are installed and used. See
 | Role | Build status |
 |------|--------------|
 | [markosamuli.asdf] | [![Build Status](https://travis-ci.org/markosamuli/ansible-asdf.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-asdf) |
-| [markosamuli.aws-tools] | [![Build Status](https://travis-ci.org/markosamuli/ansible-aws-tools.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-aws-tools) |
+| [markosamuli.aws_tools] | [![Build Status](https://travis-ci.org/markosamuli/ansible-aws-tools.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-aws-tools) |
 | [markosamuli.gcloud] | [![Build Status](https://travis-ci.org/markosamuli/ansible-gcloud.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-gcloud) |
 | [markosamuli.golang] | [![Build Status](https://travis-ci.org/markosamuli/ansible-golang.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-golang) |
+| [markosamuli.linuxbrew] | [![Build Status](https://travis-ci.org/markosamuli/ansible-linuxbrew.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-linuxbrew) |
 | [markosamuli.nvm] | [![Build Status](https://travis-ci.org/markosamuli/ansible-nvm.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-nvm) |
 | [markosamuli.packer] | [![Build Status](https://travis-ci.org/markosamuli/ansible-packer.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-packer) |
 | [markosamuli.pyenv] | [![Build Status](https://travis-ci.org/markosamuli/ansible-pyenv.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-pyenv) |
@@ -369,10 +382,11 @@ The following external Ansible roles are installed and used. See
 | [markosamuli.hyper] | [![Build Status](https://travis-ci.org/markosamuli/ansible-hyper.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-hyper) |
 
 [markosamuli.asdf]: https://github.com/markosamuli/ansible-asdf
-[markosamuli.aws-tools]: https://github.com/markosamuli/ansible-aws-tools
+[markosamuli.aws_tools]: https://github.com/markosamuli/ansible-aws-tools
 [markosamuli.gcloud]: https://github.com/markosamuli/ansible-gcloud
 [markosamuli.golang]: https://github.com/markosamuli/ansible-golang
 [markosamuli.hyper]: https://github.com/markosamuli/ansible-hyper
+[markosamuli.linuxbrew]: https://github.com/markosamuli/ansible-linuxbrew
 [markosamuli.nvm]: https://github.com/markosamuli/ansible-nvm
 [markosamuli.packer]: https://github.com/markosamuli/ansible-packer
 [markosamuli.pyenv]: https://github.com/markosamuli/ansible-pyenv
