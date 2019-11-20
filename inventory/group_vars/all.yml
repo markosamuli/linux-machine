@@ -3,6 +3,9 @@
 # Install Vagrant and VirtualBox
 install_vagrant: false
 
+# Install Docker
+install_docker: true
+
 # Update apt cache when running playbooks
 update_apt_cache: true
 

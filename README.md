@@ -228,7 +228,6 @@ rbenv:
 ### Developer tools
 
 - [Git](https://git-scm.com/)
-- [Docker Engine](https://docs.docker.com/engine/) Community Edition
 
 ### Vagrant and VirtualBox
 
@@ -241,6 +240,18 @@ install_vagrant: true
 
 [Vagrant]: https://www.vagrantup.com/
 [VirtualBox]: https://www.virtualbox.org/
+
+### Docker
+
+[Docker] will be installed by default.
+
+To disable installation, add:
+
+```yaml
+install_docker: false
+```
+
+[Docker]: https://docs.docker.com/engine/
 
 ### DevOps and Cloud tools
 

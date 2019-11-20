@@ -25,7 +25,7 @@
   when: install_vagrant | bool
 
 - import_playbook: docker.yml
-  when: not is_wsl
+  when: install_docker | bool
 
 - import_playbook: gcloud.yml
 - import_playbook: aws.yml
