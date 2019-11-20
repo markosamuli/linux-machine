@@ -14,9 +14,11 @@
     "pengwin",
     "playbook",
     "playbooks",
+    "rbenv",
     "setup",
     "vars",
     "xenial",
-    "xerus"
+    "xerus",
+    "zzet"
   ]
 }
