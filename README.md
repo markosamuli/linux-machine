@@ -152,6 +152,12 @@ install_slack: true
 - [htop] process viewer for console
 - [pass] — the standard unix password manager
 
+Run tools playbook:
+
+```bash
+make tools
+```
+
 [GNU Wget]: https://www.gnu.org/software/wget/
 [curl]: https://curl.haxx.se/
 [jq]: https://stedolan.github.io/jq/
@@ -247,6 +253,12 @@ This will install:
 - [rbenv] using [zzet.rbenv] role
 - [Ruby] version 2.6.3 with rbenv
 
+Run Ruby playbook:
+
+```bash
+make ruby
+```
+
 To change the installed rubies and default version, add the following to your
 `machine.yaml` file and customize it to your needs:
 
@@ -282,6 +294,12 @@ fi
 - [Node Version Manager] (NVM)
 - [Node.js] LTS installed with NMV
 
+Run Node.js playbook:
+
+```bash
+make node
+```
+
 You can disable installation by adding the following option to
 your [`machine.yaml`][machine.yaml]:
 
@@ -302,6 +320,12 @@ your [`machine.yaml`][machine.yaml]:
 
 ```yaml
 install_golang: false
+```
+
+Run Go playbook:
+
+```bash
+make golang
 ```
 
 [Go programming language]: https://golang.org/
@@ -328,6 +352,12 @@ install_vagrant: true
 
 [Docker] will be installed by default.
 
+Run Docker playbook:
+
+```bash
+make docker
+```
+
 To disable installation, add:
 
 ```yaml
@@ -347,6 +377,12 @@ install_packer: true
 [Packer]: https://packer.io/
 
 ### Terraform
+
+Run Terraform playbook:
+
+```bash
+make terraform
+```
 
 Disable [Terraform] installation with:
 
@@ -376,6 +412,12 @@ install_aws: false
 ### Google Cloud Platform
 
 [Google Cloud SDK] installed from the archive file under user home directory.
+
+Run Google Cloud SDK playbook:
+
+```bash
+make gcloud
+```
 
 Default install path is in `~/google-cloud-sdk`, but you can
 install it to another location, for example if you prefer
