@@ -79,6 +79,6 @@ repos:
     hooks:
       - id: travis-lint
         name: Lint .travis.yml
-        entry: bin/travis-lint.sh
+        entry: scripts/travis-lint.sh
         language: script
         files: '^.travis.yml$'
