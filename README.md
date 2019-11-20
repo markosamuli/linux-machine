@@ -349,24 +349,44 @@ install_terraform: false
 - [cli53](https://github.com/barnybug/cli53) - command line tool for Amazon
   Route 53
 
+You can disable installation by adding the following option to
+your [`machine.yaml`][machine.yaml]:
+
+```yaml
+install_aws: false
+```
+
 ### Google Cloud Platform
 
-- [Google Cloud SDK] installed from the archive file under user home directory
+[Google Cloud SDK] installed from the archive file under user home directory.
+
+Default install path is in `~/google-cloud-sdk`, but you can
+install it to another location, for example if you prefer
+`~/opt/google-cloud-sdk` add the following option:
+
+```yaml
+gcloud_install_path: ~/opt
+```
 
 The [markosamuli.gcloud] role will modify your `.bashrc` and `.zshrc` files.
 To disable this and manage the configuration yourself, disable the following
-configuration option in the `machine.yaml` file.
+configuration option in the [`machine.yaml`][machine.yaml] file:
 
 ```yaml
-# Do not set up Cloud SDK shell when using existing dotfiles
 gcloud_setup_shell: false
+```
+
+You can disable installation by adding the following option to
+your [`machine.yaml`][machine.yaml]:
+
+```yaml
+install_gcloud: false
 ```
 
 If you prefer to install Google Cloud SDK using package manager, enable it in
 the `machine.yaml` configuration file:
 
 ```yaml
-# Install Cloud SDK from package manager
 gcloud_install_from_package_manager: true
 ```
 

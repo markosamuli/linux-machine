@@ -24,6 +24,12 @@ install_vagrant: false
 # Install Docker
 install_docker: true
 
+# Install Google Cloud SDK
+install_gcloud: true
+
+# Install AWS tools
+install_aws: true
+
 # Install Terraform
 install_terraform: true
 

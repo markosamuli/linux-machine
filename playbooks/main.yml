@@ -41,7 +41,10 @@
   when: install_docker | bool
 
 - import_playbook: gcloud.yml
+  when: install_gcloud | bool
+
 - import_playbook: aws.yml
+  when: install_aws | bool
 
 - import_playbook: terraform.yml
   when: install_terraform | bool
