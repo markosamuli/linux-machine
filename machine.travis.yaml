@@ -7,9 +7,6 @@ user_home_fix_permissions: false
 
 # Install asdf plugins
 asdf_plugins:
-  - name: doctl
-    versions:
-      - "1.19.0"
   - name: kubectl
     versions:
       - "1.14.2"
