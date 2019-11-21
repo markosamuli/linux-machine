@@ -7,7 +7,7 @@
 - name: markosamuli.asdf
   version: v1.1.0
 - name: markosamuli.aws_tools
-  version: v2.0.0
+  version: v2.1.0
 - name: markosamuli.gcloud
   version: v2.1.1
 - name: markosamuli.golang
