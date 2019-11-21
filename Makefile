@@ -115,6 +115,10 @@ travis-lint: setup-pre-commit  ## lint .travis.yml file
 roles:  ## install and update Ansible roles
 	@./setup -n -f
 
+.PHONY: aws
+aws: ## install AWS tools
+	@./setup -q -t aws
+
 .PHONY: tools
 tools: ## install tools
 	@./setup -q -t tools
