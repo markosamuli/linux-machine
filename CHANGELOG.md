@@ -69,16 +69,25 @@ manually enabled:
 * Upgraded [markosamuli.golang] from v1.0.0 to v1.2.1
 * Optional shell script initialization
 * Install common Go packages with the [markosamuli.golang] role
-* Changed default GOPATH from `~/Projects/golang` to `~/go`
+* Changed default `GOPATH` from `~/Projects/golang` to `~/go`
 * Add `GO111MODULES` environment variable into shell configuration
 
 [markosamuli.golang]: https://github.com/markosamuli/ansible-golang
 
 #### AWS tools
 
-* Upgraded [markosamuli.aws_tools] from v1.0.1 to v2.0.0
+* Upgraded [markosamuli.aws_tools] from v1.0.1 to v2.1.0
+* Install packages under `~/.aws-tools`
+* Added `aws-tools-update` script for updating packages in the virtualenv
+* Update [cli53] to v0.8.16
+* Update [aws-vault] to v4.7.1
+
+The previous release installed packages under `/opt/aws-tools` and created
+symbolic links to `/usr/local/bin`. These will be removed automatically.
 
 [markosamuli.aws_tools]: https://github.com/markosamuli/ansible-aws-tools
+[cli53]: https://github.com/barnybug/cli53
+[aws-vault]: https://github.com/99designs/aws-vault
 
 #### Google Cloud SDK
 
