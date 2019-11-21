@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# Setup script for https://github.com/markosamuli/linux-machine
+
+DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
 # Commands
 run_playbook=1        # Run playbook as default command
@@ -39,12 +42,19 @@ ansible_skip_tags=""
 ansible_verbose=0
 ansible_become=0
 
+# Install Ansible from PyPI
+ansible_pypi="${MACHINE_ANSIBLE_PYPI:-false}"
+
+# Ansible virtualenv
+ansible_virtualenv="${DIR}/.venv"
+
 # Ansible version test
-required_ansible_version="2.4"
+required_ansible_version="2.7"
 
 # Ansible PPA to use
-ansible_version="2.7"
-ansible_ppa="ansible/ansible-2.7"
+ansible_version="${MACHINE_ANSIBLE_VERSION:-2.8}"
+ansible_ppa="ansible/ansible-${ansible_version}"
+ansible_ppa_key_id="93C4A3FD7BB9C367"
 
 # Print error into STDERR
 error() {
@@ -54,25 +64,63 @@ error() {
 # Print usage help
 show_help() {
     echo "Usage: $0"
-    echo " -h         Show this help"
-    echo " -f         Force overwriting existing Ansible roles"
-    echo " -v         Verbose mode"
-    echo " -n         Do not run Ansible playbook"
-    echo " -q         Do not install Ansible requirements"
-    echo " -l         List available Ansible tags"
-    echo " -s         Ansible playbook syntax check"
-    echo " -u         Update Ansible roles to the latest versions"
-    echo " -t TAGS    Run Ansible with the given comma separated list of tags"
-    echo " -i TAGS    Skip the given list of tags"
+
+    cat <<END_OF_OPTIONS
+
+  -h         Show this help
+  -f         Force overwriting existing Ansible roles
+  -v         Verbose mode
+  -n         Do not run Ansible playbook
+  -q         Do not install Ansible requirements
+  -l         List available Ansible tags
+  -s         Ansible playbook syntax check
+  -u         Update Ansible roles to the latest versions
+  -t TAGS    Run Ansible with the given comma separated list of tags
+  -i TAGS    Skip the given list of tags
+
+  --reinstall-ansible
+      Remove and re-install Ansible
+
+  --enable-ansible-pypi
+      Enable Ansible installation from PyPI into a virtualenv
+
+  --disable-ansible-pypi
+      Disable Ansible installation from PyPI into a virtualenv
+
+  --install-ansible
+      Enable Ansible installation
+
+  --no-run-playbook
+      Disable Ansible playbooks from being run
+
+  --no-install-roles
+      Disable Ansible roles from being installed or updated
+
+  --verbose
+      Enable verbose Ansible output
+
+  --print-versions
+      Print Ansible and Python versions
+END_OF_OPTIONS
 }
 
 # Get Ansible version
 get_ansible_version() {
-    # shellcheck disable=SC2046
-    $(ansible_bin_prefix)ansible \
+    "$(ansible_bin_prefix)ansible" \
         --version |
         grep "^ansible" |
         awk '{ print $2 }'
+}
+
+# Check we're not using broken Ansible versions
+check_broken_ansible_versions() {
+    local installed_version
+    installed_version=$(get_ansible_version)
+    echo "*** Check that we're not using Ansible v2.8.6"
+    if [ "${installed_version}" == "2.8.6" ]; then
+        error "Ansible v2.8.6 is not supported, try upgrading to Ansible v2.8.7"
+        exit 1
+    fi
 }
 
 # Check Ansible version
@@ -165,9 +213,23 @@ install_ansible_on_linux() {
         return 0
     fi
     if [ "${is_ubuntu}" == "1" ]; then
-        install_ansible_on_ubuntu
+        if [ "${ansible_pypi}" != "true" ]; then
+            install_ansible_on_ubuntu && return 0
+        fi
+        if [ "${ansible_pypi}" != "never" ]; then
+            install_ansible_with_pip && return 0
+        fi
+        error "Failed to install Ansible"
+        exit 1
     elif [ "${is_pengwin}" == "1" ]; then
-        install_ansible_on_debian
+        if [ "${ansible_pypi}" != "true" ]; then
+            install_ansible_on_debian && return 0
+        fi
+        if [ "${ansible_pypi}" != "never" ]; then
+            install_ansible_with_pip && return 0
+        fi
+        error "Failed to install Ansible"
+        exit 1
     else
         error "Your system is not supported"
         exit 1
@@ -200,48 +262,236 @@ install_ansible_with_homebrew() {
         }
 }
 
-# Install Ansible with APT on Ubuntu
-install_ansible_on_ubuntu() {
+# Uninstall Ansible from Homebrew
+uninstall_ansible_with_homebrew() {
+    local errmsg="Failed to uninstall Ansible"
+    echo "*** Uninstalling Ansible with Homebrew..."
+    brew uninstall ansible ||
+        {
+            error "${errmsg}"
+            exit 1
+        }
+
+}
+
+# Get APT package install candidate
+apt_install_candidate() {
+    local package=$1
+    local candidate
+    candidate=$(apt-cache policy "${package}" | grep 'Candidate:' | sed 's/[[:space:]]*Candidate:[[:space:]]*//')
+    if [ -n "${candidate}" ]; then
+        echo "${candidate}" | cut -d- -f1
+    fi
+}
+
+# Instal Ansible with PIP
+install_ansible_with_pip() {
+    local ansible_pypi_version
+
+    if ! command -v pip >/dev/null; then
+        error "pip not found"
+        return 1
+    fi
+
+    if [ "${ansible_version}" == "2.7" ]; then
+        ansible_pypi_version="<2.8"
+    elif [ "${ansible_version}" == "2.8" ]; then
+        ansible_pypi_version="!=2.8.6,<2.9"
+    elif [ "${ansible_version}" == "2.9" ]; then
+        ansible_pypi_version="<2.10"
+    else
+        error "Unsupported Ansible version ${ansible_version}"
+        return 1
+    fi
+
+    if ! command -v virtualenv >/dev/null; then
+        error "Python virtuelenv not found"
+        return 1
+    fi
+
+    if [ ! -d "${ansible_virtualenv}" ]; then
+        virtualenv "${ansible_virtualenv}" || {
+            error "Failed to create virtualenv in ${ansible_virtualenv}"
+            return 1
+        }
+    fi
+
+    echo "*** Activate virtualenv in ${ansible_virtualenv}"
+    # shellcheck disable=SC1090
+    source "${ansible_virtualenv}/bin/activate"
+
+    pip install "ansible${ansible_pypi_version}" || {
+        error "Failed to install Ansible"
+        return 1
+    }
+
+    echo "*** Ansible ${ansible_version} installed"
+    ansible_pypi=true
+}
+
+install_software_properties_common() {
+    local installed
+    installed=$(dpkg -s software-properties-common 2>/dev/null | grep 'Status' | grep installed)
+    if [ -z "${installed}" ]; then
+        echo "*** Install software-properties-common..."
+        sudo apt-get install -y software-properties-common
+    fi
+}
+
+# Remove Ansible installations
+remove_ansible() {
+
+    remove_ansible_virtualenv
+
+    if [ "${is_macos}" == "1" ]; then
+        uninstall_ansible_with_homebrew
+    elif [ "${is_linux}" == "1" ]; then
+        if [ "${is_ubuntu}" == "1" ]; then
+            remove_ansible_apt
+            remove_ansible_ppa_sources_list
+        elif [ "${is_pengwin}" == "1" ]; then
+            remove_ansible_apt
+            remove_ansible_ppa_sources_list
+        fi
+    fi
+}
+
+install_ansible_ppa_on_ubuntu() {
+
+    # Do not add PPA if it already exists
+    if compgen -G "/etc/apt/sources.list.d/ansible*.list" >/dev/null; then
+        local deb_url="http://ppa.launchpad.net/${ansible_ppa}/ubuntu"
+        if grep -q "^deb ${deb_url}" /etc/apt/sources.list.d/ansible*.list; then
+            return 0
+        fi
+    fi
+
+    install_software_properties_common
+
+    echo "*** Add ${ansible_ppa} PPA repository..."
+    sudo apt-add-repository -y "ppa:${ansible_ppa}"
 
     add_ansible_ppa_key
 
-    echo "*** Add ${ansible_ppa} PPA repository..."
-    sudo apt-get install -y software-properties-common
-    sudo apt-add-repository -y "ppa:${ansible_ppa}"
+    echo "*** Update APT cache..."
     sudo apt-get update
+}
 
-    echo "*** Installing Ansible ${ansible_version}..."
-    sudo apt-get install -y "ansible=${ansible_version}*"
+remove_ansible_ppa_sources_list() {
+    local update_apt_cache
+    for apt_list in /etc/apt/sources.list.d/ansible*.list; do
+        if [ -e "${apt_list}" ]; then
+            echo "Remove ${apt_list}"
+            sudo rm -f "${apt_list}" || {
+                error "Failed to remove ${apt_list}"
+                exit 1
+            }
+            update_apt_cache=1
+        fi
+    done
+    if [ "${update_apt_cache}" == "1" ]; then
+        echo "*** Update APT cache..."
+        sudo apt-get update
+    fi
+}
+
+# Remove virtualenv when using OS package installation
+remove_ansible_virtualenv() {
+    if [ -d "${ansible_virtualenv}" ]; then
+        echo "*** Removing virtualenv in '${ansible_virtualenv}'"
+        rm -rf "${ansible_virtualenv}"
+    fi
+}
+
+# Install Ansible with APT on Ubuntu
+install_ansible_on_ubuntu() {
+
+    install_ansible_ppa_on_ubuntu
+
+    if ! install_ansible_apt "${ansible_version}"; then
+        error "Couldn't install Ansible ${ansible_version} from APT"
+        return 1
+    fi
+
+    echo "*** Ansible ${ansible_version} installed"
+
+    remove_ansible_virtualenv
+}
+
+install_ansible_ppa_on_debian() {
+    local deb_url="http://ppa.launchpad.net/${ansible_ppa}/ubuntu"
+    local apt_list="/etc/apt/sources.list.d/ansible.list"
+
+    if [ -e "${apt_list}" ]; then
+        if grep -q "^deb ${deb_url}" "${apt_list}"; then
+            return 0
+        fi
+        echo "*** Updating ${ansible_ppa} PPA repository..."
+        sudo sh -c "echo 'deb ${deb_url} trusty main' > ${apt_list}"
+    else
+        echo "*** Add ${ansible_ppa} PPA repository..."
+        sudo sh -c "echo 'deb ${deb_url} trusty main' > ${apt_list}"
+    fi
+
+    add_ansible_ppa_key
+
+    echo "*** Update APT cache..."
+    sudo apt-get update
 }
 
 # Install Ansible with APT on Debian
 install_ansible_on_debian() {
 
-    add_ansible_ppa_key
+    install_ansible_ppa_on_debian
 
-    echo "*** Add ${ansible_ppa} PPA repository..."
-    local deb_url="http://ppa.launchpad.net/${ansible_ppa}/ubuntu"
-    local apt_list="/etc/apt/sources.list.d/ansible.list"
-    sudo sh -c "echo 'deb ${deb_url} trusty main' > ${apt_list}"
-    sudo apt-get update
+    if ! install_ansible_apt "${ansible_version}"; then
+        error "Couldn't install Ansible ${ansible_version} from APT"
+        return 1
+    fi
 
-    echo "*** Installing Ansible ${ansible_version}..."
-    sudo apt-get install -y "ansible=${ansible_version}*"
+    echo "*** Ansible ${ansible_version} installed"
+
+    remove_ansible_virtualenv
+}
+
+# Install Ansible APT package
+install_ansible_apt() {
+    local version=$1
+
+    local candidate
+    candidate=$(apt_install_candidate "ansible")
+    if [ "${candidate}" == "2.8.6" ]; then
+        error "WARNING: Not installing Ansible version ${candidate} from APT"
+        return 1
+    fi
+
+    echo "*** Installing Ansible ${version}..."
+    sudo apt-get install -y "ansible=${version}*"
+}
+
+# Remove Ansible APT package
+remove_ansible_apt() {
+    sudo apt-get remove -y "ansible"
 }
 
 # Add Ansible PPA signing key
 add_ansible_ppa_key() {
     echo "*** Add Ansible PPA signing key..."
-    gpg --keyserver keyserver.ubuntu.com --recv 93C4A3FD7BB9C367
-    gpg --export --armor 93C4A3FD7BB9C367 | sudo apt-key add -
+    gpg --keyserver keyserver.ubuntu.com --recv "${ansible_ppa_key_id}"
+    gpg --export --armor "${ansible_ppa_key_id}" | sudo apt-key add -
+}
+
+# Remove Ansible PPA signing key
+remove_ansible_ppa_key() {
+    echo "*** Remove Ansible PPA signing key..."
+    sudo apt-key del "${ansible_ppa_key_id}"
 }
 
 # Install Ansible roles
 install_ansible_roles() {
     local errmsg="Failed to install Ansible roles"
     echo "*** Installing Ansible roles..."
-    # shellcheck disable=SC2046
-    $(ansible_bin_prefix)ansible-galaxy install \
+    "$(ansible_bin_prefix)ansible-galaxy" install \
         -r requirements.yml \
         -p ${ansible_roles} \
         ${ansible_roles_opts} ||
@@ -330,7 +580,7 @@ ansible_bin_prefix() {
 # Run Ansible playbook
 run_ansible_playbook() {
     # shellcheck disable=SC2046
-    $(ansible_bin_prefix)ansible-playbook "${ansible_playbook}" \
+    "$(ansible_bin_prefix)ansible-playbook" "${ansible_playbook}" \
         $(ansible_inventory) \
         $(run_ansible_playbook_opts)
 }
@@ -391,7 +641,7 @@ run_ansible_playbook_opts() {
 # Check Ansible playbook syntax
 check_ansible_playbook_syntax() {
     # shellcheck disable=SC2046
-    $(ansible_bin_prefix)ansible-playbook ${ansible_playbook} \
+    "$(ansible_bin_prefix)ansible-playbook" ${ansible_playbook} \
         $(ansible_inventory) \
         --syntax-check
 }
@@ -414,7 +664,7 @@ ansible_inventory() {
 # List tags available in Ansible playbooks
 ansible_playbook_list_tags() {
     # shellcheck disable=SC2046
-    $(ansible_bin_prefix)ansible-playbook ${ansible_playbook} \
+    "$(ansible_bin_prefix)ansible-playbook" ${ansible_playbook} \
         $(ansible_inventory) \
         --list-tags
 }
@@ -438,8 +688,7 @@ setup_dependencies() {
             exit 1
         fi
     else
-        # shellcheck disable=SC2046
-        $(ansible_bin_prefix)ansible --version >/dev/null ||
+        "$(ansible_bin_prefix)ansible" --version >/dev/null ||
             {
                 error "${ansible_err}"
                 exit 1
@@ -448,12 +697,44 @@ setup_dependencies() {
 
 }
 
-# Configuration
-configure() {
+# Configure options
+configure_options() {
     if [ "${is_macos}" == "1" ]; then
         ansible_become=0
     elif [ "${is_linux}" == "1" ]; then
         ansible_become=1
+        ansible_homebrew=0
+        install_homebrew=0
+    fi
+}
+
+# Configure Ansible PATH
+configure_ansible_path() {
+    # Skip virtualenv and PATH config if using Homebrew
+    if [ "${ansible_homebrew}" == "1" ]; then
+        return 0
+    fi
+
+    # Activate local virtualenv if found
+    if [ -d "${ansible_virtualenv}" ]; then
+        echo "*** Activate virtualenv in ${ansible_virtualenv}"
+        # shellcheck disable=SC1090
+        source "${ansible_virtualenv}/bin/activate"
+        ansible_pypi=1
+        return 0
+    fi
+
+    # Use Ansible from ~/.local if found
+    local local_bin_path
+    if [ -e "$HOME/.local/bin/ansible" ]; then
+        echo "*** Ansible found in ~/.local/bin"
+        local_bin_path=$(echo "$PATH" | grep "$HOME/\.local/bin")
+        if [ -z "${local_bin_path}" ]; then
+            echo "*** Adding ~/.local/bin to PATH"
+            PATH="$PATH:$HOME/.local/bin"
+        fi
+        ansible_pypi=1
+        return 0
     fi
 }
 
@@ -513,6 +794,52 @@ check_user() {
     fi
 }
 
+# Parse command line arguments
+POSITIONAL=()
+while [[ $# -gt 0 ]]; do
+    key="$1"
+    case $key in
+        --reinstall-ansible)
+            install_ansible=1
+            remove_ansible=1
+            shift
+            ;;
+        --enable-ansible-pypi)
+            ansible_pypi=true
+            shift
+            ;;
+        --disable-ansible-pypi)
+            ansible_pypi=never
+            shift
+            ;;
+        --install-ansible)
+            install_ansible=1
+            shift
+            ;;
+        --no-run-playbook)
+            run_playbook=0
+            shift
+            ;;
+        --no-install-roles)
+            install_roles=0
+            shift
+            ;;
+        --verbose)
+            ansible_verbose=1
+            shift
+            ;;
+        --print-versions)
+            print_versions=1
+            shift
+            ;;
+        *) # unknown option
+            POSITIONAL+=("$1") # save it in an array for later
+            shift              # past argument
+            ;;
+    esac
+done
+set -- "${POSITIONAL[@]}" # restore positional parameters
+
 # Parse command line options
 while getopts ":hfnqlsvut:i:" opt; do
     case $opt in
@@ -569,7 +896,15 @@ done
 detect_os
 
 # Configure options
-configure
+configure_options
+
+# Remove existing Ansible installations
+if [ "${remove_ansible}" == "1" ]; then
+    remove_ansible
+fi
+
+# Configure Ansible path
+configure_ansible_path
 
 # Setup dependencies
 setup_dependencies
@@ -589,6 +924,8 @@ if ! check_ansible_version ${required_ansible_version}; then
     error "Ansible ${required_ansible_version} required"
     exit 1
 fi
+
+check_broken_ansible_versions
 
 if [ "${update_roles}" == "1" ]; then
     update_ansible_roles
