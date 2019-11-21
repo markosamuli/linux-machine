@@ -116,44 +116,47 @@ roles:  ## install and update Ansible roles
 	@./setup -n -f
 
 .PHONY: aws
-aws: ## install AWS tools
+aws:  ## install AWS tools
 	@./setup -q -t aws
-
-.PHONY: tools
-tools: ## install tools
-	@./setup -q -t tools
-
-.PHONY: golang
-golang:  ## install Go programming language
-	@./setup -q -t golang
-
-.PHONY: python
-python:  ## install Python with pyenv
-	@./setup -q -t python,pyenv
-
-.PHONY: ruby
-ruby:  # install Ruby with rbenv
-	@./setup -q -t ruby,rbenv
-
-.PHONY: node
-node:  ## install Node.js with NVM
-	@./setup -q -t node,nvm
-
-.PHONY: terraform
-terraform:  ## install Terraform
-	@./setup -q -t terraform
-
-.PHONY: gcloud
-gcloud:  ## install Google Cloud SDK
-	@./setup -q -t gcloud
 
 .PHONY: docker
 docker:  ## install Docker
 	@./setup -q -t docker
 
+.PHONY: gcloud
+gcloud: playbooks/roles/markosamuli.gcloud  ## install Google Cloud SDK
+	@./setup -q -t gcloud
+
+.PHONY: golang
+golang: playbooks/roles/markosamuli.golang  ## install Go programming language
+	@./setup -q -t golang
+
+.PHONY: node
+node: playbooks/roles/markosamuli.nvm  ## install Node.js with NVM
+	@./setup -q -t node,nvm
+
+.PHONY: python
+python: playbooks/roles/markosamuli.pyenv  ## install Python with pyenv
+	@./setup -q -t python,pyenv
+
+.PHONY: ruby
+ruby: playbooks/roles/zzet.rbenv  # install Ruby with rbenv
+	@./setup -q -t ruby,rbenv
+
 .PHONY: rust
 rust: playbooks/roles/markosamuli.rust  ## install Rust
 	@./setup -q -t rust
+
+.PHONY: terraform
+terraform: playbooks/roles/markosamuli.terraform  ## install Terraform
+	@./setup -q -t terraform
+
+.PHONY: tools
+tools:  ## install tools
+	@./setup -q -t tools
+
+playbooks/roles/zzet.rbenv:
+	@./setup -n
 
 playbooks/roles/markosamuli.%:
 	@./setup -n
