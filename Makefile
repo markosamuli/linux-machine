@@ -1,12 +1,12 @@
-TRAVIS = $(shell command -v travis 2> /dev/null)
-SHELLCHECK = $(shell command -v shellcheck 2> /dev/null)
-SHFMT = $(shell command -v shfmt 2> /dev/null)
+TRAVIS = $(shell command -v travis 2>/dev/null)
+SHELLCHECK = $(shell command -v shellcheck 2>/dev/null)
+SHFMT = $(shell command -v shfmt 2>/dev/null)
 
 .PHONY: all
 all: install-git-hooks lint
 
-PYENV_BIN = $(shell command -v pyenv)
-PYTHON_BIN = $(shell command -v python)
+PYENV_BIN = $(shell command -v pyenv 2>/dev/null)
+PYTHON_BIN = $(shell command -v python 2>/dev/null)
 PYTHON_VERSION = 3.7.5
 PYTHON_VERSION_PATH = $(HOME)/.pyenv/versions/$(PYTHON_VERSION)
 PYENV_VIRTUALENV = $(shell basename $(shell pwd))
