@@ -31,6 +31,21 @@
 
 ### Changed
 
+#### Ansible
+
+* Require minimum Ansible version 2.7
+* Install Ansible 2.8 as the default version
+* Check that we're not using broken Ansible v2.8.6
+* Check Ansible version when running playbooks
+
+#### Setup script
+
+* Support for installing Ansible in a local virtualenv from PyPI
+* Allow setting the default Ansible version with `MACHINE_ANSIBLE_VERSION`
+  environment variable
+* Support for uninstalling existing Ansible installations
+* Added new long command line options in the setup script
+
 #### Default installation options
 
 The following tools are no longer installed automatically but require to be
@@ -40,11 +55,6 @@ manually enabled:
 * Slack desktop application
 * Vagrant and VirtualBox
 * Packer
-
-#### Tools
-
-* Check Ansible version when running playbooks
-* Makefile with tasks for common playbooks
 
 #### Terraform
 
@@ -119,7 +129,11 @@ symbolic links to `/usr/local/bin`. These will be removed automatically.
 
 #### Development improvements
 
+* Makefile with tasks for common playbooks
+* Self-documented Makefile and 'make help' command
 * Travis: Fail fast on build errors
+* Travis: Run builds with Ansible 2.7, 2.8 and 2.9
+* Travis: Do not test manually installing PyPI
 * GitHub Actions: Added new pre-commit workflow
 * Format Python code with [yapf] pre-commit hook
 * Validate shell scripts with [shellcheck] and improve coding style
