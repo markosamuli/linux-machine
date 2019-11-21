@@ -39,6 +39,11 @@ indent_size = 2
 indent_style = space
 indent_size = 2
 
+# VS Code config files
+[.vscode/*.json]
+indent_style = space
+indent_size = 4
+
 # Makefile
 [Makefile]
 indent_style = tab
