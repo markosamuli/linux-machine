@@ -7,7 +7,7 @@ all: install-git-hooks lint
 
 PYENV_BIN = $(shell command -v pyenv 2>/dev/null)
 PYTHON_BIN = $(shell command -v python 2>/dev/null)
-PYTHON_VERSION = 3.7.5
+PYTHON_VERSION = $(shell pyenv install --list | sed 's/ //g' | grep "^3\.7\.[0-9]*$$" | sort -r | head -1)
 PYTHON_VERSION_PATH = $(HOME)/.pyenv/versions/$(PYTHON_VERSION)
 PYENV_VIRTUALENV = $(shell basename $(shell pwd))
 PYENV_VIRTUALENV_PATH = $(HOME)/.pyenv/versions/$(PYENV_VIRTUALENV)
