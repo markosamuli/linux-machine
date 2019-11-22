@@ -134,6 +134,10 @@ docker:  ## install Docker
 gcloud: playbooks/roles/markosamuli.gcloud  ## install Google Cloud SDK
 	@./setup -q -t gcloud
 
+.PHONY: linuxbrew
+linuxbrew: playbooks/roles/markosamuli.linuxbrew  ## install Homebrew on Linux
+	@./setup -q -t linuxbrew
+
 .PHONY: golang
 golang: playbooks/roles/markosamuli.golang  ## install Go programming language
 	@./setup -q -t golang
