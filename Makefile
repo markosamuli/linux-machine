@@ -15,6 +15,10 @@ default: help
 help:  ## print this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
+.PHONY: setup
+setup:  ## run setup with default options
+	@./setup
+
 # Get paths to pyenv and Python commmands
 PYENV_BIN = $(shell command -v pyenv 2>/dev/null)
 PYTHON_BIN = $(shell command -v python 2>/dev/null)
@@ -59,36 +63,20 @@ endif
 endif
 
 .PHONY: setup-requirements
-setup-requirements: setup-pyenv-virtualenv  ## setup development requirements
+setup-requirements: setup-pyenv-virtualenv  ## setup requirements for running the scripts
 	@pip install -r requirements.txt
+
+.PHONY: setup-dev-requirements
+setup-dev-requirements: setup-pyenv-virtualenv  ## setup development requirements
+	@pip install -r requirements.dev.txt
 
 PRE_COMMIT_INSTALLED = $(shell pre-commit --version 2>&1 | head -1 | grep -q 'pre-commit 1' && echo true)
 
 .PHONY: setup-pre-commit
 setup-pre-commit:  ## setup pre-commit if not installed
 ifneq ($(PRE_COMMIT_INSTALLED),true)
-	@$(MAKE) setup-requirements
+	@$(MAKE) setup-dev-requirements
 endif
-
-.PHONY: setup-ansible
-setup-ansible:  ## setup Ansible from package manager without roles or running playbooks
-	@./setup \
-		--reinstall-ansible \
-		--disable-ansible-pypi \
-		--no-run-playbook \
-		--no-install-roles \
-		--print-versions \
-		--verbose
-
-.PHONY: setup-ansible-pypi
-setup-ansible-pypi:  ## setup Ansible from PyPI without roles or running playbooks
-	@./setup \
-		--reinstall-ansible \
-		--enable-ansible-pypi \
-		--no-run-playbook \
-		--no-install-roles \
-		--print-versions \
-		--verbose
 
 .PHONY: lint
 lint: pre-commit  ## lint source code
@@ -107,9 +95,18 @@ endif
 travis-lint: setup-pre-commit  ## lint .travis.yml file
 	@pre-commit run -a travis-lint -v
 
+.PHONY: setup-ansible
+install-ansible:  ## install Ansible without roles or running playbooks
+	@./setup \
+		--install-ansible \
+		--no-run-playbook \
+		--no-install-roles \
+		--print-versions \
+		--verbose
+
 .PHONY: install-roles
 install-roles:  ## install Ansible roles
-	@./setup -n
+	@./setup --no-run-playbook
 
 .PHONY: clean-roles
 clean-roles: setup-requirements  ## remove outdated Ansible roles

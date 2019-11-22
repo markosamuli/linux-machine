@@ -1,3 +1,1 @@
-pre-commit==1.20.0
 PyYAML<6,>=5.1
-virtualenv==16.3.0
