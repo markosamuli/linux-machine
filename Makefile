@@ -90,10 +90,6 @@ setup-ansible-pypi:  ## setup Ansible from PyPI without roles or running playboo
 		--print-versions \
 		--verbose
 
-.PHONY: update
-update:  ## update Ansible roles in the requirements.yml file
-	@./scripts/update-roles.py
-
 .PHONY: lint
 lint: pre-commit  ## lint source code
 
@@ -111,9 +107,20 @@ endif
 travis-lint: setup-pre-commit  ## lint .travis.yml file
 	@pre-commit run -a travis-lint -v
 
-.PHONY: roles
-roles:  ## install and update Ansible roles
-	@./setup -n -f
+.PHONY: install-roles
+install-roles:  ## install Ansible roles
+	@./setup -n
+
+.PHONY: clean-roles
+clean-roles: setup-requirements  ## remove outdated Ansible roles
+	@./scripts/clean-roles.py
+
+.PHONY: update-roles
+update-roles: setup-requirements  ## update Ansible roles in the requirements.yml file
+	@./scripts/update-roles.py
+
+.PHONY: latest-roles
+latest-roles: update-roles clean-roles install-roles  # update Ansible roles and install new versions
 
 .PHONY: aws
 aws:  ## install AWS tools
