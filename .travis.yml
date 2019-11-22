@@ -14,20 +14,30 @@ language: generic
 
 matrix:
   include:
-    - name: "Ubuntu 16.04 LTS without Ansible"
+    - name: "Ubuntu 16.04 LTS with Ansible 2.7"
       os: linux
       dist: xenial
-    - name: "Ubuntu 18.04 LTS without Ansible"
+      env: MACHINE_ANSIBLE_VERSION=2.7
+    - name: "Ubuntu 18.04 LTS with Ansible 2.7"
       os: linux
       dist: bionic
-    - name: "Ubuntu 16.04 LTS with Ansible 2.7 PyPI installed"
+      env: MACHINE_ANSIBLE_VERSION=2.7
+    - name: "Ubuntu 16.04 LTS with Ansible 2.8"
       os: linux
       dist: xenial
-      env: ANSIBLE_VERSION='<2.8.0'
-    - name: "Ubuntu 16.04 LTS with Ansible 2.8 PyPI installed"
+      env: MACHINE_ANSIBLE_VERSION=2.8
+    - name: "Ubuntu 18.04 LTS with Ansible 2.8"
+      os: linux
+      dist: bionic
+      env: MACHINE_ANSIBLE_VERSION=2.8
+    - name: "Ubuntu 16.04 LTS with Ansible 2.9"
       os: linux
       dist: xenial
-      env: ANSIBLE_VERSION='<2.9.0,!=2.8.6'
+      env: MACHINE_ANSIBLE_VERSION=2.9
+    - name: "Ubuntu 18.04 LTS with Ansible 2.9"
+      os: linux
+      dist: bionic
+      env: MACHINE_ANSIBLE_VERSION=2.9
 
 before_install:
   # Cleanup existing NVM installation
@@ -36,13 +46,6 @@ before_install:
   - unset NVM_BIN
   - rm -rf /home/travis/.nvm
   - rm -rf /etc/profile.d/travis-nvm.sh
-
-install:
-  # Install Ansible with pip on Ubuntu
-  - >
-    if [[ "$ANSIBLE_VERSION" != "" ]]; then
-      pip install --user ansible${ANSIBLE_VERSION}
-    fi
 
 script:
   # Use Travis test configuration

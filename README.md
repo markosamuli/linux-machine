@@ -17,17 +17,43 @@ Read my [Machine Setup Guide][machine-setup-guide] for instructions.
 - [Ubuntu] or another supported operating system
 - Git installed
 - Bash shell
-- [Ansible] 2.7
+- [Ansible] 2.7 or newer (some features require Ansible 2.8)
 - [Python] 2.7 or 3.7 as required by Ansible
-
-[Ansible] 2.7 will be installed from [ansible/ansible-2.7] PPA if not found on
-the system.
 
 See [markosamuli/macos-machine] for my macOS setup.
 
 [Ansible]: https://www.ansible.com/
-[ansible/ansible-2.7]: https://launchpad.net/~ansible/+archive/ubuntu/ansible-2.7
 [markosamuli/macos-machine]: https://github.com/markosamuli/macos-machine
+
+## Ansible version
+
+The setup script will install Ansible using APT from [Ansible PPAs] if
+the `ansible` command is not found on your system.
+
+If an acceptable Ansible APT package installation candidate can't be found
+the setup script will try to install Ansible with PIP in a local virtuelenv.
+
+If `virtuelenv` can't be found the setup script the setup will fail.
+
+You can define `MACHINE_ANSIBLE_VERSION` environment variable to change
+the installed version.
+
+Example to use Ansible 2.8:
+
+```bash
+export MACHINE_ANSIBLE_VERSION=2.8
+```
+
+| Version | PPA |
+|---------|-----|
+| `2.7` | [ansible/ansible-2.7] |
+| `2.8` (default) | [ansible/ansible-2.8] |
+| `2.9` | [ansible/ansible-2.9] |
+
+[Ansible PPAs]: https://launchpad.net/~ansible
+[ansible/ansible-2.7]: https://launchpad.net/~ansible/+archive/ubuntu/ansible-2.7
+[ansible/ansible-2.8]: https://launchpad.net/~ansible/+archive/ubuntu/ansible-2.8
+[ansible/ansible-2.9]: https://launchpad.net/~ansible/+archive/ubuntu/ansible-2.9
 
 ### Ubuntu
 
