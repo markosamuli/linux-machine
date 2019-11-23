@@ -25,6 +25,9 @@
   version: v1.0.0
 - name: markosamuli.pyenv
   version: v2.1.1
+- name: markosamuli.rust
+  src: https://github.com/markosamuli/ansible-rust
+  version: master
 - name: markosamuli.terraform
   version: v1.2.1
 - name: markosamuli.vagrant

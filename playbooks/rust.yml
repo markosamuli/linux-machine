@@ -1,0 +1,8 @@
+---
+
+- name: Install Rust
+  hosts: all
+  become: false
+  roles:
+    - role: markosamuli.rust
+      tags: rust

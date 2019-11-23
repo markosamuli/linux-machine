@@ -42,6 +42,9 @@ install_packer: false
 # Install Ruby and rbenv
 install_ruby: false
 
+# Install Rust programming language
+install_rust: false
+
 # Update apt cache when running playbooks
 update_apt_cache: true
 
