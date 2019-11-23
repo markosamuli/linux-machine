@@ -147,6 +147,10 @@ node: playbooks/roles/markosamuli.nvm  ## install Node.js with NVM
 python: playbooks/roles/markosamuli.pyenv  ## install Python with pyenv
 	@./setup -q -t python,pyenv
 
+.PHONY: permissions
+permissions:  ## fix permissions in user home directory
+	@USER_HOME_FIX_PERMISSIONS=true ./setup -q -t permissions
+
 .PHONY: ruby
 ruby: playbooks/roles/zzet.rbenv  # install Ruby with rbenv
 	@./setup -q -t ruby,rbenv
@@ -164,14 +168,10 @@ tools:  ## install tools
 	@./setup -q -t tools
 
 playbooks/roles/zzet.rbenv:
-	@./setup -n
+	@./setup --no-run-playbook
 
 playbooks/roles/markosamuli.%:
-	@./setup -n
-
-.PHONY: permissions
-permissions:  ## fix permissions in user home directory
-	@USER_HOME_FIX_PERMISSIONS=true ./setup -q -t permissions
+	@./setup --no-run-playbook
 
 PRE_COMMIT_HOOKS = .git/hooks/pre-commit
 PRE_PUSH_HOOKS = .git/hooks/pre-push
