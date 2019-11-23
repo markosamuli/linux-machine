@@ -490,6 +490,12 @@ install it to another location, for example if you prefer
 gcloud_install_path: ~/opt
 ```
 
+To prefer `python3` over `python2` during Google Cloud SDK install:
+
+```yaml
+gcloud_prefer_python3: true
+```
+
 The [markosamuli.gcloud] role will modify your `.bashrc` and `.zshrc` files.
 To disable this and manage the configuration yourself, disable the following
 configuration option in the [`machine.yaml`][machine.yaml] file:
