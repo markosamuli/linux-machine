@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased changes] - 2019-11-20
+## [Unreleased changes] - 2019-11-23
 
 ### Added
 
@@ -36,6 +36,14 @@
 [Rust]: https://www.rust-lang.org/
 [markosamuli.rust]: https://github.com/markosamuli/ansible-rust
 
+### Fixed
+
+* Use `bash` executable instead of `sh` with Ansible on WSL environments to
+  get around Windows directory white spaces on the PATH. Fixes issues with
+  `zzet.rbenv` role no longer using bash for executing shell commands.
+* Fix `update-roles.py` script not working if using master as version in
+  `requirements.yml` file.
+
 ### Changed
 
 #### Ansible
@@ -47,11 +55,13 @@
 
 #### Setup script
 
-* Support for installing Ansible in a local virtualenv from PyPI
+* Rework on the setup script for improved Ansible installation when using
+  pyenv or virtualenv or calling Ansible with any non-system paths.
+* Support for installing Ansible in a local virtualenv from PyPI.
 * Allow setting the default Ansible version with `MACHINE_ANSIBLE_VERSION`
-  environment variable
-* Support for uninstalling existing Ansible installations
-* Added new long command line options in the setup script
+  environment variable.
+* Added support for uninstalling existing Ansible installations.
+* Added new long command line options in the setup script.
 
 #### Default installation options
 
@@ -134,18 +144,39 @@ symbolic links to `/usr/local/bin`. These will be removed automatically.
 [Python 2.7.17]: https://www.python.org/downloads/release/python-2717/
 [Python 3.7.5]: https://www.python.org/downloads/release/python-375/
 
+#### Makefile
+
+* Added Makefile with tasks for common playbooks.
+* Self-documented Makefile and `make help` command.
+* Added `setup` command for running `setup` script with the default options.
+* Removed `setup-ansible` and `setup-ansible-pypi` Makefile commands.
+* Added `install-ansible` Makefile command  that doesn't enable or disable PyPI
+  and doesn't reinstall existing Ansible installations.
+* Playbook short commands in Makefile will automatically install missing Ansible
+  roles.
+* Added `linuxbrew` Makefile command.
+* Renamed `roles` Makefile command to  `install-roles` and removed `-f` argument.
+* Renamed `update` Makefile command to  `update-roles`.
+* Added `clean-roles` Makefile command for running `clean-roles.py` script.
+* Added `latest-roles` Makefile command to update, clean and install required
+  Ansible roles to their latest versions.
+
+#### Travis
+
+* Fail fast on build errors
+* Run builds with Ansible 2.7, 2.8 and 2.9
+* Do not test manually installing PyPI
+
 #### Development improvements
 
-* Makefile with tasks for common playbooks
-* Self-documented Makefile and 'make help' command
-* Travis: Fail fast on build errors
-* Travis: Run builds with Ansible 2.7, 2.8 and 2.9
-* Travis: Do not test manually installing PyPI
-* GitHub Actions: Added new pre-commit workflow
+* Added new pre-commit workflow in GitHub Actions
 * Format Python code with [yapf] pre-commit hook
 * Validate shell scripts with [shellcheck] and improve coding style
 * Format shell scripts with [shfmt]
 * Setup virtualenv with pyenv for local development
+* Added `clean-roles.py` script for removing outdated Ansible roles.
+* Move development requirements from `requirements.txt` into a separate
+  `requirements.dev.txt` file to avoid installing those during normal usage.
 
 [yapf]: https://github.com/google/yapf
 [shellcheck]: https://github.com/koalaman/shellcheck
