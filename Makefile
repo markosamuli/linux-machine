@@ -151,6 +151,10 @@ linuxbrew: playbooks/roles/markosamuli.linuxbrew  ## install Homebrew on Linux
 golang: playbooks/roles/markosamuli.golang  ## install Go programming language
 	@./setup -q -t golang
 
+.PHONY: lua
+lua: ## install Lua programming language
+	@./setup -q -t lua
+
 .PHONY: node
 node: playbooks/roles/markosamuli.nvm  ## install Node.js with NVM
 	@./setup -q -t node,nvm

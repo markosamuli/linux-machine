@@ -24,6 +24,9 @@
 - import_playbook: asdf.yml
   when: install_asdf | bool
 
+- import_playbook: lua.yml
+  when: install_lua | bool
+
 - import_playbook: nodejs.yml
   when: install_nodejs | bool
 

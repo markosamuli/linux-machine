@@ -15,6 +15,14 @@ rules:
   document-start:
     present: true
 
+  braces:
+    # Allowing one space inside braces to improve code readability
+    max-spaces-inside: 1
+
+  brackets:
+    # Allowing one space inside braces to improve code readability
+    max-spaces-inside: 1
+
   indentation:
     # Requiring 2 space indentation
     spaces: 2

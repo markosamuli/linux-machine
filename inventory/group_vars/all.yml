@@ -6,6 +6,12 @@ install_linuxbrew: false
 # Install asdf-vm
 install_asdf: false
 
+# Install Lua programming language
+install_lua: false
+
+# Lua version to install
+lua_version: "5.3"
+
 # Install Neovim
 install_neovim: false
 

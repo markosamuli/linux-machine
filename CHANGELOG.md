@@ -19,6 +19,16 @@
 [Homebrew on Linux]: https://docs.brew.sh/Homebrew-on-Linux
 [markosamuli.linuxbrew]: https://github.com/markosamuli/ansible-linuxbrew
 
+#### Lua
+
+* Install [Lua] programming language and [LuaRocks] package manager for Lua
+* Install [luacheck] rock using the custom [luarocks module]
+
+[Lua]: https://www.lua.org/
+[luarocks]: https://luarocks.org/
+[luacheck]: https://github.com/mpeterv/luacheck
+[luarocks module]: playbooks/library/luarocks.py
+
 #### Ruby
 
 * Install [rbenv] and [Ruby] with [zzet.rbenv] v3.4.7

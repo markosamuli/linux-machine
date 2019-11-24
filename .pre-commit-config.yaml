@@ -34,17 +34,20 @@ repos:
     rev: v0.28.0
     hooks:
       - id: yapf
+        exclude: ^playbooks/library/luarocks\.py$
 
   - repo: https://github.com/pre-commit/pre-commit-hooks.git
     rev: v2.2.3
     hooks:
       - id: flake8
+        exclude: ^playbooks/library/luarocks\.py$
 
   - repo: https://github.com/pre-commit/mirrors-pylint.git
     rev: v2.4.4
     hooks:
       - id: pylint
         args: ['--disable=duplicate-code']
+        exclude: ^playbooks/library/luarocks\.py$
 
   - repo: https://github.com/adrienverge/yamllint.git
     rev: v1.18.0

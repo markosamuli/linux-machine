@@ -19,6 +19,8 @@
         "kubectl",
         "linebreak",
         "linuxbrew",
+        "luacheck",
+        "luarocks",
         "macos",
         "markdownlint",
         "markosamuli",

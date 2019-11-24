@@ -5,6 +5,9 @@
 # Do not fix permissions
 user_home_fix_permissions: false
 
+# Install Lua
+install_lua: true
+
 # Install asdf plugins
 asdf_plugins:
   - name: kubectl
