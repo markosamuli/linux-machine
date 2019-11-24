@@ -15,6 +15,10 @@ default: help
 help:  ## print this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
+.PHONY: setup
+setup:  ## run setup with default options
+	@./setup
+
 # Get paths to pyenv and Python commmands
 PYENV_BIN = $(shell command -v pyenv 2>/dev/null)
 PYTHON_BIN = $(shell command -v python 2>/dev/null)
@@ -59,40 +63,20 @@ endif
 endif
 
 .PHONY: setup-requirements
-setup-requirements: setup-pyenv-virtualenv  ## setup development requirements
+setup-requirements: setup-pyenv-virtualenv  ## setup requirements for running the scripts
 	@pip install -r requirements.txt
+
+.PHONY: setup-dev-requirements
+setup-dev-requirements: setup-pyenv-virtualenv  ## setup development requirements
+	@pip install -r requirements.dev.txt
 
 PRE_COMMIT_INSTALLED = $(shell pre-commit --version 2>&1 | head -1 | grep -q 'pre-commit 1' && echo true)
 
 .PHONY: setup-pre-commit
 setup-pre-commit:  ## setup pre-commit if not installed
 ifneq ($(PRE_COMMIT_INSTALLED),true)
-	@$(MAKE) setup-requirements
+	@$(MAKE) setup-dev-requirements
 endif
-
-.PHONY: setup-ansible
-setup-ansible:  ## setup Ansible from package manager without roles or running playbooks
-	@./setup \
-		--reinstall-ansible \
-		--disable-ansible-pypi \
-		--no-run-playbook \
-		--no-install-roles \
-		--print-versions \
-		--verbose
-
-.PHONY: setup-ansible-pypi
-setup-ansible-pypi:  ## setup Ansible from PyPI without roles or running playbooks
-	@./setup \
-		--reinstall-ansible \
-		--enable-ansible-pypi \
-		--no-run-playbook \
-		--no-install-roles \
-		--print-versions \
-		--verbose
-
-.PHONY: update
-update:  ## update Ansible roles in the requirements.yml file
-	@./scripts/update-roles.py
 
 .PHONY: lint
 lint: pre-commit  ## lint source code
@@ -111,56 +95,83 @@ endif
 travis-lint: setup-pre-commit  ## lint .travis.yml file
 	@pre-commit run -a travis-lint -v
 
-.PHONY: roles
-roles:  ## install and update Ansible roles
-	@./setup -n -f
+.PHONY: setup-ansible
+install-ansible:  ## install Ansible without roles or running playbooks
+	@./setup \
+		--install-ansible \
+		--no-run-playbook \
+		--no-install-roles \
+		--print-versions \
+		--verbose
+
+.PHONY: install-roles
+install-roles:  ## install Ansible roles
+	@./setup --no-run-playbook
+
+.PHONY: clean-roles
+clean-roles: setup-requirements  ## remove outdated Ansible roles
+	@./scripts/clean-roles.py
+
+.PHONY: update-roles
+update-roles: setup-requirements  ## update Ansible roles in the requirements.yml file
+	@./scripts/update-roles.py
+
+.PHONY: latest-roles
+latest-roles: update-roles clean-roles install-roles  # update Ansible roles and install new versions
 
 .PHONY: aws
-aws: ## install AWS tools
+aws:  ## install AWS tools
 	@./setup -q -t aws
-
-.PHONY: tools
-tools: ## install tools
-	@./setup -q -t tools
-
-.PHONY: golang
-golang:  ## install Go programming language
-	@./setup -q -t golang
-
-.PHONY: python
-python:  ## install Python with pyenv
-	@./setup -q -t python,pyenv
-
-.PHONY: ruby
-ruby:  # install Ruby with rbenv
-	@./setup -q -t ruby,rbenv
-
-.PHONY: node
-node:  ## install Node.js with NVM
-	@./setup -q -t node,nvm
-
-.PHONY: terraform
-terraform:  ## install Terraform
-	@./setup -q -t terraform
-
-.PHONY: gcloud
-gcloud:  ## install Google Cloud SDK
-	@./setup -q -t gcloud
 
 .PHONY: docker
 docker:  ## install Docker
 	@./setup -q -t docker
 
-.PHONY: rust
-rust: playbooks/roles/markosamuli.rust  ## install Rust
-	@./setup -q -t rust
+.PHONY: gcloud
+gcloud: playbooks/roles/markosamuli.gcloud  ## install Google Cloud SDK
+	@./setup -q -t gcloud
 
-playbooks/roles/markosamuli.%:
-	@./setup -n
+.PHONY: linuxbrew
+linuxbrew: playbooks/roles/markosamuli.linuxbrew  ## install Homebrew on Linux
+	@./setup -q -t linuxbrew
+
+.PHONY: golang
+golang: playbooks/roles/markosamuli.golang  ## install Go programming language
+	@./setup -q -t golang
+
+.PHONY: node
+node: playbooks/roles/markosamuli.nvm  ## install Node.js with NVM
+	@./setup -q -t node,nvm
+
+.PHONY: python
+python: playbooks/roles/markosamuli.pyenv  ## install Python with pyenv
+	@./setup -q -t python,pyenv
 
 .PHONY: permissions
 permissions:  ## fix permissions in user home directory
 	@USER_HOME_FIX_PERMISSIONS=true ./setup -q -t permissions
+
+.PHONY: ruby
+ruby: playbooks/roles/zzet.rbenv  # install Ruby with rbenv
+	@./setup -q -t ruby,rbenv
+
+.PHONY: rust
+rust: playbooks/roles/markosamuli.rust  ## install Rust
+	@./setup -q -t rust
+
+.PHONY: terraform
+terraform: playbooks/roles/markosamuli.terraform  ## install Terraform
+	@./setup -q -t terraform
+
+.PHONY: tools
+tools:  ## install tools
+	@./setup -q -t tools
+
+playbooks/roles/zzet.rbenv:
+	@./setup --no-run-playbook
+
+playbooks/roles/markosamuli.%:
+	@./setup --no-run-playbook
 
 PRE_COMMIT_HOOKS = .git/hooks/pre-commit
 PRE_PUSH_HOOKS = .git/hooks/pre-push

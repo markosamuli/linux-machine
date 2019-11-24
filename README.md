@@ -25,36 +25,6 @@ See [markosamuli/macos-machine] for my macOS setup.
 [Ansible]: https://www.ansible.com/
 [markosamuli/macos-machine]: https://github.com/markosamuli/macos-machine
 
-## Ansible version
-
-The setup script will install Ansible using APT from [Ansible PPAs] if
-the `ansible` command is not found on your system.
-
-If an acceptable Ansible APT package installation candidate can't be found
-the setup script will try to install Ansible with PIP in a local virtuelenv.
-
-If `virtuelenv` can't be found the setup script the setup will fail.
-
-You can define `MACHINE_ANSIBLE_VERSION` environment variable to change
-the installed version.
-
-Example to use Ansible 2.8:
-
-```bash
-export MACHINE_ANSIBLE_VERSION=2.8
-```
-
-| Version | PPA |
-|---------|-----|
-| `2.7` | [ansible/ansible-2.7] |
-| `2.8` (default) | [ansible/ansible-2.8] |
-| `2.9` | [ansible/ansible-2.9] |
-
-[Ansible PPAs]: https://launchpad.net/~ansible
-[ansible/ansible-2.7]: https://launchpad.net/~ansible/+archive/ubuntu/ansible-2.7
-[ansible/ansible-2.8]: https://launchpad.net/~ansible/+archive/ubuntu/ansible-2.8
-[ansible/ansible-2.9]: https://launchpad.net/~ansible/+archive/ubuntu/ansible-2.9
-
 ### Ubuntu
 
 This setup has been tested on the [Ubuntu] [16.04 LTS (Xenial Xerus)]
@@ -139,6 +109,80 @@ The `setup` script will detect if this file exists and passes it to the
 Ansible Playbook with `--extra-vars`.
 
 [machine.yaml]: machine.yaml
+
+## Ansible
+
+The setup script will try to install Ansible
+
+### Ansible version
+
+Ansible version 2.8 is installed by default.
+
+You can define `MACHINE_ANSIBLE_VERSION` environment variable to change
+the installed version.
+
+Example to use Ansible 2.9 instead of Ansible 2.8:
+
+```bash
+export MACHINE_ANSIBLE_VERSION=2.9
+```
+
+### Force Ansible reinstall
+
+To remove existing Ansible versions and force installation of Ansible, you
+can use the `--reinstall-ansible` argument, for example:
+
+```bash
+./setup --reinstall-ansible
+```
+
+### Installing Ansible with APT
+
+The setup script will install Ansible using APT from [Ansible PPAs] if
+the `ansible` command is not found on your system.
+
+| Version | PPA |
+|---------|-----|
+| `2.7` | [ansible/ansible-2.7] |
+| `2.8` (default) | [ansible/ansible-2.8] |
+| `2.9` | [ansible/ansible-2.9] |
+
+[Ansible PPAs]: https://launchpad.net/~ansible
+[ansible/ansible-2.7]: https://launchpad.net/~ansible/+archive/ubuntu/ansible-2.7
+[ansible/ansible-2.8]: https://launchpad.net/~ansible/+archive/ubuntu/ansible-2.8
+[ansible/ansible-2.9]: https://launchpad.net/~ansible/+archive/ubuntu/ansible-2.9
+
+### Installing Ansible from PyPI into virtualenv
+
+If an acceptable Ansible APT package installation candidate can't be found
+the setup script will try to install Ansible with [pip] in a local virtuelenv.
+
+If [virtuelenv] can't be found the setup script the setup will fail.
+
+You can disable installation from PyPI with `--disable-ansible-pypi` argument,
+for example:
+
+```bash
+./setup --disable-ansible-pypi
+```
+
+[pip]: https://pypi.org/project/pip/
+[virtuelenv]: https://virtualenv.pypa.io/en/latest/
+
+### Installing Ansible from PyPI into pyenv environment
+
+If the user has set up a local development environment with [pyenv] and this is
+defined in a `.python-version` file in the repository root, the setup script
+will install Ansible into this environment.
+
+Same as with the local virtualenv, you can disable installation from PyPI
+with `--disable-ansible-pypi` argument, for example:
+
+```bash
+./setup --disable-ansible-pypi
+```
+
+[pyenv]: https://github.com/pyenv/pyenv
 
 ## Software installed by the playbooks
 
@@ -524,16 +568,22 @@ backup copies of them before running the script.
 The following external Ansible roles are installed and used. See
 [requirements.yml] file for the installed versions.
 
-To install roles and forcibly update any existing ones:
+To install roles:
 
 ```bash
-make roles
+make install-roles
 ```
 
 To update roles to the latest release versions:
 
 ```bash
-make update
+make update-roles
+```
+
+To remove any outdated roles:
+
+```bash
+make clean-roles
 ```
 
 | Role | Build status |
@@ -564,12 +614,6 @@ make update
 [requirements.yml]: requirements.yml
 
 ## Development
-
-Fix ansible-lint installation issues:
-
-```bash
-pip install virtualenv==16.3.0
-```
 
 Install [pre-commit] hooks:
 
