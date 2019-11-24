@@ -8,13 +8,8 @@ insert_final_newline = true
 trim_trailing_whitespace = true
 charset = utf-8
 
-# Shell scripts without extension
-[{setup,tests/idempotence}]
-indent_style = space
-indent_size = 4
-
 # Shell scripts
-[{*.sh}]
+[{*.sh,setup}]
 indent_style = space
 indent_size = 4
 
@@ -25,17 +20,12 @@ indent_size = 2
 max_line_length = 80
 
 # YAML files
-[{*.yml,*.yaml}]
-indent_style = space
-indent_size = 2
-
-# YAML files without extension
-[{.ansible-lint,.yamllint}]
+[{*.yml,*.yaml,.ansible-lint,.yamllint}]
 indent_style = space
 indent_size = 2
 
 # JSON files
-[{*.json}]
+[*.json]
 indent_style = space
 indent_size = 2
 
@@ -49,7 +39,7 @@ indent_size = 4
 indent_style = tab
 indent_size = 2
 
-# Python scripts without extension
-[{update-roles,tests/playbook-tags}]
+# Python scripts
+[*.py]
 indent_style = space
 indent_size = 4
