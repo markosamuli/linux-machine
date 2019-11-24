@@ -37,7 +37,7 @@ run_setup() {
 
 # Parse tags from the main.yml playbook file
 get_playbook_tags() {
-    ./tests/playbook-tags.py playbooks/main.yml || {
+    ./tests/playbook_tags.py playbooks/main.yml || {
         error "Something went wrong while trying to get playbook tags"
         exit 1
     }
