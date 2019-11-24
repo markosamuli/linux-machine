@@ -1,5 +1,28 @@
 #!/usr/bin/env bash
-# Setup script for https://github.com/markosamuli/linux-machine
+#
+# Setup script for https://github.com/markosamuli/linux-machine and
+# https://github.com/markosamuli/macos-machine Ansible playbooks.
+#
+# 2019-11-22:
+# - Rework on the setup script for improved Ansible installation when using
+#   pyenv or virtualenv or calling Ansible with any non-system paths.
+# - Use bash executable instead of sh with Ansible on WSL environments
+#
+# 2019-11-21:
+# - Require minimum Ansible version 2.7
+# - Install Ansible 2.8 as the default version
+# - Support for installing Ansible in a local virtualenv from PyPI
+# - Allow setting the default Ansible version with MACHINE_ANSIBLE_VERSION
+#   environment variable
+# - Check that we're not using Ansible v2.8.6
+# - Support for uninstalling existing Ansible installations
+# - Added new long command line options in setup script
+#
+# 2019-11-20:
+# - Check for outdated Homebrew packages on macOS
+#
+# 2019-11-09:
+# - Check the current user is not root
 
 DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
