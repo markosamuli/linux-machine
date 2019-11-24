@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased changes] - 2019-11-23
+## [2.1.0] - 2019-11-24
 
 ### Added
 
@@ -168,7 +168,7 @@ symbolic links to `/usr/local/bin`. These will be removed automatically.
 * Added `linuxbrew` Makefile command.
 * Renamed `roles` Makefile command to  `install-roles` and removed `-f` argument.
 * Renamed `update` Makefile command to  `update-roles`.
-* Added `clean-roles` Makefile command for running `clean-roles.py` script.
+* Added `clean-roles` Makefile command for running `clean_roles.py` script.
 * Added `latest-roles` Makefile command to update, clean and install required
   Ansible roles to their latest versions.
 
@@ -178,9 +178,16 @@ symbolic links to `/usr/local/bin`. These will be removed automatically.
 * Run builds with Ansible 2.7, 2.8 and 2.9
 * Do not test manually installing PyPI
 
-#### Development improvements
+#### Python scripts
+
+* Moved Python business logic and shared functionality from the Python scripts
+  into a local `machine` Python package.
+
+#### Development and coding style improvements
 
 * Added new pre-commit workflow in GitHub Actions
+* Removed `autopep8` in favour of using `yapf` for formatting Python code
+* Added `pylint` pre-commit hooks for linting Python code
 * Format Python code with [yapf] pre-commit hook
 * Validate shell scripts with [shellcheck] and improve coding style
 * Format shell scripts with [shfmt]
@@ -198,4 +205,5 @@ symbolic links to `/usr/local/bin`. These will be removed automatically.
 First release.
 
 [Unreleased changes]: https://github.com/markosamuli/linux-machine/commits/develop
+[2.0.0]: https://github.com/markosamuli/linux-machine/releases/tag/v2.0.0
 [1.0.0]: https://github.com/markosamuli/linux-machine/releases/tag/v1.0.0
