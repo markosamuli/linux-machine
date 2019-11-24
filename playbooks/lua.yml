@@ -1,0 +1,22 @@
+---
+
+- name: Lua programming language
+  hosts: all
+  tags: lua
+  tasks:
+
+    - name: Install Lua
+      package:
+        name: "lua{{ lua_version }}"
+
+    - name: Install Lua development files
+      package:
+        name: "liblua{{ lua_version }}-dev"
+
+    - name: Install LuaRocks package manager
+      package:
+        name: luarocks
+
+    - name: Install the "luacheck" rock
+      luarocks:
+        name: luacheck

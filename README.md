@@ -437,6 +437,29 @@ install_golang: false
 
 [Go programming language]: https://golang.org/
 
+### Lua
+
+You can install [Lua] programming language by adding the following option to
+your [`machine.yaml`][machine.yaml] file:
+
+```yaml
+install_lua: true
+```
+
+Run Lua playbook:
+
+```bash
+make lua
+```
+
+This will also install [LuaRocks] package manager and [luacheck]
+rock using the custom [luarocks module].
+
+[Lua]: https://www.lua.org/
+[LuaRocks]: https://luarocks.org/
+[luacheck]: https://github.com/mpeterv/luacheck
+[luarocks module]: playbooks/library/luarocks.py
+
 ### Git
 
 Latest version of [Git] will be installed.
