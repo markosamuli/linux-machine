@@ -1,16 +1,17 @@
-#!/usr/bin/env python
+"""Ansible playbook tools"""
 
+from collections import OrderedDict
 import os.path
 import sys
-import yaml
-from collections import OrderedDict
+import yaml  # pylint: disable=import-error
 
 
 def get_tags_from_playbook(playbook_file):
+    """Get available tags from Ansible playbook"""
     tags = []
     playbook_path = os.path.dirname(playbook_file)
-    with open(playbook_file) as f:
-        playbook = yaml.safe_load(f)
+    with open(playbook_file) as playbook_fp:
+        playbook = yaml.safe_load(playbook_fp)
         for item in playbook:
             if 'import_playbook' in item:
                 import_playbook = os.path.join(playbook_path,
@@ -35,17 +36,3 @@ def get_tags_from_playbook(playbook_file):
         sys.stderr.write('%s has no tags\n' % playbook_file)
 
     return tags
-
-
-def print_tags_from_playbook(playbook_file):
-    for tag in get_tags_from_playbook(playbook_file):
-        print(tag)
-
-
-if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        print_tags_from_playbook(sys.argv[1])
-    else:
-        print('error: playbook name missing')
-        print('usage: %s [playbook]' % sys.argv[0])
-        sys.exit(1)
