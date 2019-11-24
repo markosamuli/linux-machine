@@ -118,9 +118,10 @@ symbolic links to `/usr/local/bin`. These will be removed automatically.
 
 #### Google Cloud SDK
 
-* Upgraded [markosamuli.gcloud] from v1.1.1 to v2.1.1
+* Upgraded [markosamuli.gcloud] from v1.1.1 to v2.1.2
 * Install Google Cloud SDK from an archive file instead of the APT repository
 * Cloud SDK release 271.0.0
+* Option for preferring `python3` over `python2` during install
 
 [markosamuli.gcloud]: https://github.com/markosamuli/ansible-gcloud
 
