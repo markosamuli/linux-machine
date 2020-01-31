@@ -142,6 +142,10 @@ aws:  ## install AWS tools
 docker:  ## install Docker
 	@./setup -q -t docker
 
+.PHONY: editors
+editors:  ## install IDEs and code editors
+	@./setup -q -t editors
+
 .PHONY: gcloud
 gcloud: playbooks/roles/markosamuli.gcloud  ## install Google Cloud SDK
 	@./setup -q -t gcloud

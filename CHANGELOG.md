@@ -7,6 +7,7 @@ Test setup on Ubuntu 19.10.
 ## Added
 
 * Install Zsh by default
+* Added `make editors` command
 
 ## Fixed
 
