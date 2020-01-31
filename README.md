@@ -208,18 +208,22 @@ Installation will be done using [markosamuli.linuxbrew] Ansible role.
 
 ### Desktop applications
 
-Installed on all environments:
+Installed on all non-WSL environments:
 
-- [Terminator](https://gnometerminator.blogspot.com/p/introduction.html)
-- [Hyper](https://hyper.is/)
+- [Terminator][terminator]
+- [Hyper][hyper]
+- [Terminus][terminus]
 
-To install [Slack] desktop application via Snap package:
+To install [Slack][slack] desktop application via Snap package:
 
 ```yaml
 install_slack: true
 ```
 
-[Slack]: https://snapcraft.io/slack
+[terminator]: https://gnometerminator.blogspot.com/p/introduction.html
+[hyper]: https://hyper.is/
+[terminus]: https://eugeny.github.io/terminus/
+[slack]: https://snapcraft.io/slack
 
 ### Command line tools
 

@@ -4,6 +4,7 @@
 # Ansible roles
 playbooks/roles/*
 !playbooks/roles/docker
+!playbooks/roles/terminus
 !playbooks/roles/user_home_permissions
 
 # IDEs

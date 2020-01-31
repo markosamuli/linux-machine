@@ -7,6 +7,7 @@
     - name: Install Terminator
       apt:
         name: terminator
+      tags: terminator
       when: not is_wsl
 
 - name: Hyper
@@ -15,4 +16,12 @@
   roles:
     - role: markosamuli.hyper
       tags: hyper
+      when: not is_wsl
+
+- name: Terminus
+  hosts: all
+  tags: terminal
+  roles:
+    - role: terminus
+      tags: terminus
       when: not is_wsl

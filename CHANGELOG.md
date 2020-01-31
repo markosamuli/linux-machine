@@ -8,6 +8,9 @@ Test setup on Ubuntu 19.10.
 
 * Install Zsh by default
 * Added `make editors` command
+* Install [Terminus][terminus] terminal application
+
+[terminus]: https://eugeny.github.io/terminus/
 
 ## Fixed
 

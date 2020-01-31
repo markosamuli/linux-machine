@@ -1,0 +1,14 @@
+---
+
+- name: Get installed Terminus version
+  shell: "dpkg -l terminus | grep terminus | awk 'NR==1{print $3}' | cut -d- -f1" # noqa 306
+  register: terminus_dpkg_version
+  changed_when: false
+
+- name: Set installed Terminus version
+  set_fact:
+    terminus_installed_version: "{{ terminus_dpkg_version.stdout }}"
+
+- name: Install new Terminus version from Debian package
+  include_tasks: Debian_install.yml
+  when: terminus_installed_version != terminus_version
