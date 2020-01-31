@@ -23,6 +23,8 @@ setup:  ## run setup with default options
 PYENV_BIN = $(shell command -v pyenv 2>/dev/null)
 PYTHON_BIN = $(shell command -v python 2>/dev/null)
 
+# Configure pyenv variables only if pyenv is found
+ifneq ($(PYENV_BIN),)
 # Python version to use for the virtualenv
 PYTHON_VERSION = $(shell pyenv install --list | sed 's/ //g' | grep "^3\.7\.[0-9]*$$" | sort -r | head -1)
 PYTHON_VERSION_PATH = $(HOME)/.pyenv/versions/$(PYTHON_VERSION)
@@ -33,6 +35,7 @@ PYENV_VIRTUALENV_PATH = $(HOME)/.pyenv/versions/$(PYENV_VIRTUALENV)
 
 # Get local pyenv version
 PYENV_LOCAL = $(shell pyenv local 2>/dev/null)
+endif
 
 .PHONY: setup-pyenv-virtualenv
 setup-pyenv-virtualenv:  ## setup virtualenv with pyenv for development

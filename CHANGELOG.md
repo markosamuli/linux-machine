@@ -1,5 +1,13 @@
 # Changelog
 
+## [Unreleased] - 2020-01-31
+
+Test setup on Ubuntu 19.10.
+
+## Fixed
+
+* Supress errors in `Makefile` when `pyenv` is not installed
+
 ## [2.1.0] - 2019-11-24
 
 ### Added
