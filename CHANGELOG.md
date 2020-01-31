@@ -4,6 +4,10 @@
 
 Test setup on Ubuntu 19.10.
 
+## Added
+
+* Install Zsh by default
+
 ## Fixed
 
 * Supress errors in `Makefile` when `pyenv` is not installed

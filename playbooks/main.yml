@@ -2,6 +2,9 @@
 
 - import_playbook: setup.yml
 
+- import_playbook: zsh.yml
+  when: install_zsh | bool
+
 - import_playbook: linuxbrew.yml
   when: install_linuxbrew | bool
 

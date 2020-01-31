@@ -1,0 +1,9 @@
+---
+
+- name: zsh
+  hosts: all
+  tags: zsh
+  tasks:
+    - name: Install zsh
+      package:
+        name: zsh

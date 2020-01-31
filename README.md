@@ -186,6 +186,14 @@ with `--disable-ansible-pypi` argument, for example:
 
 ## Software installed by the playbooks
 
+### Zsh
+
+Zsh is installed by default. You can disable this in the configuration:
+
+```yaml
+install_zsh: false
+```
+
 ### Homebrew on Linux (aka Linuxbrew)
 
 [Homebrew] can be installed on Linux by enabled the following option:

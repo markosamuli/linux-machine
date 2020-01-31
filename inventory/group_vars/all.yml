@@ -1,5 +1,8 @@
 ---
 
+# Install zsh
+install_zsh: true
+
 # Install Linuxbrew
 install_linuxbrew: false
 

@@ -186,6 +186,10 @@ terraform: playbooks/roles/markosamuli.terraform  ## install Terraform
 tools:  ## install tools
 	@./setup -q -t tools
 
+.PHONY: zsh
+zsh:  ## install zsh
+	@./setup -q -t zsh
+
 playbooks/roles/zzet.rbenv:
 	@./setup --no-run-playbook
 
