@@ -4,7 +4,6 @@
 # Travis CI configuration
 # https://docs.travis-ci.com/
 ---
-
 # Run tests against pull requests and main branches only
 if: |
   type = pull_request OR \
