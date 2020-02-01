@@ -1,9 +1,9 @@
 # Development Linux Setup
 
-| Branch  | Status |
-|---------|--------|
-| master  | [![Build Status](https://travis-ci.org/markosamuli/linux-machine.svg?branch=master)](https://travis-ci.org/markosamuli/linux-machine/branches)
-| develop | [![Build Status](https://travis-ci.org/markosamuli/linux-machine.svg?branch=develop)](https://travis-ci.org/markosamuli/linux-machine/branches)
+| Branch  | Status                                                                                                                                          |
+| ------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| master  | [![Build Status](https://travis-ci.org/markosamuli/linux-machine.svg?branch=master)](https://travis-ci.org/markosamuli/linux-machine/branches)  |
+| develop | [![Build Status](https://travis-ci.org/markosamuli/linux-machine.svg?branch=develop)](https://travis-ci.org/markosamuli/linux-machine/branches) |
 
 This is a collection of Ansible roles and tasks to setup a Linux development
 machine.
@@ -14,42 +14,42 @@ Read my [Machine Setup Guide][machine-setup-guide] for instructions.
 
 ## Requirements
 
-- [Ubuntu] or another supported operating system
+- [Ubuntu][ubuntu] or another supported operating system
 - Git installed
 - Bash shell
-- [Ansible] 2.7 or newer (some features require Ansible 2.8)
-- [Python] 2.7 or 3.7 as required by Ansible
+- [Ansible][ansible] 2.7 or newer (some features require Ansible 2.8)
+- [Python][python] 2.7 or 3.7 as required by Ansible
 
 See [markosamuli/macos-machine] for my macOS setup.
 
-[Ansible]: https://www.ansible.com/
+[ansible]: https://www.ansible.com/
 [markosamuli/macos-machine]: https://github.com/markosamuli/macos-machine
 
 ### Ubuntu
 
-This setup has been tested on the [Ubuntu] [16.04 LTS (Xenial Xerus)]
-and [18.04 LTS (Bionic Beaver)] releases.
+This setup has been tested on the Ubuntu [16.04 LTS (Xenial Xerus)][xenial]
+and [18.04 LTS (Bionic Beaver)][bionic] releases.
 
 Travis CI builds are running on Ubuntu 16.04.
 
-[Ubuntu]: https://www.ubuntu.com/
-[16.04 LTS (Xenial Xerus)]: http://releases.ubuntu.com/16.04/
-[18.04 LTS (Bionic Beaver)]: http://releases.ubuntu.com/18.04/
+[ubuntu]: https://www.ubuntu.com/
+[xenial]: http://releases.ubuntu.com/16.04/
+[bionic]: http://releases.ubuntu.com/18.04/
 
 ### Ubuntu on WSL
 
 I've also used this playbook to install packages on Ubuntu running on
-[Windows Subsystem for Linux] on Windows 10.
+[Windows Subsystem for Linux][wsl] on Windows 10.
 
 Some packages are known not to work so I've added custom fact `is_wsl`
 that can be used to check if we're running Linux on Windows and these
 will be skipped during the set up.
 
-[Windows Subsystem for Linux]: https://docs.microsoft.com/en-us/windows/wsl/install-win10
+[wsl]: https://docs.microsoft.com/en-us/windows/wsl/install-win10
 
 ### Pengwin on WSL
 
-I've tried installing some of the packages on [Pengwin] distribution.
+I've tried installing some of the packages on [Pengwin][pengwin] distribution.
 
 Ansible installation should be compatible with [pengwin-setup] as found
 in the `development` branch.
@@ -64,11 +64,11 @@ Tested packages:
 Known conflicts:
 
 - Pengwin installs Terraform in `/usr/bin/terraform`
-- Pengwin installs Node.js with [n npm] instead of NVM
+- Pengwin installs Node.js with [n npm][tjn] instead of NVM
 
-[Pengwin]: https://github.com/WhitewaterFoundry/Pengwin
+[pengwin]: https://github.com/WhitewaterFoundry/Pengwin
 [pengwin-setup]: https://github.com/WhitewaterFoundry/pengwin-setup
-[n npm]: https://github.com/tj/n
+[tjn]: https://github.com/tj/n
 
 ## Install
 
@@ -138,16 +138,17 @@ can use the `--reinstall-ansible` argument, for example:
 
 ### Installing Ansible with APT
 
-The setup script will install Ansible using APT from [Ansible PPAs] if
-the `ansible` command is not found on your system.
+The setup script will install Ansible using APT from
+[Ansible PPAs][ansible-ppa] if the `ansible` command is not found on your
+system.
 
-| Version | PPA |
-|---------|-----|
-| `2.7` | [ansible/ansible-2.7] |
+| Version         | PPA                   |
+| --------------- | --------------------- |
+| `2.7`           | [ansible/ansible-2.7] |
 | `2.8` (default) | [ansible/ansible-2.8] |
-| `2.9` | [ansible/ansible-2.9] |
+| `2.9`           | [ansible/ansible-2.9] |
 
-[Ansible PPAs]: https://launchpad.net/~ansible
+[ansible-ppa]: https://launchpad.net/~ansible
 [ansible/ansible-2.7]: https://launchpad.net/~ansible/+archive/ubuntu/ansible-2.7
 [ansible/ansible-2.8]: https://launchpad.net/~ansible/+archive/ubuntu/ansible-2.8
 [ansible/ansible-2.9]: https://launchpad.net/~ansible/+archive/ubuntu/ansible-2.9
@@ -196,7 +197,7 @@ install_zsh: false
 
 ### Homebrew on Linux (aka Linuxbrew)
 
-[Homebrew] can be installed on Linux by enabled the following option:
+[Homebrew][homebrew] can be installed on Linux by enabled the following option:
 
 ```yaml
 install_linuxbrew: true
@@ -204,7 +205,7 @@ install_linuxbrew: true
 
 Installation will be done using [markosamuli.linuxbrew] Ansible role.
 
-[Homebrew]: https://docs.brew.sh/Homebrew-on-Linux
+[homebrew]: https://docs.brew.sh/Homebrew-on-Linux
 
 ### Desktop applications
 
@@ -229,10 +230,11 @@ install_slack: true
 
 ### Command line tools
 
-- [GNU Wget]
+- [GNU Wget][wget]
 - [curl]
 - [jq] command-line JSON processor
-- [The Silver Searcher] (`ag` command) code searching utility similar to `ack`
+- [The Silver Searcher][ag] (`ag` command) code searching utility similar
+  to `ack`
 - [htop] process viewer for console
 - [pass] — the standard unix password manager
 
@@ -242,19 +244,20 @@ Run tools playbook:
 make tools
 ```
 
-[GNU Wget]: https://www.gnu.org/software/wget/
+[wget]: https://www.gnu.org/software/wget/
 [curl]: https://curl.haxx.se/
 [jq]: https://stedolan.github.io/jq/
 [htop]: https://hisham.hm/htop/
-[The Silver Searcher]: https://github.com/ggreer/the_silver_searcher
+[ag]: https://github.com/ggreer/the_silver_searcher
 [pass]: https://www.passwordstore.org/
 
 ### Editors
 
-[Visual Studio Code] will be installed on non-WSL environments via Snap package.
+[Visual Studio Code][vscode] will be installed on non-WSL environments via Snap
+package.
 
-See [Developing on WSL] for instructions how to install and use Visual Studio
-Code [Remote - WSL] extension.
+See [Developing on WSL][vscode-dev-wsl] for instructions how to install and use
+Visual Studio Code [Remote - WSL][vscode-remote-wsl] extension.
 
 Latest version of [Vim] will be installed using the package manager.
 
@@ -264,11 +267,11 @@ To install [Neovim] enable it in `machine.yaml`:
 install_neovim: true
 ```
 
-[Visual Studio Code]: https://code.visualstudio.com/
-[Developing on WSL]: https://code.visualstudio.com/docs/remote/wsl
-[Remote - WSL]: https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl
-[Vim]: https://www.vim.org/
-[Neovim]: https://neovim.io/
+[vscode]: https://code.visualstudio.com/
+[vscode-dev-wsl]: https://code.visualstudio.com/docs/remote/wsl
+[vscode-remote-wsl]: https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl
+[vim]: https://www.vim.org/
+[neovim]: https://neovim.io/
 
 ### asdf version manager
 
@@ -326,7 +329,7 @@ and disable the following configuration option.
 pyenv_init_shell: false
 ```
 
-[Python]: https://www.python.org/
+[python]: https://www.python.org/
 [pyenv]: https://github.com/pyenv/pyenv
 [pyenv-virtualenv]: https://github.com/pyenv/pyenv-virtualenv
 
@@ -377,7 +380,7 @@ fi
 
 [zzet.rbenv]: https://github.com/zzet/ansible-rbenv-role
 [rbenv]: https://github.com/rbenv/rbenv
-[Ruby]: https://www.ruby-lang.org/en/
+[ruby]: https://www.ruby-lang.org/en/
 
 ### Rust
 
@@ -407,12 +410,12 @@ To uninstall Rust, run:
 rustup self uninstall
 ```
 
-[Rust]: https://www.rust-lang.org/
+[rust]: https://www.rust-lang.org/
 [markosamuli.rust]: https://github.com/markosamuli/ansible-rust
 
 ### Node.js
 
-- [Node Version Manager] (NVM)
+- [Node Version Manager](NVM)
 - [Node.js] LTS installed with NMV
 
 Run Node.js playbook:
@@ -428,8 +431,8 @@ your [`machine.yaml`][machine.yaml]:
 install_nodejs: false
 ```
 
-[Node Version Manager]: https://github.com/creationix/nvm
-[Node.js]: https://nodejs.org/en/
+[node version manager]: https://github.com/creationix/nvm
+[node.js]: https://nodejs.org/en/
 
 ### Go
 
@@ -449,12 +452,12 @@ your [`machine.yaml`][machine.yaml]:
 install_golang: false
 ```
 
-[Go programming language]: https://golang.org/
+[go programming language]: https://golang.org/
 
 ### Lua
 
-You can install [Lua] programming language by adding the following option to
-your [`machine.yaml`][machine.yaml] file:
+You can install [Lua][lua] programming language by adding the following option
+to your [`machine.yaml`][machine.yaml] file:
 
 ```yaml
 install_lua: true
@@ -466,35 +469,35 @@ Run Lua playbook:
 make lua
 ```
 
-This will also install [LuaRocks] package manager and [luacheck]
-rock using the custom [luarocks module].
+This will also install [LuaRocks][luarocks] package manager and [luacheck]
+rock using the custom [luarocks module][luarocks-py].
 
-[Lua]: https://www.lua.org/
-[LuaRocks]: https://luarocks.org/
+[lua]: https://www.lua.org/
+[luarocks]: https://luarocks.org/
 [luacheck]: https://github.com/mpeterv/luacheck
-[luarocks module]: playbooks/library/luarocks.py
+[luarocks-py]: playbooks/library/luarocks.py
 
 ### Git
 
-Latest version of [Git] will be installed.
+Latest version of [Git][git] will be installed.
 
-[Git]: https://git-scm.com/
+[git]: https://git-scm.com/
 
 ### Vagrant and VirtualBox
 
-[Vagrant] and [VirtualBox] are no longer installed by default, but you can
-enable them by adding:
+[Vagrant][vagrant] and [VirtualBox][virtualbox] are no longer installed by
+default, but you can enable them by adding:
 
 ```yaml
 install_vagrant: true
 ```
 
-[Vagrant]: https://www.vagrantup.com/
-[VirtualBox]: https://www.virtualbox.org/
+[vagrant]: https://www.vagrantup.com/
+[virtualbox]: https://www.virtualbox.org/
 
 ### Docker
 
-[Docker] will be installed by default.
+[Docker][docker] will be installed by default.
 
 Run Docker playbook:
 
@@ -508,17 +511,17 @@ To disable installation, add:
 install_docker: false
 ```
 
-[Docker]: https://docs.docker.com/engine/
+[docker]: https://docs.docker.com/engine/
 
 ### Packer
 
-To install [Packer] add:
+To install [Packer][packer] add:
 
 ```yaml
 install_packer: true
 ```
 
-[Packer]: https://packer.io/
+[packer]: https://packer.io/
 
 ### Terraform
 
@@ -528,13 +531,13 @@ Run Terraform playbook:
 make terraform
 ```
 
-Disable [Terraform] installation with:
+Disable [Terraform][terraform] installation with:
 
 ```yaml
 install_terraform: false
 ```
 
-[Terraform]: https://www.terraform.io/
+[terraform]: https://www.terraform.io/
 
 ### Amazon Web Services
 
@@ -555,7 +558,8 @@ install_aws: false
 
 ### Google Cloud Platform
 
-[Google Cloud SDK] installed from the archive file under user home directory.
+[Google Cloud SDK][cloud-sdk] installed from the archive file under user home
+directory.
 
 Run Google Cloud SDK playbook:
 
@@ -599,7 +603,7 @@ the `machine.yaml` configuration file:
 gcloud_install_from_package_manager: true
 ```
 
-[Google Cloud SDK]: https://cloud.google.com/sdk/
+[cloud-sdk]: https://cloud.google.com/sdk/
 
 ## Changes to existing configuration
 
@@ -629,19 +633,19 @@ To remove any outdated roles:
 make clean-roles
 ```
 
-| Role | Build status |
-|------|--------------|
-| [markosamuli.asdf] | [![Build Status](https://travis-ci.org/markosamuli/ansible-asdf.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-asdf) |
+| Role                    | Build status                                                                                                                                  |
+| ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| [markosamuli.asdf]      | [![Build Status](https://travis-ci.org/markosamuli/ansible-asdf.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-asdf)           |
 | [markosamuli.aws_tools] | [![Build Status](https://travis-ci.org/markosamuli/ansible-aws-tools.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-aws-tools) |
-| [markosamuli.gcloud] | [![Build Status](https://travis-ci.org/markosamuli/ansible-gcloud.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-gcloud) |
-| [markosamuli.golang] | [![Build Status](https://travis-ci.org/markosamuli/ansible-golang.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-golang) |
+| [markosamuli.gcloud]    | [![Build Status](https://travis-ci.org/markosamuli/ansible-gcloud.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-gcloud)       |
+| [markosamuli.golang]    | [![Build Status](https://travis-ci.org/markosamuli/ansible-golang.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-golang)       |
 | [markosamuli.linuxbrew] | [![Build Status](https://travis-ci.org/markosamuli/ansible-linuxbrew.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-linuxbrew) |
-| [markosamuli.nvm] | [![Build Status](https://travis-ci.org/markosamuli/ansible-nvm.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-nvm) |
-| [markosamuli.packer] | [![Build Status](https://travis-ci.org/markosamuli/ansible-packer.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-packer) |
-| [markosamuli.pyenv] | [![Build Status](https://travis-ci.org/markosamuli/ansible-pyenv.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-pyenv) |
+| [markosamuli.nvm]       | [![Build Status](https://travis-ci.org/markosamuli/ansible-nvm.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-nvm)             |
+| [markosamuli.packer]    | [![Build Status](https://travis-ci.org/markosamuli/ansible-packer.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-packer)       |
+| [markosamuli.pyenv]     | [![Build Status](https://travis-ci.org/markosamuli/ansible-pyenv.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-pyenv)         |
 | [markosamuli.terraform] | [![Build Status](https://travis-ci.org/markosamuli/ansible-terraform.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-terraform) |
-| [markosamuli.vagrant] | [![Build Status](https://travis-ci.org/markosamuli/ansible-vagrant.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-vagrant) |
-| [markosamuli.hyper] | [![Build Status](https://travis-ci.org/markosamuli/ansible-hyper.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-hyper) |
+| [markosamuli.vagrant]   | [![Build Status](https://travis-ci.org/markosamuli/ansible-vagrant.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-vagrant)     |
+| [markosamuli.hyper]     | [![Build Status](https://travis-ci.org/markosamuli/ansible-hyper.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-hyper)         |
 
 [markosamuli.asdf]: https://github.com/markosamuli/ansible-asdf
 [markosamuli.aws_tools]: https://github.com/markosamuli/ansible-aws-tools
@@ -675,7 +679,7 @@ make lint
 ## References
 
 This is based on my previous setup [markosamuli/machine] that was forked off
-from  [caarlos0/machine] to suit my needs.
+from [caarlos0/machine] to suit my needs.
 
 [markosamuli/machine]: https://github.com/markosamuli/machine
 [caarlos0/machine]: https://github.com/caarlos0/machine
