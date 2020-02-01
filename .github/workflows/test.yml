@@ -40,8 +40,7 @@ jobs:
 
       - name: Install pre-commit
         run: |
-          pip install virtualenv==16.3.0
-          pip install pre-commit
+          pip install -r requirements.dev.txt
           pre-commit --version
 
       - name: Install shfmt

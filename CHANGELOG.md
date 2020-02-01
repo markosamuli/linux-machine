@@ -20,6 +20,7 @@ Test setup on Ubuntu 19.10.
 ### Fixed
 
 - Supress errors in `Makefile` when `pyenv` is not installed
+- Prevent [pre-commit] from being upgraded to version 2
 
 ### Changed
 

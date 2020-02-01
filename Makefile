@@ -106,10 +106,7 @@ endif
 endif
 
 .PHONY: lint
-lint: pre-commit  ## lint source code
-
-.PHONY: pre-commit
-pre-commit: setup-pre-commit setup-shfmt setup-shellcheck  ## run pre-commit hooks on all files
+lint: setup-pre-commit setup-shfmt setup-shellcheck  ## run pre-commit hooks on all files
 	@pre-commit run -a -v
 
 .PHONY: python-lint
@@ -225,11 +222,11 @@ COMMIT_MSG_HOOKS = .git/hooks/commit-msg
 .PHONY: install-git-hooks
 install-git-hooks: $(PRE_COMMIT_HOOKS) $(PRE_PUSH_HOOKS) $(COMMIT_MSG_HOOKS)  ## install Git hooks
 
-$(PRE_COMMIT_HOOKS): setup-pre-commit  ## install pre-commit hooks
+$(PRE_COMMIT_HOOKS): setup-pre-commit
 	@pre-commit install --install-hooks
 
-$(PRE_PUSH_HOOKS): setup-pre-commit  ## install pre-push hooks
+$(PRE_PUSH_HOOKS): setup-pre-commit
 	@pre-commit install --install-hooks -t pre-push
 
-$(COMMIT_MSG_HOOKS): setup-pre-commit  ## install commit-msg hooks
+$(COMMIT_MSG_HOOKS): setup-pre-commit
 	@pre-commit install --install-hooks -t commit-msg
