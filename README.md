@@ -105,6 +105,12 @@ a [`machine.yaml`][machine.yaml] file to customise your configuration.
 cp machine.yaml.example machine.yaml
 ```
 
+You can also use my customizations:
+
+```bash
+ln -s machine.msk.yaml machine.yaml
+```
+
 The `setup` script will detect if this file exists and passes it to the
 Ansible Playbook with `--extra-vars`.
 

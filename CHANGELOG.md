@@ -12,6 +12,7 @@ Test setup on Ubuntu 19.10.
 - Install [shfmt] and [shellcheck] as a dependency in the Makefile
 - Install [Meld][meld], a visual diff and merge tool
 - Use [Prettier][prettier] for formatting JSON, Markdown and YAML files
+- Added my current configuration into the repository
 
 [terminus]: https://eugeny.github.io/terminus/
 [meld]: https://meldmerge.org/

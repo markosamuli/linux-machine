@@ -1,0 +1,23 @@
+---
+# I use .dotfiles from github.com/markosamuli/dotfiles and I don't want the
+# Ansible roles messing up with my .bashrc or .zshrc files.
+nvm_init_shell: false
+pyenv_init_shell: false
+gcloud_setup_shell: false
+linuxbrew_init_shell: false
+aws_tools_init_shell: false
+
+# Install Linuxbrew so I can use it to install Hugo
+install_linuxbrew: true
+
+# Install Ruby with rbenv so I can use travis gem
+install_ruby: true
+
+# Install Lua as my dotfiles have Lua code
+install_lua: true
+
+# Install Rust programming language
+install_rust: true
+
+# Use Python 3.7.5 as the default Python version
+pyenv_global: 3.7.5
