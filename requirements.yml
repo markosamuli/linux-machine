@@ -3,7 +3,6 @@
 #
 # Ansible Galaxy roles to install
 ---
-
 - name: markosamuli.asdf
   version: v1.1.0
 - name: markosamuli.aws_tools

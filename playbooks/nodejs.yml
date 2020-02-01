@@ -1,5 +1,4 @@
 ---
-
 - name: NVM and Node.js
   hosts: all
   become: false

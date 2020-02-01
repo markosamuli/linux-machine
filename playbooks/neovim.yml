@@ -1,5 +1,4 @@
 ---
-
 - name: Neovim
   hosts: all
   tags: neovim

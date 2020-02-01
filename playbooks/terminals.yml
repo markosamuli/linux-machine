@@ -1,5 +1,4 @@
 ---
-
 - name: Terminator
   hosts: all
   tags: terminal

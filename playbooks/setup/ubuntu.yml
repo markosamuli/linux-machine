@@ -1,5 +1,4 @@
 ---
-
 - name: Check Ubuntu requirements
   hosts: all
   tags:

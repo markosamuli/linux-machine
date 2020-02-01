@@ -1,5 +1,4 @@
 ---
-
 - name: Get installed Terminus version
   shell: "dpkg -l terminus | grep terminus | awk 'NR==1{print $3}' | cut -d- -f1" # noqa 306
   register: terminus_dpkg_version

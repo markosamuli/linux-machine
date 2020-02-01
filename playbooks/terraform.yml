@@ -1,11 +1,8 @@
 ---
-
 - name: Remove conflicting Terraform installations
   hosts: all
   tags: terraform
   tasks:
-
-
     - name: Set asdf installs directory
       set_fact:
         asdf_installs_dir: "{{ user_home }}/.asdf/installs"

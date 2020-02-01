@@ -1,5 +1,4 @@
 ---
-
 - name: Tools
   hosts: all
   tags: tools
@@ -31,7 +30,6 @@
     - name: GUI tools
       when: not is_wsl
       block:
-
         - name: Install meld (graphical tool to diff and merge files)
           package:
             name: meld

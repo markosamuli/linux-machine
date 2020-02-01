@@ -1,10 +1,8 @@
 ---
-
 - name: Remove conflicting Packer installations
   hosts: all
   tags: packer
   tasks:
-
     - name: Set asdf install directory
       set_fact:
         asdf_installs_dir: "{{ user_home }}/.asdf/installs"

@@ -1,5 +1,4 @@
 ---
-
 - name: Install AWS tools
   hosts: all
   tags: aws

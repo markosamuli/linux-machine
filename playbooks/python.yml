@@ -1,5 +1,4 @@
 ---
-
 - name: Python
   hosts: all
   tags: python

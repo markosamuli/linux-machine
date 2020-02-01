@@ -1,5 +1,4 @@
 ---
-
 - name: Check Pengwin requirements
   hosts: all
   tags:

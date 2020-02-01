@@ -1,5 +1,4 @@
 ---
-
 - name: rbenv
   hosts: all
   become: false
