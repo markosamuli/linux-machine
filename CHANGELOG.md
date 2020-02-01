@@ -10,8 +10,10 @@ Test setup on Ubuntu 19.10.
 * Added `make editors` command
 * Install [Terminus][terminus] terminal application
 * Install [shfmt] and [shellcheck] as a dependency in the Makefile
+* Install [Meld][meld], a visual diff and merge tool
 
 [terminus]: https://eugeny.github.io/terminus/
+[meld]: https://meldmerge.org/
 
 ### Fixed
 

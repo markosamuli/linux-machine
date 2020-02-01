@@ -27,3 +27,11 @@
     - name: Install pass (password manager)
       package:
         name: pass
+
+    - name: GUI tools
+      when: not is_wsl
+      block:
+
+        - name: Install meld (graphical tool to diff and merge files)
+          package:
+            name: meld

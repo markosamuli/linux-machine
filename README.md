@@ -213,6 +213,7 @@ Installed on all non-WSL environments:
 - [Terminator][terminator]
 - [Hyper][hyper]
 - [Terminus][terminus]
+- [Meld][meld], a visual diff and merge tool
 
 To install [Slack][slack] desktop application via Snap package:
 
@@ -223,6 +224,7 @@ install_slack: true
 [terminator]: https://gnometerminator.blogspot.com/p/introduction.html
 [hyper]: https://hyper.is/
 [terminus]: https://eugeny.github.io/terminus/
+[meld]: https://meldmerge.org/
 [slack]: https://snapcraft.io/slack
 
 ### Command line tools
