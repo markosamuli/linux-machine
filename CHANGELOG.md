@@ -4,17 +4,22 @@
 
 Test setup on Ubuntu 19.10.
 
-## Added
+### Added
 
 * Install Zsh by default
 * Added `make editors` command
 * Install [Terminus][terminus] terminal application
+* Install [shfmt] and [shellcheck] as a dependency in the Makefile
 
 [terminus]: https://eugeny.github.io/terminus/
 
-## Fixed
+### Fixed
 
 * Supress errors in `Makefile` when `pyenv` is not installed
+
+### Changed
+
+* Use [shfmt] v3 for formatting bash scripts
 
 ## [2.1.0] - 2019-11-24
 

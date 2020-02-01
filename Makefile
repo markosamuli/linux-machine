@@ -7,6 +7,7 @@
 TRAVIS = $(shell command -v travis 2>/dev/null)
 SHELLCHECK = $(shell command -v shellcheck 2>/dev/null)
 SHFMT = $(shell command -v shfmt 2>/dev/null)
+SNAP = $(shell command -v snap 2>/dev/null)
 
 .PHONY: default
 default: help
@@ -36,6 +37,9 @@ PYENV_VIRTUALENV_PATH = $(HOME)/.pyenv/versions/$(PYENV_VIRTUALENV)
 # Get local pyenv version
 PYENV_LOCAL = $(shell pyenv local 2>/dev/null)
 endif
+
+# Get path to Go binary
+GO_BIN = $(shell command -v go 2>/dev/null)
 
 .PHONY: setup-pyenv-virtualenv
 setup-pyenv-virtualenv:  ## setup virtualenv with pyenv for development
@@ -81,17 +85,31 @@ ifneq ($(PRE_COMMIT_INSTALLED),true)
 	@$(MAKE) setup-dev-requirements
 endif
 
+.PHONY: setup-shfmt
+setup-shfmt:  ## setup shfmt if not installed
+ifeq ($(SHFMT),)
+ifeq ($(GO_BIN),)
+	$(error "go not found, failed to install shfmt")
+else
+	GO111MODULE=on go get mvdan.cc/sh/v3/cmd/shfmt
+endif
+endif
+
+.PHONY: setup-shellcheck
+setup-shellcheck:  ## setup shellcheck if not installed
+ifeq ($(SHELLCHECK),)
+ifeq ($(SNAP),)
+	$(error "snap not found, failed to install shellcheck")
+else
+	snap install shellcheck
+endif
+endif
+
 .PHONY: lint
 lint: pre-commit  ## lint source code
 
 .PHONY: pre-commit
-pre-commit: setup-pre-commit  ## run pre-commit hooks on all files
-ifndef SHELLCHECK
-	$(error "shellcheck not found, try: 'snap install shellcheck'")
-endif
-ifndef SHFMT
-	$(error "shfmt not found, try: 'snap install shfmt'")
-endif
+pre-commit: setup-pre-commit setup-shfmt setup-shellcheck  ## run pre-commit hooks on all files
 	@pre-commit run -a -v
 
 .PHONY: python-lint
