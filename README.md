@@ -379,13 +379,19 @@ make tools
 [ag]: https://github.com/ggreer/the_silver_searcher
 [pass]: https://www.passwordstore.org/
 
-### Editors
+### Visual Studio Code
 
 [Visual Studio Code][vscode] will be installed on non-WSL environments via Snap
 package.
 
 See [Developing on WSL][vscode-dev-wsl] for instructions how to install and use
 Visual Studio Code [Remote - WSL][vscode-remote-wsl] extension.
+
+[vscode]: https://code.visualstudio.com/
+[vscode-dev-wsl]: https://code.visualstudio.com/docs/remote/wsl
+[vscode-remote-wsl]: https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl
+
+### Vim
 
 Latest version of [Vim] will be installed using the package manager.
 
@@ -395,9 +401,6 @@ To install [Neovim] enable it in `machine.yaml`:
 install_neovim: true
 ```
 
-[vscode]: https://code.visualstudio.com/
-[vscode-dev-wsl]: https://code.visualstudio.com/docs/remote/wsl
-[vscode-remote-wsl]: https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl
 [vim]: https://www.vim.org/
 [neovim]: https://neovim.io/
 
