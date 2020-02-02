@@ -14,11 +14,15 @@ Test setup on Ubuntu 19.10.
 - Use [Prettier][prettier] for formatting JSON, Markdown and YAML files
 - Added my current configuration into the repository
 - Install [LibreOffice][libreoffice] productivity suite
+- Install [ClamAV][clamav] antivirus software
+- Install [Lynis][lynis] security tool
 
 [terminus]: https://eugeny.github.io/terminus/
 [meld]: https://meldmerge.org/
 [prettier]: https://prettier.io/
 [libreoffice]: https://www.libreoffice.org/
+[clamav]: https://www.clamav.net/
+[lynis]: https://cisofy.com/lynis/
 
 ### Fixed
 

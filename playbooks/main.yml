@@ -19,6 +19,12 @@
     not is_wsl
     and (install_productivity | bool)
 
+- import_playbook: antivirus.yml
+  when: install_antivirus | bool
+
+- import_playbook: security.yml
+  when: install_security | bool
+
 - import_playbook: vim.yml
 
 - import_playbook: neovim.yml

@@ -19,5 +19,11 @@ install_lua: true
 # Install Rust programming language
 install_rust: true
 
+# Install Antivirus tools
+install_antivirus: true
+
+# Install Security tools
+install_security: true
+
 # Use Python 3.7.5 as the default Python version
 pyenv_global: 3.7.5

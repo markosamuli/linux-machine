@@ -149,6 +149,10 @@ update-roles: setup-requirements  ## update Ansible roles in the requirements.ym
 .PHONY: latest-roles
 latest-roles: update-roles clean-roles install-roles  # update Ansible roles and install new versions
 
+.PHONY: antivirus
+antivirus: ## install antivirus software
+	@./setup -q -t antivirus
+
 .PHONY: aws
 aws:  ## install AWS tools
 	@./setup -q -t aws
@@ -200,6 +204,10 @@ ruby: playbooks/roles/zzet.rbenv  # install Ruby with rbenv
 .PHONY: rust
 rust: playbooks/roles/markosamuli.rust  ## install Rust
 	@./setup -q -t rust
+
+.PHONY: security
+security: ## install security tools
+	@./setup -q -t security
 
 .PHONY: terraform
 terraform: playbooks/roles/markosamuli.terraform  ## install Terraform

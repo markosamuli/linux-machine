@@ -248,6 +248,34 @@ install_productivity: false
 
 [libreoffice]: https://www.libreoffice.org/
 
+### Antivirus
+
+Antivirus software can be installed:
+
+- [ClamAV][clamav]
+
+To enable:
+
+```yaml
+install_antivirus: true
+```
+
+[clamav]: https://www.clamav.net/
+
+### Security tools
+
+Security tools that can be installed:
+
+- [Lynis][lynis] security tool
+
+To enable:
+
+```yaml
+install_security: true
+```
+
+[lynis]: https://cisofy.com/lynis/
+
 ### Command line tools
 
 - [GNU Wget][wget]

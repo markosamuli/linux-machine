@@ -1,0 +1,11 @@
+---
+- name: Antivirus
+  hosts: all
+  tags: antivirus
+  tasks:
+    - name: Install ClamAV antivirus
+      package:
+        name: clamav
+    - name: Install ClamAV deamon
+      package:
+        name: clamav-daemon
