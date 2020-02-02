@@ -32,6 +32,11 @@
           - apt-transport-https
           - ca-certificates
 
+    - name: Install apt-show-versions
+      apt:
+        name:
+          - apt-show-versions
+
     - name: Install software-properties-common
       apt:
         name: software-properties-common
