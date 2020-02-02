@@ -34,7 +34,10 @@ def update_settings(settings: Dict) -> Dict:
 def get_option(name: str) -> Union[str, bool, int]:
     """Get option value from the local configuration file"""
     settings = load_settings()
-    return settings[name]
+    try:
+        return settings[name]
+    except KeyError:
+        return None
 
 
 def set_option(name: str,
