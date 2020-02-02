@@ -107,19 +107,22 @@ endif
 
 .PHONY: lint
 lint: setup-pre-commit setup-shfmt setup-shellcheck  ## run pre-commit hooks on all files
-	@pre-commit run -a -v
+	@pre-commit run -a
+
+.PHONY: python-format
+python-format: setup-pre-commit  ## format Python files
+	@-pre-commit run -a requirements-txt-fixer
+	@-pre-commit run -a yapf
 
 .PHONY: python-lint
-python-lint: setup-pre-commit  ## lint and format Python files
-	@pre-commit run -a check-ast -v
-	@pre-commit run -a requirements-txt-fixer -v
-	@pre-commit run -a yapf -v
-	@pre-commit run -a flake8 -v
-	@pre-commit run -a pylint -v
+python-lint: setup-pre-commit setup-dev-requirements python-format  ## lint and format Python files
+	@pre-commit run -a check-ast
+	@pre-commit run -a flake8
+	@pre-commit run -a pylint
 
 .PHONY: travis-lint
 travis-lint: setup-pre-commit  ## lint .travis.yml file
-	@pre-commit run -a travis-lint -v
+	@pre-commit run -a travis-lint
 
 .PHONY: setup-ansible
 install-ansible:  ## install Ansible without roles or running playbooks
