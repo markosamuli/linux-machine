@@ -4,10 +4,7 @@
 # https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
 
 # Get paths to required commands
-TRAVIS = $(shell command -v travis 2>/dev/null)
-SHELLCHECK = $(shell command -v shellcheck 2>/dev/null)
-SHFMT = $(shell command -v shfmt 2>/dev/null)
-SNAP = $(shell command -v snap 2>/dev/null)
+
 
 .PHONY: default
 default: help
@@ -37,9 +34,6 @@ PYENV_VIRTUALENV_PATH = $(HOME)/.pyenv/versions/$(PYENV_VIRTUALENV)
 # Get local pyenv version
 PYENV_LOCAL = $(shell pyenv local 2>/dev/null)
 endif
-
-# Get path to Go binary
-GO_BIN = $(shell command -v go 2>/dev/null)
 
 .PHONY: setup-pyenv-virtualenv
 setup-pyenv-virtualenv:  ## setup virtualenv with pyenv for development
@@ -80,13 +74,16 @@ setup-dev-requirements: setup-pyenv-virtualenv  ## setup development requirement
 PRE_COMMIT_INSTALLED = $(shell pre-commit --version 2>&1 | head -1 | grep -q 'pre-commit 1' && echo true)
 
 .PHONY: setup-pre-commit
-setup-pre-commit:  ## setup pre-commit if not installed
+setup-pre-commit:
 ifneq ($(PRE_COMMIT_INSTALLED),true)
 	@$(MAKE) setup-dev-requirements
 endif
 
+SHFMT = $(shell command -v shfmt 2>/dev/null)
+GO_BIN = $(shell command -v go 2>/dev/null)
+
 .PHONY: setup-shfmt
-setup-shfmt:  ## setup shfmt if not installed
+setup-shfmt:
 ifeq ($(SHFMT),)
 ifeq ($(GO_BIN),)
 	$(error "go not found, failed to install shfmt")
@@ -95,8 +92,11 @@ else
 endif
 endif
 
+SHELLCHECK = $(shell command -v shellcheck 2>/dev/null)
+SNAP = $(shell command -v snap 2>/dev/null)
+
 .PHONY: setup-shellcheck
-setup-shellcheck:  ## setup shellcheck if not installed
+setup-shellcheck:
 ifeq ($(SHELLCHECK),)
 ifeq ($(SNAP),)
 	$(error "snap not found, failed to install shellcheck")
@@ -154,10 +154,16 @@ latest-roles: update-roles clean-roles install-roles  # update Ansible roles and
 
 .PHONY: antivirus
 antivirus: ## install antivirus software
+	@./scripts/configure.py install_antivirus true
 	@./setup -q -t antivirus
 
+.PHONY: audit
+audit: security  ## audit system with Lynis
+	sudo lynis audit system
+
 .PHONY: aws
-aws:  ## install AWS tools
+aws: playbooks/roles/markosamuli.aws_tools  ## install AWS tools
+	@./scripts/configure.py install_aws true
 	@./setup -q -t aws
 
 .PHONY: docker
@@ -174,18 +180,22 @@ gcloud: playbooks/roles/markosamuli.gcloud  ## install Google Cloud SDK
 
 .PHONY: linuxbrew
 linuxbrew: playbooks/roles/markosamuli.linuxbrew  ## install Homebrew on Linux
+	@./scripts/configure.py install_linuxbrew true
 	@./setup -q -t linuxbrew
 
 .PHONY: golang
 golang: playbooks/roles/markosamuli.golang  ## install Go programming language
+	@./scripts/configure.py install_golang true
 	@./setup -q -t golang
 
 .PHONY: lua
 lua: ## install Lua programming language
+	@./scripts/configure.py install_lua true
 	@./setup -q -t lua
 
 .PHONY: node
 node: playbooks/roles/markosamuli.nvm  ## install Node.js with NVM
+	@./scripts/configure.py install_nodejs true
 	@./setup -q -t node,nvm
 
 .PHONY: permissions
@@ -194,26 +204,32 @@ permissions:  ## fix permissions in user home directory
 
 .PHONY: productivity
 productivity:  ## install productivity tools
+	@./scripts/configure.py install_productivity true
 	@./setup -q -t productivity
 
 .PHONY: python
 python: playbooks/roles/markosamuli.pyenv  ## install Python with pyenv
+	@./scripts/configure.py install_python true
 	@./setup -q -t python,pyenv
 
 .PHONY: ruby
 ruby: playbooks/roles/zzet.rbenv  # install Ruby with rbenv
+	@./scripts/configure.py install_ruby true
 	@./setup -q -t ruby,rbenv
 
 .PHONY: rust
 rust: playbooks/roles/markosamuli.rust  ## install Rust
+	@./scripts/configure.py install_rust true
 	@./setup -q -t rust
 
 .PHONY: security
 security: ## install security tools
+	@./scripts/configure.py install_security true
 	@./setup -q -t security
 
 .PHONY: terraform
 terraform: playbooks/roles/markosamuli.terraform  ## install Terraform
+	@./scripts/configure.py install_terraform true
 	@./setup -q -t terraform
 
 .PHONY: tools
@@ -222,6 +238,7 @@ tools:  ## install tools
 
 .PHONY: zsh
 zsh:  ## install zsh
+	@./scripts/configure.py install_zsh true
 	@./setup -q -t zsh
 
 playbooks/roles/zzet.rbenv:
