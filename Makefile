@@ -193,6 +193,11 @@ lua: ## install Lua programming language
 	@./scripts/configure.py install_lua true
 	@./setup -q -t lua
 
+.PHONY: monitoring
+monitoring: ## install monitoring tools
+	@./scripts/configure.py install_monitoring true
+	@./setup -q -t monitoring
+
 .PHONY: node
 node: playbooks/roles/markosamuli.nvm  ## install Node.js with NVM
 	@./scripts/configure.py install_nodejs true
@@ -226,6 +231,11 @@ rust: playbooks/roles/markosamuli.rust  ## install Rust
 security: ## install security tools
 	@./scripts/configure.py install_security true
 	@./setup -q -t security
+
+.PHONY: security-hardening
+security-hardening: ## install security hardening software
+	@./scripts/configure.py install_security_hardening true
+	@./setup -q -t security-hardening
 
 .PHONY: terraform
 terraform: playbooks/roles/markosamuli.terraform  ## install Terraform

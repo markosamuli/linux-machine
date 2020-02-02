@@ -25,6 +25,12 @@
 - import_playbook: security.yml
   when: install_security | bool
 
+- import_playbook: security-hardening.yml
+  when: install_security_hardening | bool
+
+- import_playbook: monitoring.yml
+  when: install_monitoring | bool
+
 - import_playbook: vim.yml
 
 - import_playbook: neovim.yml

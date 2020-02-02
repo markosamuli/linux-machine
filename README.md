@@ -209,18 +209,37 @@ install_zsh: false
 install_linuxbrew: true
 ```
 
+To enable and install:
+
+```bash
+make linuxbrew
+```
+
 Installation will be done using [markosamuli.linuxbrew] Ansible role.
 
 [homebrew]: https://docs.brew.sh/Homebrew-on-Linux
 
-### Desktop applications
+### Terminals for desktop environments
 
 Installed on all non-WSL environments:
 
 - [Terminator][terminator]
 - [Hyper][hyper]
 - [Terminus][terminus]
+
+[terminator]: https://gnometerminator.blogspot.com/p/introduction.html
+[hyper]: https://hyper.is/
+[terminus]: https://eugeny.github.io/terminus/
+
+### Developer tools
+
+Installed on all non-WSL environments:
+
 - [Meld][meld], a visual diff and merge tool
+
+[meld]: https://meldmerge.org/
+
+### Slack
 
 To install [Slack][slack] desktop application via Snap package:
 
@@ -228,10 +247,6 @@ To install [Slack][slack] desktop application via Snap package:
 install_slack: true
 ```
 
-[terminator]: https://gnometerminator.blogspot.com/p/introduction.html
-[hyper]: https://hyper.is/
-[terminus]: https://eugeny.github.io/terminus/
-[meld]: https://meldmerge.org/
 [slack]: https://snapcraft.io/slack
 
 ### Productivity applications
@@ -239,6 +254,12 @@ install_slack: true
 Installed on non-WSL environments:
 
 - [LibreOffice][libreoffice]
+
+To enable and install:
+
+```bash
+make productivity
+```
 
 To disable:
 
@@ -254,7 +275,13 @@ Antivirus software can be installed:
 
 - [ClamAV][clamav]
 
-To enable:
+To enable and install:
+
+```bash
+make antivirus
+```
+
+To enable manually:
 
 ```yaml
 install_antivirus: true
@@ -268,13 +295,66 @@ Security tools that can be installed:
 
 - [Lynis][lynis] security tool
 
-To enable:
+To enable and run the security playbook:
+
+```bash
+make security
+```
+
+To enable manually:
 
 ```yaml
 install_security: true
 ```
 
 [lynis]: https://cisofy.com/lynis/
+
+### Security hardening
+
+Install optional security hardening tools:
+
+- [passwdqc][passwdqc] for password/passphrase strength checking and enforcement
+- [USBGuard][usbguard] for protecting system against rogue USB devices
+- [debsums][debsums] tool for verification of installed package files against
+  MD5 checksums
+
+To enable and run the security hardening playbook:
+
+```bash
+make security-hardening
+```
+
+To enable manually:
+
+```yaml
+install_security_hardening: true
+```
+
+[passwdqc]: https://www.openwall.com/passwdqc/
+[usbguard]: https://usbguard.github.io/
+[debsums]: https://packages.ubuntu.com/eoan/debsums
+
+### Monitoring
+
+Install optional system monitoring tools:
+
+- [GNU Accounting utilities][acct] for process and login accounting
+- [sysstat] - Performance monitoring tools for Linux
+
+To enable and run the monitoring playbook:
+
+```bash
+make monitoring
+```
+
+To enable manually:
+
+```yaml
+install_monitoring: true
+```
+
+[acct]: https://www.gnu.org/software/acct/
+[sysstat]: https://github.com/sysstat/sysstat
 
 ### Command line tools
 
@@ -286,7 +366,7 @@ install_security: true
 - [htop] process viewer for console
 - [pass] — the standard unix password manager
 
-Run tools playbook:
+Run the tools playbook:
 
 ```bash
 make tools

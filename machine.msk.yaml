@@ -25,5 +25,11 @@ install_antivirus: true
 # Install Security tools
 install_security: true
 
+# Install security hardening software
+install_security_hardening: true
+
+# Install monitoring tools
+install_monitoring: true
+
 # Use Python 3.7.5 as the default Python version
 pyenv_global: 3.7.5

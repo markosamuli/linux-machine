@@ -6,32 +6,65 @@ Test setup on Ubuntu 19.10.
 
 ### Added
 
+Shell:
+
 - Install Zsh by default
-- Added `make editors` command
+
+New developer tools for desktop use:
+
 - Install [Terminus][terminus] terminal application
-- Install [shfmt] and [shellcheck] as a dependency in the Makefile
 - Install [Meld][meld], a visual diff and merge tool
-- Use [Prettier][prettier] for formatting JSON, Markdown and YAML files
-- Added my current configuration into the repository
+
+Productivity tools for desktop use:
+
 - Install [LibreOffice][libreoffice] productivity suite
+
+Antivirus and security tools:
+
 - Install [ClamAV][clamav] antivirus software
-- Install [Lynis][lynis] security tool
+- Install [Lynis][lynis] security tool for auditing the system
+
+Optional security hardening tools:
+
+- [passwdqc][passwdqc] for password/passphrase strength checking and enforcement
+- [USBGuard][usbguard] for protecting system against rogue USB devices
+- [debsums][debsums] tool for verification of installed package files against
+  MD5 checksums
+
+Optional system monitoring tools:
+
+- [GNU Accounting utilities][acct] for process and login accounting
+- [sysstat] - Performance monitoring tools for Linux
 
 [terminus]: https://eugeny.github.io/terminus/
 [meld]: https://meldmerge.org/
-[prettier]: https://prettier.io/
 [libreoffice]: https://www.libreoffice.org/
 [clamav]: https://www.clamav.net/
 [lynis]: https://cisofy.com/lynis/
+[passwdqc]: https://www.openwall.com/passwdqc/
+[usbguard]: https://usbguard.github.io/
+[debsums]: https://packages.ubuntu.com/eoan/debsums
+[acct]: https://www.gnu.org/software/acct/
+[sysstat]: https://github.com/sysstat/sysstat
 
 ### Fixed
+
+Issues fixed in this release:
 
 - Supress errors in `Makefile` when `pyenv` is not installed
 - Prevent [pre-commit] from being upgraded to version 2
 
-### Changed
+### Changes
 
-- Use [shfmt] v3 for formatting bash scripts
+The following changes have been made to the development and setup tooling:
+
+- Install [shfmt] and [shellcheck] as a dependency in the Makefile
+- Use [shfmt] v3 for formatting bash scripts- Added `make editors` command
+- Use [Prettier][prettier] for formatting JSON, Markdown and YAML files
+- Added my current `machine.yaml` configuration file into the repository
+- Added script for automatic `machine.yaml` file configuration
+
+[prettier]: https://prettier.io/
 
 ## [2.1.0] - 2019-11-24
 

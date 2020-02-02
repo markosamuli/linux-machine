@@ -1,0 +1,19 @@
+---
+- name: Security hardening
+  hosts: all
+  tags: security-hardening
+  tasks:
+    - name: Install security hardening on non-WSL environments only
+      when: not is_wsl
+      block:
+        - name: Install passwdqc - password/passphrase strength checking and enforcement
+          apt:
+            name:
+              - passwdqc
+              - libpam-passwdqc
+        - name: Install USBGuard
+          apt:
+            name: usbguard
+        - name: Install debsums
+          apt:
+            name: debsums

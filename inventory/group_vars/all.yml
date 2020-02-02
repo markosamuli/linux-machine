@@ -62,6 +62,12 @@ install_antivirus: false
 # Install security tools
 install_security: false
 
+# Install security hardening software
+install_security_hardening: false
+
+# Install monitoring tools
+install_monitoring: false
+
 # Update apt cache when running playbooks
 update_apt_cache: true
 
