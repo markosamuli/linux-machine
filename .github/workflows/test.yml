@@ -38,10 +38,14 @@ jobs:
       - name: Fix Go directory permissions
         run: chmod -R o-rwx /opt/hostedtoolcache/go
 
-      - name: Install pre-commit
+      - name: Install dependencies
         run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
           pip install -r requirements.dev.txt
           pre-commit --version
+          pylint --version
+          flake8 --version
 
       - name: Install shfmt
         run: |
@@ -71,6 +75,15 @@ jobs:
       - name: Run pre-commit
         run: |
           export PATH="$PATH:$GOPATH/bin"
+          export SKIP=pylint,flake8
           pre-commit run -a
         env:
           GOPATH: /home/runner/go
+
+      - name: Lint with pylint
+        run: |
+          pylint machine scripts/*.py tests/*.py
+
+      - name: Lint with flake8
+        run: |
+          flake8 .
