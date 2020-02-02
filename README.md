@@ -234,6 +234,20 @@ install_slack: true
 [meld]: https://meldmerge.org/
 [slack]: https://snapcraft.io/slack
 
+### Productivity applications
+
+Installed on non-WSL environments:
+
+- [LibreOffice][libreoffice]
+
+To disable:
+
+```yaml
+install_productivity: false
+```
+
+[libreoffice]: https://www.libreoffice.org/
+
 ### Command line tools
 
 - [GNU Wget][wget]

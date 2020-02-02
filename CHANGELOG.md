@@ -13,10 +13,12 @@ Test setup on Ubuntu 19.10.
 - Install [Meld][meld], a visual diff and merge tool
 - Use [Prettier][prettier] for formatting JSON, Markdown and YAML files
 - Added my current configuration into the repository
+- Install [LibreOffice][libreoffice] productivity suite
 
 [terminus]: https://eugeny.github.io/terminus/
 [meld]: https://meldmerge.org/
 [prettier]: https://prettier.io/
+[libreoffice]: https://www.libreoffice.org/
 
 ### Fixed
 

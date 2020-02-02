@@ -14,6 +14,11 @@
 
 - import_playbook: tools.yml
 
+- import_playbook: productivity.yml
+  when: |
+    not is_wsl
+    and (install_productivity | bool)
+
 - import_playbook: vim.yml
 
 - import_playbook: neovim.yml

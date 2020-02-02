@@ -181,13 +181,17 @@ lua: ## install Lua programming language
 node: playbooks/roles/markosamuli.nvm  ## install Node.js with NVM
 	@./setup -q -t node,nvm
 
-.PHONY: python
-python: playbooks/roles/markosamuli.pyenv  ## install Python with pyenv
-	@./setup -q -t python,pyenv
-
 .PHONY: permissions
 permissions:  ## fix permissions in user home directory
 	@USER_HOME_FIX_PERMISSIONS=true ./setup -q -t permissions
+
+.PHONY: productivity
+productivity:  ## install productivity tools
+	@./setup -q -t productivity
+
+.PHONY: python
+python: playbooks/roles/markosamuli.pyenv  ## install Python with pyenv
+	@./setup -q -t python,pyenv
 
 .PHONY: ruby
 ruby: playbooks/roles/zzet.rbenv  # install Ruby with rbenv

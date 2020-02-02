@@ -53,6 +53,9 @@ install_ruby: false
 # Install Rust programming language
 install_rust: false
 
+# Install productivity tools
+install_productivity: true
+
 # Update apt cache when running playbooks
 update_apt_cache: true
 
