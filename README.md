@@ -22,19 +22,24 @@ Read my [Machine Setup Guide][machine-setup-guide] for instructions.
 
 See [markosamuli/macos-machine] for my macOS setup.
 
+[ubuntu]: https://www.ubuntu.com
 [ansible]: https://www.ansible.com/
 [markosamuli/macos-machine]: https://github.com/markosamuli/macos-machine
 
 ### Ubuntu
 
-This setup has been tested on the Ubuntu [16.04 LTS (Xenial Xerus)][xenial]
-and [18.04 LTS (Bionic Beaver)][bionic] releases.
+This setup has been tested on the following Ubuntu releases:
+
+- Ubuntu [16.04 LTS (Xenial Xerus)][xenial]
+- Ubuntu [18.04 LTS (Bionic Beaver)][bionic]
+- Ubuntu [19.10 (Eoan Ermine)][eoan]
 
 Travis CI builds are running on Ubuntu 16.04.
 
 [ubuntu]: https://www.ubuntu.com/
 [xenial]: http://releases.ubuntu.com/16.04/
 [bionic]: http://releases.ubuntu.com/18.04/
+[eoan]: http://releases.ubuntu.com/19.10/
 
 ### Ubuntu on WSL
 
