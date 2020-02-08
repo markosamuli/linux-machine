@@ -1,0 +1,14 @@
+---
+- name: Monitoring
+  hosts: all
+  tags: monitoring
+  tasks:
+    - name: Install monitoring tools on non-WSL environments only
+      when: not is_wsl
+      block:
+        - name: Install utilities for process and login accounting
+          apt:
+            name: acct
+        - name: Install performance monitoring tools for Linux
+          apt:
+            name: sysstat

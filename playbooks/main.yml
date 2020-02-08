@@ -1,6 +1,8 @@
 ---
-
 - import_playbook: setup.yml
+
+- import_playbook: zsh.yml
+  when: install_zsh | bool
 
 - import_playbook: linuxbrew.yml
   when: install_linuxbrew | bool
@@ -11,6 +13,23 @@
   when: install_slack | bool
 
 - import_playbook: tools.yml
+
+- import_playbook: productivity.yml
+  when: |
+    not is_wsl
+    and (install_productivity | bool)
+
+- import_playbook: antivirus.yml
+  when: install_antivirus | bool
+
+- import_playbook: security.yml
+  when: install_security | bool
+
+- import_playbook: security-hardening.yml
+  when: install_security_hardening | bool
+
+- import_playbook: monitoring.yml
+  when: install_monitoring | bool
 
 - import_playbook: vim.yml
 

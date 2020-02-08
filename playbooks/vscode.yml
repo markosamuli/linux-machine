@@ -1,5 +1,4 @@
 ---
-
 - name: Visual Studio Code
   hosts: all
   tags:
@@ -9,7 +8,7 @@
   tasks:
     - name: Remove tagplus5 Visual Studio Code PPA repository
       apt_repository:
-        repo: 'deb https://tagplus5.github.io/vscode-ppa/ubuntu ./'
+        repo: "deb https://tagplus5.github.io/vscode-ppa/ubuntu ./"
         state: absent
 
     - name: Remove Visual Studio Code if installed via APT

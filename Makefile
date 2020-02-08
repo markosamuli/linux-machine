@@ -4,9 +4,7 @@
 # https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
 
 # Get paths to required commands
-TRAVIS = $(shell command -v travis 2>/dev/null)
-SHELLCHECK = $(shell command -v shellcheck 2>/dev/null)
-SHFMT = $(shell command -v shfmt 2>/dev/null)
+
 
 .PHONY: default
 default: help
@@ -23,6 +21,8 @@ setup:  ## run setup with default options
 PYENV_BIN = $(shell command -v pyenv 2>/dev/null)
 PYTHON_BIN = $(shell command -v python 2>/dev/null)
 
+# Configure pyenv variables only if pyenv is found
+ifneq ($(PYENV_BIN),)
 # Python version to use for the virtualenv
 PYTHON_VERSION = $(shell pyenv install --list | sed 's/ //g' | grep "^3\.7\.[0-9]*$$" | sort -r | head -1)
 PYTHON_VERSION_PATH = $(HOME)/.pyenv/versions/$(PYTHON_VERSION)
@@ -33,6 +33,7 @@ PYENV_VIRTUALENV_PATH = $(HOME)/.pyenv/versions/$(PYENV_VIRTUALENV)
 
 # Get local pyenv version
 PYENV_LOCAL = $(shell pyenv local 2>/dev/null)
+endif
 
 .PHONY: setup-pyenv-virtualenv
 setup-pyenv-virtualenv:  ## setup virtualenv with pyenv for development
@@ -73,35 +74,55 @@ setup-dev-requirements: setup-pyenv-virtualenv  ## setup development requirement
 PRE_COMMIT_INSTALLED = $(shell pre-commit --version 2>&1 | head -1 | grep -q 'pre-commit 1' && echo true)
 
 .PHONY: setup-pre-commit
-setup-pre-commit:  ## setup pre-commit if not installed
+setup-pre-commit:
 ifneq ($(PRE_COMMIT_INSTALLED),true)
 	@$(MAKE) setup-dev-requirements
 endif
 
-.PHONY: lint
-lint: pre-commit  ## lint source code
+SHFMT = $(shell command -v shfmt 2>/dev/null)
+GO_BIN = $(shell command -v go 2>/dev/null)
 
-.PHONY: pre-commit
-pre-commit: setup-pre-commit  ## run pre-commit hooks on all files
-ifndef SHELLCHECK
-	$(error "shellcheck not found, try: 'snap install shellcheck'")
+.PHONY: setup-shfmt
+setup-shfmt:
+ifeq ($(SHFMT),)
+ifeq ($(GO_BIN),)
+	$(error "go not found, failed to install shfmt")
+else
+	GO111MODULE=on go get mvdan.cc/sh/v3/cmd/shfmt
 endif
-ifndef SHFMT
-	$(error "shfmt not found, try: 'snap install shfmt'")
 endif
-	@pre-commit run -a -v
+
+SHELLCHECK = $(shell command -v shellcheck 2>/dev/null)
+SNAP = $(shell command -v snap 2>/dev/null)
+
+.PHONY: setup-shellcheck
+setup-shellcheck:
+ifeq ($(SHELLCHECK),)
+ifeq ($(SNAP),)
+	$(error "snap not found, failed to install shellcheck")
+else
+	snap install shellcheck
+endif
+endif
+
+.PHONY: lint
+lint: setup-pre-commit setup-shfmt setup-shellcheck  ## run pre-commit hooks on all files
+	@pre-commit run -a
+
+.PHONY: python-format
+python-format: setup-pre-commit  ## format Python files
+	@-pre-commit run -a requirements-txt-fixer
+	@-pre-commit run -a yapf
 
 .PHONY: python-lint
-python-lint: setup-pre-commit  ## lint and format Python files
-	@pre-commit run -a check-ast -v
-	@pre-commit run -a requirements-txt-fixer -v
-	@pre-commit run -a yapf -v
-	@pre-commit run -a flake8 -v
-	@pre-commit run -a pylint -v
+python-lint: setup-pre-commit setup-dev-requirements python-format  ## lint and format Python files
+	@pre-commit run -a check-ast
+	@pre-commit run -a flake8
+	@pre-commit run -a pylint
 
 .PHONY: travis-lint
 travis-lint: setup-pre-commit  ## lint .travis.yml file
-	@pre-commit run -a travis-lint -v
+	@pre-commit run -a travis-lint
 
 .PHONY: setup-ansible
 install-ansible:  ## install Ansible without roles or running playbooks
@@ -131,13 +152,27 @@ update-roles: setup-requirements  ## update Ansible roles in the requirements.ym
 .PHONY: latest-roles
 latest-roles: update-roles clean-roles install-roles  # update Ansible roles and install new versions
 
+.PHONY: antivirus
+antivirus: ## install antivirus software
+	@./scripts/configure.py install_antivirus true
+	@./setup -q -t antivirus
+
+.PHONY: audit
+audit: security  ## audit system with Lynis
+	sudo lynis audit system
+
 .PHONY: aws
-aws:  ## install AWS tools
+aws: playbooks/roles/markosamuli.aws_tools  ## install AWS tools
+	@./scripts/configure.py install_aws true
 	@./setup -q -t aws
 
 .PHONY: docker
 docker:  ## install Docker
 	@./setup -q -t docker
+
+.PHONY: editors
+editors:  ## install IDEs and code editors
+	@./setup -q -t editors
 
 .PHONY: gcloud
 gcloud: playbooks/roles/markosamuli.gcloud  ## install Google Cloud SDK
@@ -145,43 +180,76 @@ gcloud: playbooks/roles/markosamuli.gcloud  ## install Google Cloud SDK
 
 .PHONY: linuxbrew
 linuxbrew: playbooks/roles/markosamuli.linuxbrew  ## install Homebrew on Linux
+	@./scripts/configure.py install_linuxbrew true
 	@./setup -q -t linuxbrew
 
 .PHONY: golang
 golang: playbooks/roles/markosamuli.golang  ## install Go programming language
+	@./scripts/configure.py install_golang true
 	@./setup -q -t golang
 
 .PHONY: lua
 lua: ## install Lua programming language
+	@./scripts/configure.py install_lua true
 	@./setup -q -t lua
+
+.PHONY: monitoring
+monitoring: ## install monitoring tools
+	@./scripts/configure.py install_monitoring true
+	@./setup -q -t monitoring
 
 .PHONY: node
 node: playbooks/roles/markosamuli.nvm  ## install Node.js with NVM
+	@./scripts/configure.py install_nodejs true
 	@./setup -q -t node,nvm
-
-.PHONY: python
-python: playbooks/roles/markosamuli.pyenv  ## install Python with pyenv
-	@./setup -q -t python,pyenv
 
 .PHONY: permissions
 permissions:  ## fix permissions in user home directory
 	@USER_HOME_FIX_PERMISSIONS=true ./setup -q -t permissions
 
+.PHONY: productivity
+productivity:  ## install productivity tools
+	@./scripts/configure.py install_productivity true
+	@./setup -q -t productivity
+
+.PHONY: python
+python: playbooks/roles/markosamuli.pyenv  ## install Python with pyenv
+	@./scripts/configure.py install_python true
+	@./setup -q -t python,pyenv
+
 .PHONY: ruby
 ruby: playbooks/roles/zzet.rbenv  # install Ruby with rbenv
+	@./scripts/configure.py install_ruby true
 	@./setup -q -t ruby,rbenv
 
 .PHONY: rust
 rust: playbooks/roles/markosamuli.rust  ## install Rust
+	@./scripts/configure.py install_rust true
 	@./setup -q -t rust
+
+.PHONY: security
+security: ## install security tools
+	@./scripts/configure.py install_security true
+	@./setup -q -t security
+
+.PHONY: security-hardening
+security-hardening: ## install security hardening software
+	@./scripts/configure.py install_security_hardening true
+	@./setup -q -t security-hardening
 
 .PHONY: terraform
 terraform: playbooks/roles/markosamuli.terraform  ## install Terraform
+	@./scripts/configure.py install_terraform true
 	@./setup -q -t terraform
 
 .PHONY: tools
 tools:  ## install tools
 	@./setup -q -t tools
+
+.PHONY: zsh
+zsh:  ## install zsh
+	@./scripts/configure.py install_zsh true
+	@./setup -q -t zsh
 
 playbooks/roles/zzet.rbenv:
 	@./setup --no-run-playbook
@@ -196,11 +264,11 @@ COMMIT_MSG_HOOKS = .git/hooks/commit-msg
 .PHONY: install-git-hooks
 install-git-hooks: $(PRE_COMMIT_HOOKS) $(PRE_PUSH_HOOKS) $(COMMIT_MSG_HOOKS)  ## install Git hooks
 
-$(PRE_COMMIT_HOOKS): setup-pre-commit  ## install pre-commit hooks
+$(PRE_COMMIT_HOOKS): setup-pre-commit
 	@pre-commit install --install-hooks
 
-$(PRE_PUSH_HOOKS): setup-pre-commit  ## install pre-push hooks
+$(PRE_PUSH_HOOKS): setup-pre-commit
 	@pre-commit install --install-hooks -t pre-push
 
-$(COMMIT_MSG_HOOKS): setup-pre-commit  ## install commit-msg hooks
+$(COMMIT_MSG_HOOKS): setup-pre-commit
 	@pre-commit install --install-hooks -t commit-msg

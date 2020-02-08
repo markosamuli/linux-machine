@@ -1,0 +1,17 @@
+---
+- name: Lynis software repository
+  become: true
+  block:
+    - name: Import CISOfy Software GPG key
+      apt_key:
+        keyserver: "{{ lynis_apt_keyserver }}"
+        id: "{{ lynis_apt_key_id }}"
+
+    - name: Add Lynis repository
+      apt_repository:
+        repo: "{{ lynis_repository }}"
+        filename: cisofy-lynis
+
+    - name: Install Lynis
+      package:
+        name: "{{ lynis_package }}={{ lynis_version }}"

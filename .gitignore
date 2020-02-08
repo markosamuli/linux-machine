@@ -4,11 +4,14 @@
 # Ansible roles
 playbooks/roles/*
 !playbooks/roles/docker
+!playbooks/roles/lynis
+!playbooks/roles/terminus
 !playbooks/roles/user_home_permissions
 
 # IDEs
 .vscode/*
 !.vscode/cSpell.json
+!.vscode/extensions.json
 
 # Local configuration
 machine.yaml
@@ -21,3 +24,6 @@ machine.yaml
 
 # Python
 __pycache__
+
+# Prettier config files in any directory
+!.prettierrc.yaml

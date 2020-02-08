@@ -1,4 +1,6 @@
 ---
+# Install zsh
+install_zsh: true
 
 # Install Linuxbrew
 install_linuxbrew: false
@@ -50,6 +52,21 @@ install_ruby: false
 
 # Install Rust programming language
 install_rust: false
+
+# Install productivity tools
+install_productivity: true
+
+# Install antivirus software
+install_antivirus: false
+
+# Install security tools
+install_security: false
+
+# Install security hardening software
+install_security_hardening: false
+
+# Install monitoring tools
+install_monitoring: false
 
 # Update apt cache when running playbooks
 update_apt_cache: true

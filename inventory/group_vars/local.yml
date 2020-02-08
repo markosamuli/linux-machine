@@ -1,5 +1,4 @@
 ---
-
 # Variables for local machine installation.
 
 user_home: "{{ ansible_env.HOME }}"

@@ -1,0 +1,21 @@
+---
+- name: Create temporary download directory
+  tempfile:
+    state: directory
+    suffix: terminus
+  register: terminus_tmp
+
+- name: Download Terminus .deb package
+  get_url:
+    url: "{{ terminus_deb_url }}"
+    dest: "{{ terminus_tmp.path }}/{{ terminus_deb_file }}"
+    checksum: "{{ terminus_deb_checksum }}"
+
+- name: Install Terminus .deb package
+  apt:
+    deb: "{{ terminus_tmp.path }}/{{ terminus_deb_file }}"
+
+- name: Cleanup temp directory
+  file:
+    path: "{{ terminus_tmp.path }}"
+    state: absent

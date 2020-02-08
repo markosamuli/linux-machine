@@ -7,14 +7,20 @@
 # Do not update apt-cache
 # update_apt_cache: false
 
+# Do not install zsh
+# install_zsh: false
+
 # Use custom Go workspace directory
 # golang_path: "go"
 
 # Default Node.js version to install (NVM aliases supported)
 # nvm_default_node_version: "lts/*"
 
-# Make Python 2.7.15 default global version in pyenv
-# pyenv_global: "2.7.15"
+# Initialize shell profile scripts
+# nvm_init_shell: false
+
+# Make Python 3.7.5 default global version in pyenv
+# pyenv_global: "3.7.5"
 
 # Do not configure pyenv shell when using existing dotfiles
 # pyenv_init_shell: false
@@ -30,6 +36,9 @@
 
 # Do not configure Linuxbew shell when using existing dotfiles
 # linuxbrew_init_shell: false
+
+# Install Linuxbrew
+# install_linuxbrew: true
 
 # Fix permissions in user home directory
 # user_home_fix_permissions: true

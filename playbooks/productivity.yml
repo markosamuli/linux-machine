@@ -1,0 +1,8 @@
+---
+- name: Productivity
+  hosts: all
+  tags: productivity
+  tasks:
+    - name: Install LibreOffice productivity suite
+      package:
+        name: libreoffice

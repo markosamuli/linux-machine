@@ -1,0 +1,8 @@
+---
+- name: Security tools
+  hosts: all
+  tags: security
+  roles:
+    - name: Install Lynis security tool
+      role: lynis
+      tags: lynis

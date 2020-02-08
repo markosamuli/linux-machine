@@ -1,5 +1,4 @@
 ---
-
 - name: Update APT package cache
   hosts: all
   become: true

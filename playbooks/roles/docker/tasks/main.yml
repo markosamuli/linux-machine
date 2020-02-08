@@ -1,5 +1,4 @@
 ---
-
 - name: Load variables for the target system
   include_vars: "{{ item }}"
   with_first_found:
@@ -26,7 +25,7 @@
 
 - name: Add Docker repository
   apt_repository:
-    repo: 'deb [arch=amd64] {{ docker_apt_url }} {{ docker_apt_release }} test'
+    repo: "deb [arch=amd64] {{ docker_apt_url }} {{ docker_apt_release }} test"
     filename: docker
 
 - name: Install Docker CE

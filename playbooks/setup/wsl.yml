@@ -1,12 +1,10 @@
 ---
-
 - name: Detect Windows Subsystem for Linux
   hosts: all
   tags:
     - always
     - wsl
   tasks:
-
     - name: Detect Windows Subsystem for Linux
       command: "sh -c 'grep -q Microsoft /proc/version && echo yes || echo no'"
       register: detect_wsl_grep
