@@ -91,6 +91,8 @@ Issues fixed in this release:
 
 - Suppress errors in `Makefile` when `pyenv` is not installed
 - Prevent [pre-commit] from being upgraded to version 2
+- Use the correct `nvm_shell_init` variable instead of `nvm_init_shell` in the
+  `machine.msk.yaml` config file
 
 ### Changes
 
