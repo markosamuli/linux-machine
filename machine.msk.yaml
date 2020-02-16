@@ -1,11 +1,13 @@
 ---
 # I use .dotfiles from github.com/markosamuli/dotfiles and I don't want the
 # Ansible roles messing up with my .bashrc or .zshrc files.
-nvm_init_shell: false
+nvm_shell_init: false
 pyenv_init_shell: false
 gcloud_setup_shell: false
+golang_init_shell: false
 linuxbrew_init_shell: false
 aws_tools_init_shell: false
+asdf_init_shell: false
 
 # Install Linuxbrew so I can use it to install Hugo
 install_linuxbrew: true
