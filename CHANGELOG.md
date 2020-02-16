@@ -1,8 +1,16 @@
 # Changelog
 
-## [Unreleased] - 2020-01-31
+## [Unreleased] - 2020-02-16
 
 Test setup on Ubuntu 19.10.
+
+### Breaking changes
+
+- The setup script and Ansible playbooks will require [Ansible 2.8][ansible28]
+  to include support for installing software via [snap] packages.
+
+[ansible28]: https://docs.ansible.com/ansible/2.8/index.html
+[snap]: https://snapcraft.io/
 
 ### Added
 
@@ -51,7 +59,7 @@ Optional system monitoring tools:
 
 Issues fixed in this release:
 
-- Supress errors in `Makefile` when `pyenv` is not installed
+- Suppress errors in `Makefile` when `pyenv` is not installed
 - Prevent [pre-commit] from being upgraded to version 2
 
 ### Changes
@@ -271,5 +279,6 @@ symbolic links to `/usr/local/bin`. These will be removed automatically.
 First release.
 
 [unreleased changes]: https://github.com/markosamuli/linux-machine/commits/develop
+[2.1.0]: https://github.com/markosamuli/linux-machine/releases/tag/v2.1.0
 [2.0.0]: https://github.com/markosamuli/linux-machine/releases/tag/v2.0.0
 [1.0.0]: https://github.com/markosamuli/linux-machine/releases/tag/v1.0.0
