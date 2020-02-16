@@ -443,7 +443,8 @@ asdf_plugins:
 
 Use Ubuntu/Debian packages to install Python on the system:
 
-- [Python] v2.7 with `python` package
+- [Python] with `python` package — installed Python version will depend on the
+  OS release version
 - [pip] with `python-pip` package
 - [virtualenv] from PyPI
 
@@ -451,7 +452,7 @@ Use [pyenv] to install and manage Python versions for the current user:
 
 - [pyenv]
 - [pyenv-virtualenv]
-- [Python] v2.7 and v3.7 installed with pyenv
+- [Python] v3.7 installed with pyenv
 
 Run Python playbook:
 
