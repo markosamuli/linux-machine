@@ -18,6 +18,10 @@ Shell:
 
 - Install Zsh by default
 
+New developer CLI tools:
+
+- Install [ShellCheck][shellcheck] via snap
+
 New developer tools for desktop use:
 
 - Install [Terminus][terminus] terminal application
@@ -44,6 +48,7 @@ Optional system monitoring tools:
 - [GNU Accounting utilities][acct] for process and login accounting
 - [sysstat] - Performance monitoring tools for Linux
 
+[shellcheck]: https://github.com/koalaman/shellcheck
 [terminus]: https://eugeny.github.io/terminus/
 [meld]: https://meldmerge.org/
 [libreoffice]: https://www.libreoffice.org/

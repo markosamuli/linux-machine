@@ -33,3 +33,7 @@
         - name: Install meld (graphical tool to diff and merge files)
           package:
             name: meld
+
+    - name: Install shellcheck
+      snap:
+        name: shellcheck

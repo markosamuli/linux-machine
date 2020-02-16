@@ -370,6 +370,7 @@ install_monitoring: true
   to `ack`
 - [htop] process viewer for console
 - [pass] — the standard unix password manager
+- [ShellCheck][shellcheck], a static analysis tool for shell scripts
 
 Run the tools playbook:
 
@@ -383,6 +384,7 @@ make tools
 [htop]: https://hisham.hm/htop/
 [ag]: https://github.com/ggreer/the_silver_searcher
 [pass]: https://www.passwordstore.org/
+[shellcheck]: https://github.com/koalaman/shellcheck
 
 ### Visual Studio Code
 

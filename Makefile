@@ -237,6 +237,10 @@ security-hardening: ## install security hardening software
 	@./scripts/configure.py install_security_hardening true
 	@./setup -q -t security-hardening
 
+.PHONY: shellcheck
+shellcheck: ## install shellcheck
+	@./setup -q -t shellcheck
+
 .PHONY: terraform
 terraform: playbooks/roles/markosamuli.terraform  ## install Terraform
 	@./scripts/configure.py install_terraform true
