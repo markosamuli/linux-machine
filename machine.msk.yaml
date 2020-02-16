@@ -33,5 +33,5 @@ install_security_hardening: true
 # Install monitoring tools
 install_monitoring: true
 
-# Use Python 3.7.5 as the default Python version
-pyenv_global: 3.7.5
+# Default Python version
+pyenv_global: 3.7.6
