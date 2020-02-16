@@ -8,6 +8,7 @@ Test setup on Ubuntu 19.10.
 
 - The setup script and Ansible playbooks will require [Ansible 2.8][ansible28]
   to include support for installing software via [snap] packages.
+- Use [markosamuli.pyenv] v3.0.0 and remove Python 2.7 support
 
 [ansible28]: https://docs.ansible.com/ansible/2.8/index.html
 [snap]: https://snapcraft.io/
@@ -100,6 +101,11 @@ The following changes have been made to the development and setup tooling:
 - Use [Prettier][prettier] for formatting JSON, Markdown and YAML files
 - Added my current `machine.yaml` configuration file into the repository
 - Added script for automatic `machine.yaml` file configuration
+
+Node.js and Python versions:
+
+- Install Node.js v12.x
+- Install Python 3.7.6
 
 [prettier]: https://prettier.io/
 
