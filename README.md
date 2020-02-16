@@ -592,6 +592,29 @@ install_golang: false
 
 [go programming language]: https://golang.org/
 
+Go tools installed for development:
+
+- [golint] is a linter for Go source code
+- [goimports] is a tool for updating your Go import lines
+- [errcheck] is a program for checking for unchecked errors in go programs
+- [go-callvis] is a development tool to help visualize call graph of a Go
+  program using interactive view
+- [gopkgs] is a tool that provides list of available Go packages that can be
+  imported
+- [Stringer][stringer] is a tool to automate the creation of methods that
+  satisfy the fmt.Stringer interface
+- [guru] is a tool for answering questions about Go source code
+- [staticcheck] is a linter for Go source code
+
+[golint]: https://godoc.org/golang.org/x/lint
+[goimports]: https://godoc.org/golang.org/x/tools/cmd/goimports
+[errcheck]: https://github.com/kisielk/errcheck
+[go-callvis]: https://github.com/TrueFurby/go-callvis
+[gopkgs]: https://github.com/uudashr/gopkgs
+[stringer]: https://godoc.org/golang.org/x/tools/cmd/stringer
+[guru]: https://godoc.org/golang.org/x/tools/cmd/guru
+[staticcheck]: https://godoc.org/honnef.co/go/tools/staticcheck
+
 ### Lua
 
 You can install [Lua][lua] programming language by adding the following option

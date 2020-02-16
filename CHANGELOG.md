@@ -22,19 +22,29 @@ New developer CLI tools:
 
 - Install [ShellCheck][shellcheck] via snap
 
+[shellcheck]: https://github.com/koalaman/shellcheck
+
 New developer tools for desktop use:
 
 - Install [Terminus][terminus] terminal application
 - Install [Meld][meld], a visual diff and merge tool
 
+[terminus]: https://eugeny.github.io/terminus/
+[meld]: https://meldmerge.org/
+
 Productivity tools for desktop use:
 
 - Install [LibreOffice][libreoffice] productivity suite
+
+[libreoffice]: https://www.libreoffice.org/
 
 Antivirus and security tools:
 
 - Install [ClamAV][clamav] antivirus software
 - Install [Lynis][lynis] security tool for auditing the system
+
+[clamav]: https://www.clamav.net/
+[lynis]: https://cisofy.com/lynis/
 
 Optional security hardening tools:
 
@@ -43,22 +53,36 @@ Optional security hardening tools:
 - [debsums][debsums] tool for verification of installed package files against
   MD5 checksums
 
+[passwdqc]: https://www.openwall.com/passwdqc/
+[usbguard]: https://usbguard.github.io/
+[debsums]: https://packages.ubuntu.com/eoan/debsums
+
 Optional system monitoring tools:
 
 - [GNU Accounting utilities][acct] for process and login accounting
 - [sysstat] - Performance monitoring tools for Linux
 
-[shellcheck]: https://github.com/koalaman/shellcheck
-[terminus]: https://eugeny.github.io/terminus/
-[meld]: https://meldmerge.org/
-[libreoffice]: https://www.libreoffice.org/
-[clamav]: https://www.clamav.net/
-[lynis]: https://cisofy.com/lynis/
-[passwdqc]: https://www.openwall.com/passwdqc/
-[usbguard]: https://usbguard.github.io/
-[debsums]: https://packages.ubuntu.com/eoan/debsums
 [acct]: https://www.gnu.org/software/acct/
 [sysstat]: https://github.com/sysstat/sysstat
+
+Install additional Go tools for development:
+
+- [errcheck] is a program for checking for unchecked errors in go programs
+- [go-callvis] is a development tool to help visualize call graph of a Go
+  program using interactive view
+- [gopkgs] is a tool that provides list of available Go packages that can be
+  imported
+- [Stringer][stringer] is a tool to automate the creation of methods that
+  satisfy the fmt.Stringer interface
+- [guru] is a tool for answering questions about Go source code
+- [staticcheck] is a linter for Go source code
+
+[errcheck]: https://github.com/kisielk/errcheck
+[go-callvis]: https://github.com/TrueFurby/go-callvis
+[gopkgs]: https://github.com/uudashr/gopkgs
+[stringer]: https://godoc.org/golang.org/x/tools/cmd/stringer
+[guru]: https://godoc.org/golang.org/x/tools/cmd/guru
+[staticcheck]: https://godoc.org/honnef.co/go/tools/staticcheck
 
 ### Fixed
 
