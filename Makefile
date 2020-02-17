@@ -14,6 +14,10 @@ help:  ## print this help
 setup:  ## run setup with default options
 	@./setup
 
+.PHONY: update
+update: setup-ansible ## update Ansible roles
+	@./setup --no-install-ansible --update-roles --no-run-playbook
+
 .PHONY: clean
 clean:  ## delete local development dependencies
 	-rm -rf playbooks/roles/markosamuli.*
