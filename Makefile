@@ -151,14 +151,20 @@ travis-lint: setup-pre-commit  ## lint .travis.yml file
 # Ansible setup
 ###
 
+ANSIBLE_INSTALLED = $(shell ansible --version 2>&1 | head -1 | grep -q 'ansible 2' && echo true)
+
 .PHONY: setup-ansible
+setup-ansible:
+ifneq ($(ANSIBLE_INSTALLED),true)
+	@$(MAKE) install-ansible
+endif
+
+.PHONY: install-ansible
 install-ansible:  ## install Ansible without roles or running playbooks
 	@./setup \
 		--install-ansible \
 		--no-run-playbook \
-		--no-install-roles \
-		--print-versions \
-		--verbose
+		--no-install-roles
 
 .PHONY: install-roles
 install-roles:  ## install Ansible roles
@@ -180,39 +186,50 @@ update-roles: setup-requirements  ## update Ansible roles in the requirements.ym
 latest-roles: update-roles clean-roles install-roles  # update Ansible roles and install new versions
 
 ###
-# Playbooks
+# Tools
 ###
-
-.PHONY: antivirus
-antivirus: ## install antivirus software
-	@./scripts/configure.py install_antivirus true
-	@./setup -q -t antivirus
 
 .PHONY: audit
 audit: security  ## audit system with Lynis
 	sudo lynis audit system
 
+###
+# Initialise requirements for running playbooks
+###
+
+.PHONY: init
+init: setup-ansible setup-requirements
+
+###
+# Playbooks
+###
+
+.PHONY: antivirus
+antivirus: init ## install antivirus software
+	@./scripts/configure.py install_antivirus true
+	@./setup -q -t antivirus
+
 .PHONY: aws
-aws: playbooks/roles/markosamuli.aws_tools  ## install AWS tools
+aws: init playbooks/roles/markosamuli.aws_tools  ## install AWS tools
 	@./scripts/configure.py install_aws true
 	@./setup -q -t aws
 
 .PHONY: docker
-docker:  ## install Docker
+docker: init ## install Docker
 	@./scripts/configure.py install_docker true
 	@./setup -q -t docker
 
 .PHONY: editors
-editors:  ## install IDEs and code editors
+editors: init ## install IDEs and code editors
 	@./setup -q -t editors
 
 .PHONY: gcloud
-gcloud: playbooks/roles/markosamuli.gcloud  ## install Google Cloud SDK
+gcloud: init playbooks/roles/markosamuli.gcloud  ## install Google Cloud SDK
 	@./scripts/configure.py install_gcloud true
 	@./setup -q -t gcloud
 
 .PHONY: linuxbrew
-linuxbrew: playbooks/roles/markosamuli.linuxbrew  ## install Homebrew on Linux
+linuxbrew: init playbooks/roles/markosamuli.linuxbrew  ## install Homebrew on Linux
 ifeq ($(UNAME_S),Linux)
 	@./scripts/configure.py install_linuxbrew true
 	@./setup -q -t linuxbrew
@@ -221,76 +238,83 @@ else
 endif
 
 .PHONY: golang
-golang: playbooks/roles/markosamuli.golang  ## install Go programming language
+golang: init playbooks/roles/markosamuli.golang  ## install Go programming language
 	@./scripts/configure.py install_golang true
 	@./setup -q -t golang
 
 .PHONY: lua
-lua: ## install Lua programming language
+lua: init ## install Lua programming language
 	@./scripts/configure.py install_lua true
 	@./setup -q -t lua
 
 .PHONY: monitoring
-monitoring: ## install monitoring tools
+monitoring: init ## install monitoring tools
 	@./scripts/configure.py install_monitoring true
 	@./setup -q -t monitoring
 
 .PHONY: node
-node: playbooks/roles/markosamuli.nvm  ## install Node.js with NVM
+node: init playbooks/roles/markosamuli.nvm ## install Node.js with NVM
 	@./scripts/configure.py install_nodejs true
 	@./setup -q -t node,nvm
 
 .PHONY: permissions
-permissions:  ## fix permissions in user home directory
+permissions: init ## fix permissions in user home directory
 	@USER_HOME_FIX_PERMISSIONS=true ./setup -q -t permissions
 
 .PHONY: productivity
-productivity:  ## install productivity tools
+productivity: init ## install productivity tools
 	@./scripts/configure.py install_productivity true
 	@./setup -q -t productivity
 
+# Do not create virtualenv if Python is not installed yet
 .PHONY: python
-python: playbooks/roles/markosamuli.pyenv  ## install Python with pyenv
-	@./scripts/configure.py install_python true
+python: setup-ansible playbooks/roles/markosamuli.pyenv ## install Python with pyenv
 	@./setup -q -t python,pyenv
 
 .PHONY: ruby
-ruby: playbooks/roles/zzet.rbenv  ## install Ruby with rbenv
+ruby: init playbooks/roles/zzet.rbenv ## install Ruby with rbenv
 	@./scripts/configure.py install_ruby true
 	@./setup -q -t ruby,rbenv
 
 .PHONY: rust
-rust: playbooks/roles/markosamuli.rust  ## install Rust programming language
+rust: init playbooks/roles/markosamuli.rust ## install Rust programming language
 	@./scripts/configure.py install_rust true
 	@./setup -q -t rust
 
 .PHONY: security
-security: ## install security tools
+security: init ## install security tools
 	@./scripts/configure.py install_security true
 	@./setup -q -t security
 
 .PHONY: security-hardening
-security-hardening: ## install security hardening software
+security-hardening: init ## install security hardening software
 	@./scripts/configure.py install_security_hardening true
 	@./setup -q -t security-hardening
 
 .PHONY: shellcheck
-shellcheck: ## install shellcheck
+shellcheck: init ## install shellcheck
 	@./setup -q -t shellcheck
 
 .PHONY: terraform
-terraform: playbooks/roles/markosamuli.terraform  ## install Terraform
+terraform: init playbooks/roles/markosamuli.terraform  ## install Terraform
 	@./scripts/configure.py install_terraform true
 	@./setup -q -t terraform
 
 .PHONY: tools
-tools:  ## install tools
+tools: init ## install tools
 	@./setup -q -t tools
 
 .PHONY: zsh
-zsh:  ## install zsh
+zsh: init ## install zsh
 	@./scripts/configure.py install_zsh true
 	@./setup -q -t zsh
+
+###
+# Aliases for the playbooks
+###
+
+.PHONY: go
+go: golang
 
 ###
 # Ansible roles
