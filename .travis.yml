@@ -13,14 +13,6 @@ language: generic
 
 matrix:
   include:
-    - name: "Ubuntu 16.04 LTS with Ansible 2.7"
-      os: linux
-      dist: xenial
-      env: MACHINE_ANSIBLE_VERSION=2.7
-    - name: "Ubuntu 18.04 LTS with Ansible 2.7"
-      os: linux
-      dist: bionic
-      env: MACHINE_ANSIBLE_VERSION=2.7
     - name: "Ubuntu 16.04 LTS with Ansible 2.8"
       os: linux
       dist: xenial
