@@ -3,6 +3,7 @@
 [![GitHub release](https://img.shields.io/github/release/markosamuli/linux-machine.svg)](https://github.com/markosamuli/linux-machine/releases)
 [![License](https://img.shields.io/github/license/markosamuli/linux-machine.svg)](https://github.com/markosamuli/linux-machine/blob/master/LICENSE)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
+[![Known Vulnerabilities](https://snyk.io/test/github/markosamuli/linux-machine/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/markosamuli/linux-machine?targetFile=requirements.txt)
 
 | Branch  | Build Status                              | Coding Style                |
 | ------- | ----------------------------------------- | --------------------------- |
