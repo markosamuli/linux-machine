@@ -40,9 +40,8 @@ jobs:
 
       - name: Install Python packages
         run: |
-          python -m pip install --upgrade pip
-          pip install $(grep "^virtualenv" requirements.dev.txt)
-          pip install $(grep "^pre-commit" requirements.dev.txt)
+          python3 -m pip install --upgrade pip
+          pip3 install -r requirements.dev.txt
           pre-commit --version
 
       - name: Install Go packages
@@ -100,8 +99,8 @@ jobs:
 
       - name: Install Python requirements
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.dev.txt
+          python3 -m pip install --upgrade pip
+          pip3 install -r requirements.dev.txt
           pre-commit --version
           pylint --version
           flake8 --version
