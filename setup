@@ -953,6 +953,10 @@ run_ansible_playbook_opts() {
 
     local ansible_opts=()
 
+    if [ "${distrib_release}" == "focal" ]; then
+        ansible_opts+=("-e ansible_python_interpreter=/usr/bin/python3")
+    fi
+
     if [ -e "${local_vars_file}" ]; then
         ansible_opts+=("--extra-vars @${local_vars_file}")
     fi
