@@ -633,7 +633,19 @@ remove_ansible_virtualenv() {
 # Install Ansible with APT on Ubuntu
 install_ansible_with_apt_on_ubuntu() {
 
-    install_ansible_ppa_on_ubuntu
+    if [ "${distrib_release}" == "focal" ]; then
+        echo "*** Do not use PPA on Ubuntu 20.04 LTS"
+        if ! compare_ansible_version "2.9.0" "${required_ansible_version}"; then
+            echo "*** Require Ansible 2.9 on Ubuntu 20.04 LTS"
+            required_ansible_version="2.9"
+        fi
+        if ! compare_ansible_version "2.9.0" "${ansible_version}"; then
+            echo "*** Install Ansible 2.9 on Ubuntu 20.04 LTS"
+            ansible_version="2.9"
+        fi
+    else
+        install_ansible_ppa_on_ubuntu
+    fi
 
     if ! install_ansible_apt "${ansible_version}"; then
         error "Couldn't install Ansible ${ansible_version} from APT"
