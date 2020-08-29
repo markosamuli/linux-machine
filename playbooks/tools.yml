@@ -3,6 +3,10 @@
   hosts: all
   tags: tools
   tasks:
+    - name: Install GNU make
+      package:
+        name: make
+
     - name: Install wget
       package:
         name: wget
