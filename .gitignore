@@ -5,6 +5,7 @@
 playbooks/roles/*
 !playbooks/roles/docker
 !playbooks/roles/lynis
+!playbooks/roles/python
 !playbooks/roles/terminus
 !playbooks/roles/user_home_permissions
 
