@@ -15,6 +15,7 @@ playbooks on Ubuntu 20.04 LTS and WSL2.
 Role updates:
 
 - Use [`markosamuli.golang`][markosamuli.golang] v1.3.1
+- Use [`markosamuli.rust`][markosamuli.rust] v1.0.1
 
 Fixes for WSL2:
 
