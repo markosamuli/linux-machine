@@ -137,15 +137,15 @@ The setup script will try to install Ansible
 
 ### Ansible version
 
-Ansible version 2.8 is installed by default.
+Ansible version 2.9 is installed by default.
 
 You can define `MACHINE_ANSIBLE_VERSION` environment variable to change
 the installed version.
 
-Example to use Ansible 2.9 instead of Ansible 2.8:
+Example to use Ansible 2.8 instead of Ansible 2.9:
 
 ```bash
-export MACHINE_ANSIBLE_VERSION=2.9
+export MACHINE_ANSIBLE_VERSION=2.8
 ```
 
 ### Force Ansible reinstall
@@ -163,14 +163,15 @@ The setup script will install Ansible using APT from
 [Ansible PPAs][ansible-ppa] if the `ansible` command is not found on your
 system.
 
+Ubuntu 20.04 LTS will not use Ansible PPAs as the builds for this release
+are missing.
+
 | Version         | PPA                   |
 | --------------- | --------------------- |
-| `2.7`           | [ansible/ansible-2.7] |
-| `2.8` (default) | [ansible/ansible-2.8] |
-| `2.9`           | [ansible/ansible-2.9] |
+| `2.8`           | [ansible/ansible-2.8] |
+| `2.9` (default) | [ansible/ansible-2.9] |
 
 [ansible-ppa]: https://launchpad.net/~ansible
-[ansible/ansible-2.7]: https://launchpad.net/~ansible/+archive/ubuntu/ansible-2.7
 [ansible/ansible-2.8]: https://launchpad.net/~ansible/+archive/ubuntu/ansible-2.8
 [ansible/ansible-2.9]: https://launchpad.net/~ansible/+archive/ubuntu/ansible-2.9
 
