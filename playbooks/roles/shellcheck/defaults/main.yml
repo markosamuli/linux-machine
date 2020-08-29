@@ -1,0 +1,3 @@
+---
+# Default to snap
+shellcheck_snap: true
