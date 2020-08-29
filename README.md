@@ -835,6 +835,9 @@ make clean-roles
 
 ## Development
 
+You should have Python 3.7 or newer installed for the development tools and
+pre-commit hooks to work.
+
 Install [pre-commit] hooks:
 
 ```bash
