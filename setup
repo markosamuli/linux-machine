@@ -544,12 +544,14 @@ remove_ansible_installations() {
     remove_ansible_virtualenv
 
     # Find local pyenv version
-    local pyenv_version
-    if [ -n "${ansible_pyenv}" ]; then
-        pyenv_version="${ansible_pyenv}"
-    elif [ -e ".python-version" ]; then
-        # Check .python-version file even if PyPi install is disabled
-        pyenv_version=$(cat .python-version)
+    if command -v pyenv >/dev/null; then
+        local pyenv_version
+        if [ -n "${ansible_pyenv}" ]; then
+            pyenv_version="${ansible_pyenv}"
+        elif [ -e ".python-version" ]; then
+            # Check .python-version file even if PyPi install is disabled
+            pyenv_version=$(cat .python-version)
+        fi
     fi
 
     # Uninstall Ansible package from the pyenv environment
@@ -856,6 +858,10 @@ pyenv_exec() {
     local args=("$@")
     # The first argument is the pyenv version
     local pyenv_version="${args[0]}"
+    if ! command -v pyenv >/dev/null; then
+        error "pyenv not installed"
+        exit 1
+    fi
     # shellcheck disable=SC2068
     PYENV_VERSION="${pyenv_version}" pyenv exec "${args[@]:1}"
 }
