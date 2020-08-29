@@ -1,8 +1,45 @@
 # Changelog
 
-## [Unreleased] - 2020-02-16
+## Ubuntu 20.04 LTS and WSL2 - 2020-08-29
 
-Test setup on Ubuntu 19.10.
+Changes in the `feature/ubuntu-20.04lts` branch while testing the current
+playbooks on Ubuntu 20.04 LTS and WSL2.
+
+### Breaking changes
+
+- Remove support for installing Python 2.7 using APT packages
+- Require Ansible 2.9 on Ubuntu 20.04 LTS
+
+### Fixed
+
+Role updates:
+
+- Use [`markosamuli.golang`][markosamuli.golang] v1.3.1
+
+Fixes for WSL2:
+
+- Detect WSL2 installations using `/run/WSL` directory
+
+Fixes for Ubuntu 20.04 LTS:
+
+- Install `make`
+- Set `ansible_python_interpreter` to `/usr/bin/python3`
+- Do not install Ansible from PPA as it's not available and the default
+  APT package already has Ansible v2.9
+- Do not install `shellcheck` from Snap
+
+### Changed
+
+- Install Ansible 2.9 on Ubuntu 20.04 LTS
+- Install Python using `python3` and `python3-pip` packages instead of `python`
+  and `python-pip`
+- Using local `python` role for installing Python
+- Using local `shellcheck` role for installing Shellcheck
+
+## Ubuntu 19.10 and Ansible 2.8 - 2020-02-16
+
+This includes changes in the `feature/ansible2.8` branch that were never
+released or merged into the `develop` branch.
 
 ### Breaking changes
 
@@ -99,7 +136,8 @@ Issues fixed in this release:
 The following changes have been made to the development and setup tooling:
 
 - Install [shfmt] and [shellcheck] as a dependency in the Makefile
-- Use [shfmt] v3 for formatting bash scripts- Added `make editors` command
+- Use [shfmt] v3 for formatting bash scripts
+- Added `make editors` command
 - Use [Prettier][prettier] for formatting JSON, Markdown and YAML files
 - Added my current `machine.yaml` configuration file into the repository
 - Added script for automatic `machine.yaml` file configuration
