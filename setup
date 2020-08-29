@@ -48,11 +48,12 @@ update_roles=0        # Update Ansible roles to the latest versions
 print_versions=0      # Print Python and Ansible versions
 
 # System properties
-is_macos=""   # macOS
-is_linux=""   # Linux
-is_ubuntu=""  # Ubuntu
-is_pengwin="" # Pengwin
-is_wsl=""     # Windows Subsystem for Linux
+is_macos=""        # macOS
+is_linux=""        # Linux
+is_ubuntu=""       # Ubuntu
+is_pengwin=""      # Pengwin
+is_wsl=""          # Windows Subsystem for Linux
+distrib_release="" # OS release codename
 
 # macOS specific setup options
 install_homebrew=1 # Install Homebrew
@@ -791,25 +792,36 @@ detect_os() {
 
 # Detect Windows Subsystem for Linux
 detect_wsl() {
-    if grep -q Microsoft /proc/version; then
-        echo "*** Windows Subsystem for Linux detected"
+    if [[ -d "/run/WSL" ]]; then
+        echo "*** Windows Subsystem for Linux (WSL2) detected"
         is_wsl=1
-    else
-        is_wsl=0
+        return
     fi
+    if grep -q Microsoft /proc/version; then
+        echo "*** Windows Subsystem for Linux (WSL1) detected"
+        is_wsl=1
+        return
+    fi
+    is_wsl=0
 }
 
 # Detect Ubuntu
 detect_ubuntu() {
-    if test -f /etc/lsb-release; then
-        if grep -q Ubuntu /etc/lsb-release; then
-            echo "*** Ubuntu detected"
-            is_ubuntu=1
-        else
-            is_ubuntu=0
-        fi
-    else
+    if ! test -f /etc/lsb-release; then
         is_ubuntu=0
+        return
+    fi
+    if ! grep -q Ubuntu /etc/lsb-release; then
+        is_ubuntu=0
+        return
+    fi
+    echo "*** Ubuntu detected"
+    is_ubuntu=1
+    local codename
+    codename=$(grep "DISTRIB_CODENAME=" /etc/lsb-release | cut -d= -f2)
+    if [ -n "${codename}" ]; then
+        # shellcheck disable=SC2034
+        distrib_release="${codename}"
     fi
 }
 
