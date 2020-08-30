@@ -12,7 +12,7 @@ default_language_version:
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks.git
-    rev: v2.4.0
+    rev: v3.2.0
     hooks:
       - id: check-executables-have-shebangs
       - id: check-byte-order-marker
@@ -29,7 +29,7 @@ repos:
 
   # Format JSON, Markdown and YAML files with Prettier.
   - repo: https://github.com/prettier/prettier
-    rev: "1.19.1"
+    rev: "2.1.1"
     hooks:
       - id: prettier
         name: Format JSON, Markdown and YAML files
@@ -42,7 +42,7 @@ repos:
         stages: [commit]
 
   - repo: https://github.com/pre-commit/mirrors-yapf.git
-    rev: v0.28.0
+    rev: v0.30.0
     hooks:
       - id: yapf
         exclude: ^playbooks/library/luarocks\.py$
@@ -66,7 +66,7 @@ repos:
         exclude: ^playbooks/library/luarocks\.py$
 
   - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.18.0
+    rev: v1.24.2
     hooks:
       - id: yamllint
 
@@ -84,14 +84,14 @@ repos:
         args: ["-l", "-i", "4", "-ci", "-w"]
 
   - repo: https://github.com/openstack-dev/bashate.git
-    rev: "0.6.0"
+    rev: "2.0.0"
     hooks:
       - id: bashate
         args: ["-i", "E006"]
         verbose: false
 
   - repo: https://github.com/igorshubovych/markdownlint-cli.git
-    rev: v0.19.0
+    rev: v0.23.2
     hooks:
       - id: markdownlint
 
@@ -101,7 +101,7 @@ repos:
       - id: travis-lint
 
   - repo: https://github.com/alessandrojcm/commitlint-pre-commit-hook.git
-    rev: v2.1.0
+    rev: v3.0.0
     hooks:
       - id: commitlint
         stages: [commit-msg]
