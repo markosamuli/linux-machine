@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Get available tags in Ansible playbooks"""
 
 from pathlib import Path

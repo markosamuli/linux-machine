@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Update Ansible roles in requirements.yml to their latest released version"""
 
 import sys
@@ -14,6 +14,7 @@ try:
 except ValueError:  # Already removed
     pass
 
+# pylint: disable=import-error
 # pylint: disable=wrong-import-position
 from machine.roles import get_updated_role  # noqa: E402
 from machine.roles import list_required_roles  # noqa: E402
@@ -22,6 +23,7 @@ from machine.roles import update_required_roles  # noqa: E402
 import machine.config  # noqa: E402,F401
 # pylint: enable=unused-import
 # pylint: enable=wrong-import-position
+# pylint: enable=import-error
 
 
 def update_roles():
