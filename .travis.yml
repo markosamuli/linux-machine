@@ -13,7 +13,7 @@ os: linux
 dist: xenial
 language: shell
 
-matrix:
+jobs:
   include:
     - name: "Ubuntu 16.04 LTS with Ansible 2.8"
       os: linux
