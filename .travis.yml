@@ -29,6 +29,10 @@ matrix:
       os: linux
       dist: bionic
       env: MACHINE_ANSIBLE_VERSION=2.9
+    - name: "Ubuntu 20.04 LTS with Ansible 2.9"
+      os: linux
+      dist: focal
+      env: MACHINE_ANSIBLE_VERSION=2.9
 
 before_install:
   # Cleanup existing NVM installation
