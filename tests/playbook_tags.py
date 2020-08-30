@@ -14,9 +14,11 @@ try:
 except ValueError:  # Already removed
     pass
 
+# pylint: disable=import-error
 # pylint: disable=wrong-import-position
 from machine.playbook import get_tags_from_playbook  # noqa: E402
 # pylint: enable=wrong-import-position
+# pylint: enable=import-error
 
 
 def print_tags_from_playbook(playbook_file):
