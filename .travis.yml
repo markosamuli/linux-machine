@@ -9,7 +9,9 @@ if: |
   type = pull_request OR \
   branch IN (master, develop)
 
-language: generic
+os: linux
+dist: xenial
+language: shell
 
 matrix:
   include:
