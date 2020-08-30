@@ -698,6 +698,8 @@ install_packer: true
 
 ### Terraform
 
+Terraform is installed using [`tfenv`][tfenv] Terraform version manager.
+
 Run Terraform playbook:
 
 ```bash
@@ -710,6 +712,7 @@ Disable [Terraform][terraform] installation with:
 install_terraform: false
 ```
 
+[tfenv]: https://github.com/tfutils/tfenv
 [terraform]: https://www.terraform.io/
 
 ### Amazon Web Services
@@ -816,7 +819,6 @@ make clean-roles
 | [markosamuli.nvm]       | [![Build Status](https://travis-ci.org/markosamuli/ansible-nvm.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-nvm)             |
 | [markosamuli.packer]    | [![Build Status](https://travis-ci.org/markosamuli/ansible-packer.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-packer)       |
 | [markosamuli.pyenv]     | [![Build Status](https://travis-ci.org/markosamuli/ansible-pyenv.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-pyenv)         |
-| [markosamuli.terraform] | [![Build Status](https://travis-ci.org/markosamuli/ansible-terraform.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-terraform) |
 | [markosamuli.vagrant]   | [![Build Status](https://travis-ci.org/markosamuli/ansible-vagrant.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-vagrant)     |
 | [markosamuli.hyper]     | [![Build Status](https://travis-ci.org/markosamuli/ansible-hyper.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-hyper)         |
 
@@ -829,7 +831,6 @@ make clean-roles
 [markosamuli.nvm]: https://github.com/markosamuli/ansible-nvm
 [markosamuli.packer]: https://github.com/markosamuli/ansible-packer
 [markosamuli.pyenv]: https://github.com/markosamuli/ansible-pyenv
-[markosamuli.terraform]: https://github.com/markosamuli/ansible-terraform
 [markosamuli.vagrant]: https://github.com/markosamuli/ansible-vagrant
 [requirements.yml]: requirements.yml
 

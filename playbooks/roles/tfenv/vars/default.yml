@@ -1,0 +1,4 @@
+---
+tfenv_shell_profile_scripts:
+  - .bashrc
+  - .zshrc

@@ -8,6 +8,7 @@ playbooks/roles/*
 !playbooks/roles/python
 !playbooks/roles/shellcheck
 !playbooks/roles/terminus
+!playbooks/roles/tfenv
 !playbooks/roles/user_home_permissions
 
 # IDEs

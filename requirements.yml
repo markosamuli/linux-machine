@@ -28,8 +28,6 @@
 - name: markosamuli.rust
   src: https://github.com/markosamuli/ansible-rust
   version: v1.0.1
-- name: markosamuli.terraform
-  version: v1.2.1
 - name: markosamuli.vagrant
   src: https://github.com/markosamuli/ansible-vagrant
   version: v1.0.0

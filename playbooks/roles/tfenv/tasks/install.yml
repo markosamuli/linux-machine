@@ -1,0 +1,6 @@
+---
+- name: Clone tfenv repository
+  git:
+    repo: "{{ tfenv_repo }}"
+    dest: "{{ tfenv_dir }}"
+    version: "{{ tfenv_version }}"

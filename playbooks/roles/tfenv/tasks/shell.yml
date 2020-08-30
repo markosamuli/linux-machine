@@ -1,0 +1,22 @@
+---
+- name: Find shell profile scripts
+  stat:
+    path: "{{ tfenv_home }}/{{ item }}"
+  with_items: "{{ tfenv_shell_profile_scripts }}"
+  register: tfenv_shell_profile_st
+
+- name: Add tfenv to PATH
+  lineinfile:
+    path: "{{ item.stat.path }}"
+    regexp: '^export PATH="$HOME/.tfenv/bin:$PATH"'
+    line: 'export PATH="$HOME/.tfenv/bin:$PATH"'
+  with_items: "{{ tfenv_shell_profile_st.results }}"
+  when: item.stat.exists and not item.stat.islnk
+
+- name: Add tfenv to PATH
+  lineinfile:
+    path: "{{ item.stat.lnk_source }}"
+    regexp: '^export PATH="$HOME/.tfenv/bin:$PATH"'
+    line: 'export PATH="$HOME/.tfenv/bin:$PATH"'
+  with_items: "{{ tfenv_shell_profile_st.results }}"
+  when: item.stat.exists and item.stat.islnk
