@@ -593,9 +593,6 @@ install_ansible_ppa_on_ubuntu() {
     sudo apt-add-repository -y "ppa:${ansible_ppa}"
 
     add_ansible_ppa_key
-
-    echo "*** Update APT cache..."
-    sudo apt-get update
 }
 
 # Remove all Ansible sources list files
@@ -670,9 +667,6 @@ install_ansible_ppa_on_debian() {
     fi
 
     add_ansible_ppa_key
-
-    echo "*** Update APT cache..."
-    sudo apt-get update
 }
 
 # Install Ansible with APT on Debian
@@ -693,6 +687,9 @@ install_ansible_with_apt_on_debian() {
 # Install Ansible APT package
 install_ansible_apt() {
     local version=$1
+
+    echo "*** Update APT cache..."
+    sudo apt-get update
 
     local candidate
     candidate=$(apt_install_candidate "ansible")
