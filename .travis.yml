@@ -32,9 +32,17 @@ matrix:
     - name: "Ubuntu 20.04 LTS with Ansible 2.9"
       os: linux
       dist: focal
-      env: MACHINE_ANSIBLE_VERSION=2.9
+      env: MACHINE_ANSIBLE_VERSION=2.9 UPGRADE_GCC=yes
 
 before_install:
+  # Fix broken Travis Ubuntu 20.04 LTS images with GCC 9.2.1
+  # https://travis-ci.community/t/please-update-ubuntu-focal-20-04-lts-base-installation-due-to-a-compiling-error-with-gcc-9-2-1/8658
+  - >
+    if [[ "$UPGRADE_GCC" == "yes" ]]; then
+      sudo apt-get update
+      sudo apt-get install gcc --only-upgrade
+    fi
+
   # Cleanup existing NVM installation
   - unset NVM_CD_FLAGS
   - unset NVM_DIR
