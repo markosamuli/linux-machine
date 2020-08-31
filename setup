@@ -960,7 +960,7 @@ run_ansible_playbook_opts() {
     local ansible_opts=()
 
     if [ "${distrib_release}" == "focal" ]; then
-        ansible_opts+=("-e ansible_python_interpreter=/usr/bin/python3")
+        ansible_opts+=("-e ansible_python_interpreter=auto")
     fi
 
     if [ -e "${local_vars_file}" ]; then
