@@ -96,9 +96,15 @@ ansible_homebrew_enabled="${MACHINE_ANSIBLE_HOMEBREW}"
 ansible_virtualenv_enabled="${MACHINE_ANSIBLE_VIRTUALENV}"
 ansible_pyenv_enabled="${MACHINE_ANSIBLE_PYENV}"
 
-# Print error into STDERR
 error() {
     echo "$@" 1>&2
+}
+
+debug() {
+    if [ -z "${DEBUG}" ]; then
+        return 0
+    fi
+    echo "DEBUG: $*" 1>&2
 }
 
 # Print usage help
@@ -199,6 +205,7 @@ compare_ansible_version() {
 
 # Install dependencies on Linux
 install_linux_dependencies() {
+    debug "install Linux dependencies"
     if is_true "${install_ansible}"; then
         install_ansible
     fi
@@ -261,11 +268,15 @@ is_ansible_installed() {
     if is_ansible_homebrew_enabled; then
         # Fail if Ansible formula is not found
         if [ "$(brew --prefix ansible)" == "" ]; then
+            debug "brew --prefix ansible is empty"
             return 1
         fi
     fi
     # Fail if 'ansible --version' doesn't work
-    if [ -z "$(ansible_exec ansible --version 2>/dev/null)" ]; then
+    local version
+    version=$(ansible_exec ansible --version 2>/dev/null)
+    if [ -z "${version}" ]; then
+        debug "ansible --version is empty"
         return 1
     fi
 }
@@ -611,7 +622,10 @@ remove_ansible_apt_sources_list() {
     done
     if [ "${update_apt_cache}" == "1" ]; then
         echo "*** Update APT cache..."
-        sudo apt-get update
+        sudo apt-get update || {
+            error "failed to update APT cache"
+            exit 1
+        }
     fi
 }
 
@@ -690,7 +704,10 @@ install_ansible_apt() {
     local version=$1
 
     echo "*** Update APT cache..."
-    sudo apt-get update
+    sudo apt-get update || {
+        error "failed to update APT cache"
+        exit 1
+    }
 
     local candidate
     candidate=$(apt_install_candidate "ansible")
@@ -699,7 +716,7 @@ install_ansible_apt() {
         return 1
     fi
 
-    echo "*** Installing Ansible ${version}..."
+    echo "*** Installing Ansible ${version} from APT..."
     sudo apt-get install -y "ansible=${version}*" || {
         error "Failed to install ansible=${version}*"
         return 1
@@ -905,22 +922,19 @@ ansible_exec() {
     fi
 
     if [ -n "${ansible_path}" ]; then
-        # Execute with the custom path
-        # echo "*** Execute with custom path ${ansible_path}" >&2
+        debug "execute with the custom path ${ansible_path}"
         # shellcheck disable=SC2068
         PATH="${ansible_path}:$PATH" ${args[@]}
     elif [ -n "${pyenv_version}" ]; then
-        # Execute in the local pyenv
-        # echo "*** Execute with pyenv ${pyenv_version}" >&2
+        debug "execute in the local pyenv ${pyenv_version}"
         # shellcheck disable=SC2068
         pyenv_exec "${pyenv_version}" "${args[@]}"
     elif [ -n "${virtualenv_path}" ]; then
-        # Execute in the local virtualenv
-        # echo "*** Execute with virtualenv ${virtualenv_path}" >&2
+        debug "execute in the local virtualenv ${virtualenv_path}"
         # shellcheck disable=SC2068
         virtualenv_exec "${virtualenv_path}" "${args[@]}"
     else
-        # echo "*** Execute with system PATH" >&2
+        debug "execute with system PATH"
         # shellcheck disable=SC2068
         ${args[@]}
     fi
