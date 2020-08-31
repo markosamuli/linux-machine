@@ -4,4 +4,4 @@
   tags: docker
   roles:
     - role: docker
-      when: not is_wsl
+      when: not is_wsl or (is_wsl and wsl_version == 'WSL2')

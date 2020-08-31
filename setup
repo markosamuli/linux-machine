@@ -54,6 +54,7 @@ is_ubuntu=""       # Ubuntu
 is_pengwin=""      # Pengwin
 is_wsl=""          # Windows Subsystem for Linux
 distrib_release="" # OS release codename
+wsl_version=""     # WSL1 / WSL2
 
 # macOS specific setup options
 install_homebrew=1 # Install Homebrew
@@ -798,11 +799,13 @@ detect_wsl() {
     if [[ -d "/run/WSL" ]]; then
         echo "*** Windows Subsystem for Linux (WSL2) detected"
         is_wsl=1
+        wsl_version='WSL2'
         return
     fi
     if grep -q Microsoft /proc/version; then
         echo "*** Windows Subsystem for Linux (WSL1) detected"
         is_wsl=1
+        wsl_version='WSL1'
         return
     fi
     is_wsl=0
@@ -968,6 +971,7 @@ run_ansible_playbook_opts() {
     if is_true "${is_linux}"; then
         if is_true "${is_wsl}"; then
             ansible_vars+=("\"is_wsl\":true")
+            ansible_vars+=("\"wsl_version\":${wsl_version}")
         else
             ansible_vars+=("\"is_wsl\":false")
         fi
