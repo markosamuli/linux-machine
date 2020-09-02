@@ -53,4 +53,3 @@ nvm_default_node_version: lts/erbium
 
 # Prefer python3 during Google Cloud SDK install
 gcloud_prefer_python3: true
-
