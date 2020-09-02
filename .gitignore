@@ -30,3 +30,7 @@ __pycache__
 
 # Prettier config files in any directory
 !.prettierrc.yaml
+
+# Golang
+go.mod
+go.sum
