@@ -9,6 +9,9 @@ linuxbrew_init_shell: false
 aws_tools_init_shell: false
 asdf_init_shell: false
 
+# Install Golang
+install_golang: true
+
 # Install Linuxbrew so I can use it to install Hugo
 install_linuxbrew: true
 
