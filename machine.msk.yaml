@@ -33,6 +33,9 @@ install_security: true
 # Install security hardening software
 install_security_hardening: true
 
+# Install zsh
+install_zsh: true
+
 # Install monitoring tools
 install_monitoring: true
 

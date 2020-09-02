@@ -39,6 +39,9 @@ install_docker: true
 # Do NOT install security hardening software on WSL
 install_security_hardening: false
 
+# Install zsh
+install_zsh: true
+
 # Default Python version
 pyenv_global: 3.8.5
 
@@ -50,3 +53,4 @@ nvm_default_node_version: lts/erbium
 
 # Prefer python3 during Google Cloud SDK install
 gcloud_prefer_python3: true
+
