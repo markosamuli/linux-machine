@@ -1,6 +1,6 @@
 # Changelog
 
-## Ubuntu 20.04 LTS and WSL2 - 2020-08-29
+## Ubuntu 20.04 LTS and WSL2 - 2020-09-02
 
 Changes in the `feature/ubuntu-20.04lts` branch while testing the current
 playbooks on Ubuntu 20.04 LTS and WSL2.
@@ -9,6 +9,10 @@ playbooks on Ubuntu 20.04 LTS and WSL2.
 
 - Remove support for installing Python 2.7 using APT packages
 - Require Ansible 2.9 on Ubuntu 20.04 LTS
+- Require Python 3 or newer for local development and running any of the Python
+  scripts
+- Remove existing conflicting Terraform installations using the
+  `markosamuli.terraform` role or `asdf` version manager
 
 ### Fixed
 
@@ -23,19 +27,48 @@ Fixes for WSL2:
 
 Fixes for Ubuntu 20.04 LTS:
 
-- Install `make`
-- Set `ansible_python_interpreter` to `/usr/bin/python3`
+- Install `make` as it was missing on my environment
+- Set `ansible_python_interpreter` to `auto` to detect the Python 3 version
+  correctly
 - Do not install Ansible from PPA as it's not available and the default
   APT package already has Ansible v2.9
 - Do not install `shellcheck` from Snap
 
+Fixes in the setup script:
+
+- Update APT cache before installing Ansible, even if PPA packages are not being
+  changed
+
 ### Changed
 
-- Install Ansible 2.9 on Ubuntu 20.04 LTS
+Changes to the setup script:
+
+- Install Ansible 2.9 as the default version
+
+Playbook changes:
+
 - Install Python using `python3` and `python3-pip` packages instead of `python`
   and `python-pip`
 - Using local `python` role for installing Python
 - Using local `shellcheck` role for installing Shellcheck
+- Install `shellcheck` from APT instead of using Snap
+- Install Terraform with `tfenv`
+
+Role changes:
+
+- Use [`markosamuli.pyenv`][markosamuli.pyenv] v4.0.0
+
+Development tool changes:
+
+- Use [`pre-commit`][pre-commit] v2.7.0
+- Use [`flake8`][flake8] v3.8.3 to lint Python code
+- Use [`pylint`][pylint] v2.6.0 to lint Python code
+- Use [`ansible-lint`][ansible-lint] v4.3.3 to lint Ansible playbooks and roles
+
+[pre-commit]: https://pre-commit.com/
+[flake8]: https://gitlab.com/pycqa/flake8
+[pylint]: https://github.com/PyCQA/pylint
+[ansible-lint]: https://github.com/ansible/ansible-lint
 
 ## Ubuntu 19.10 and Ansible 2.8 - 2020-02-16
 
