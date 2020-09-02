@@ -9,18 +9,12 @@ if: |
   type = pull_request OR \
   branch IN (master, develop)
 
-language: generic
+os: linux
+dist: xenial
+language: shell
 
-matrix:
+jobs:
   include:
-    - name: "Ubuntu 16.04 LTS with Ansible 2.7"
-      os: linux
-      dist: xenial
-      env: MACHINE_ANSIBLE_VERSION=2.7
-    - name: "Ubuntu 18.04 LTS with Ansible 2.7"
-      os: linux
-      dist: bionic
-      env: MACHINE_ANSIBLE_VERSION=2.7
     - name: "Ubuntu 16.04 LTS with Ansible 2.8"
       os: linux
       dist: xenial
@@ -37,14 +31,39 @@ matrix:
       os: linux
       dist: bionic
       env: MACHINE_ANSIBLE_VERSION=2.9
+    - name: "Ubuntu 20.04 LTS with Ansible 2.9"
+      os: linux
+      dist: focal
+      env: MACHINE_ANSIBLE_VERSION=2.9 UPGRADE_GCC=yes
 
 before_install:
+  # Fix broken Travis Ubuntu 20.04 LTS images with GCC 9.2.1
+  # https://travis-ci.community/t/please-update-ubuntu-focal-20-04-lts-base-installation-due-to-a-compiling-error-with-gcc-9-2-1/8658
+  - >
+    if [[ "$UPGRADE_GCC" == "yes" ]]; then
+      sudo apt-get update
+      sudo apt-get install gcc --only-upgrade
+    fi
+
   # Cleanup existing NVM installation
   - unset NVM_CD_FLAGS
   - unset NVM_DIR
   - unset NVM_BIN
   - rm -rf /home/travis/.nvm
   - rm -rf /etc/profile.d/travis-nvm.sh
+
+  # Remove Go versions installed with Gimme
+  - >
+    if [[ -d "/home/travis/.gimme" ]]; then
+      rm -rf /home/travis/.gimme
+    fi
+
+  # Unset GOROOT and GIMME_ENV variables
+  - unset GOROOT
+  - unset GIMME_ENV
+
+  # Remove Gimme installed Go version from the PATH
+  - export PATH=$(echo "${PATH}" | sed 's~/home/travis/.gimme/versions/\([^/]*\)/bin:~~')
 
 script:
   # Use Travis test configuration

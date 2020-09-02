@@ -1,0 +1,4 @@
+---
+tfenv_repo: https://github.com/tfutils/tfenv
+tfenv_home: "{{ ansible_env.HOME }}"
+tfenv_dir: "{{ tfenv_home }}/.tfenv"

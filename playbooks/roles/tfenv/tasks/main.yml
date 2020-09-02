@@ -1,0 +1,21 @@
+---
+- name: Load variables for the target system
+  include_vars: "{{ item }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_distribution }}.yml"
+        - "{{ ansible_os_family }}.yml"
+        - "default.yml"
+      paths: vars
+
+- name: Install tfenv
+  include_tasks: install.yml
+
+- name: Configure shell
+  include_tasks: shell.yml
+  when: tfenv_shell_init
+
+- name: Install latest Terraform version
+  command: "{{ tfenv_dir }}/bin/tfenv install latest"
+  register: tfenv_install_latest
+  changed_when: "'Installing' in tfenv_install_latest.stdout"

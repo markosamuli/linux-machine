@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Remove Ansible roles that don't meet the current version as defined
 in requirements.yml file"""
 
@@ -15,12 +15,14 @@ try:
 except ValueError:  # Already removed
     pass
 
+# pylint: disable=import-error
 # pylint: disable=wrong-import-position
 from machine.roles import remove_outdated_roles  # noqa: E402
 # pylint: disable=unused-import
 import machine.config  # noqa: E402,F401
 # pylint: enable=unused-import
 # pylint: enable=wrong-import-position
+# pylint: enable=import-error
 
 MACHINE_ROLES_PATH = "playbooks/roles"
 

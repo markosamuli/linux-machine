@@ -1,0 +1,20 @@
+---
+- name: Install shellcheck via APT on Debian
+  set_fact:
+    shellcheck_snap: false
+  when: ansible_distribution == 'Debian'
+
+- name: Install shellcheck via APT on Ubuntu 20.04 LTS
+  set_fact:
+    shellcheck_snap: false
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == "focal"
+
+- name: Install shellcheck (snap)
+  snap:
+    name: shellcheck
+  when: shellcheck_snap
+
+- name: Install shellcheck (apt)
+  package:
+    name: shellcheck
+  when: not shellcheck_snap

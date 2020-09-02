@@ -11,7 +11,7 @@
   version: v2.1.2
 - name: markosamuli.golang
   src: https://github.com/markosamuli/ansible-golang
-  version: v1.2.1
+  version: v1.3.1
 - name: markosamuli.hyper
   src: https://github.com/markosamuli/ansible-hyper
   version: v1.2.0
@@ -23,12 +23,11 @@
   src: https://github.com/markosamuli/ansible-packer
   version: v1.0.0
 - name: markosamuli.pyenv
-  version: v2.1.1
+  src: https://github.com/markosamuli/ansible-pyenv
+  version: v4.0.0
 - name: markosamuli.rust
   src: https://github.com/markosamuli/ansible-rust
-  version: master
-- name: markosamuli.terraform
-  version: v1.2.1
+  version: v1.0.1
 - name: markosamuli.vagrant
   src: https://github.com/markosamuli/ansible-vagrant
   version: v1.0.0

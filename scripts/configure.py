@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """Configure local settings"""
 
 import sys
@@ -14,12 +14,14 @@ try:
 except ValueError:  # Already removed
     pass
 
+# pylint: disable=import-error
 # pylint: disable=wrong-import-position
 from machine import settings  # noqa: E402
 # pylint: disable=unused-import
 import machine.config  # noqa: E402,F401
 # pylint: enable=unused-import
 # pylint: enable=wrong-import-position
+# pylint: enable=import-error
 
 
 def display_usage(command):

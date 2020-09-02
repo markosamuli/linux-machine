@@ -1,4 +1,7 @@
 ---
+# Update apt cache when running playbooks
+update_apt_cache: true
+
 # Install zsh
 install_zsh: true
 
@@ -38,6 +41,9 @@ install_docker: true
 # Install Google Cloud SDK
 install_gcloud: true
 
+# Do not install Cloud SDK from package manager
+gcloud_install_from_package_manager: false
+
 # Install AWS tools
 install_aws: true
 
@@ -49,6 +55,14 @@ install_packer: false
 
 # Install Ruby and rbenv
 install_ruby: false
+
+# Install rbenv for the current user
+rbenv:
+  env: user
+  version: v1.1.2
+  default_ruby: 2.6.3
+  rubies:
+    - version: 2.6.3
 
 # Install Rust programming language
 install_rust: false
@@ -67,17 +81,3 @@ install_security_hardening: false
 
 # Install monitoring tools
 install_monitoring: false
-
-# Update apt cache when running playbooks
-update_apt_cache: true
-
-# Do not install Cloud SDK from package manager
-gcloud_install_from_package_manager: false
-
-# Install rbenv for the current user
-rbenv:
-  env: user
-  version: v1.1.2
-  default_ruby: 2.6.3
-  rubies:
-    - version: 2.6.3

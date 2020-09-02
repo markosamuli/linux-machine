@@ -24,23 +24,32 @@ install_lua: true
 # Install Rust programming language
 install_rust: true
 
-# Install Antivirus tools
-install_antivirus: true
+# Install Terraform
+install_terraform: true
 
-# Install Security tools
-install_security: true
+# Do NOT install Antivirus tools on WSL
+install_antivirus: false
 
-# Install security hardening software
-install_security_hardening: true
+# Do NOT install Security tools on WSL
+install_security: false
+
+# Install Docker
+install_docker: true
+
+# Do NOT install security hardening software on WSL
+install_security_hardening: false
 
 # Install zsh
 install_zsh: true
 
-# Install monitoring tools
-install_monitoring: true
-
 # Default Python version
-pyenv_global: 3.7.6
+pyenv_global: 3.8.5
+
+# Do NOT install monitoring tools
+install_monitoring: false
 
 # Use Node.js v12.x as the default version
 nvm_default_node_version: lts/erbium
+
+# Prefer python3 during Google Cloud SDK install
+gcloud_prefer_python3: true

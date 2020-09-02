@@ -40,8 +40,8 @@ def get_option(name: str) -> Union[str, bool, int]:
         return None
 
 
-def set_option(name: str,
-               value: Union[str, bool, int]) -> Union[str, bool, int]:
+def set_option(name: str, value: Union[str, bool,
+                                       int]) -> Union[str, bool, int]:
     """Set option value in the local configuration file"""
     settings = load_settings()
     settings[name] = value

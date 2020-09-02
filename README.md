@@ -1,9 +1,14 @@
 # Development Linux Setup
 
-| Branch  | Status                                                                                                                                          |
-| ------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| master  | [![Build Status](https://travis-ci.org/markosamuli/linux-machine.svg?branch=master)](https://travis-ci.org/markosamuli/linux-machine/branches)  |
-| develop | [![Build Status](https://travis-ci.org/markosamuli/linux-machine.svg?branch=develop)](https://travis-ci.org/markosamuli/linux-machine/branches) |
+[![GitHub release](https://img.shields.io/github/release/markosamuli/linux-machine.svg)](https://github.com/markosamuli/linux-machine/releases)
+[![License](https://img.shields.io/github/license/markosamuli/linux-machine.svg)](https://github.com/markosamuli/linux-machine/blob/master/LICENSE)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
+[![Known Vulnerabilities](https://snyk.io/test/github/markosamuli/linux-machine/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/markosamuli/linux-machine?targetFile=requirements.txt)
+
+| Branch  | Build Status                              | Coding Style                |
+| ------- | ----------------------------------------- | --------------------------- |
+| master  | [![Build Status][travis-master]][travis]  | ![Coding Style][cs-master]  |
+| develop | [![Build Status][travis-develop]][travis] | ![Coding Style][cs-develop] |
 
 This is a collection of Ansible roles and tasks to setup a Linux development
 machine.
@@ -11,6 +16,11 @@ machine.
 Read my [Machine Setup Guide][machine-setup-guide] for instructions.
 
 [machine-setup-guide]: https://machine.msk.io/
+[travis]: https://travis-ci.org/markosamuli/linux-machine/branches
+[travis-master]: https://travis-ci.org/markosamuli/linux-machine.svg?branch=master
+[travis-develop]: https://travis-ci.org/markosamuli/linux-machine.svg?branch=develop
+[cs-master]: https://github.com/markosamuli/linux-machine/workflows/Test/badge.svg?branch=master
+[cs-develop]: https://github.com/markosamuli/linux-machine/workflows/Test/badge.svg?branch=develop
 
 ## Requirements
 
@@ -127,15 +137,15 @@ The setup script will try to install Ansible
 
 ### Ansible version
 
-Ansible version 2.8 is installed by default.
+Ansible version 2.9 is installed by default.
 
 You can define `MACHINE_ANSIBLE_VERSION` environment variable to change
 the installed version.
 
-Example to use Ansible 2.9 instead of Ansible 2.8:
+Example to use Ansible 2.8 instead of Ansible 2.9:
 
 ```bash
-export MACHINE_ANSIBLE_VERSION=2.9
+export MACHINE_ANSIBLE_VERSION=2.8
 ```
 
 ### Force Ansible reinstall
@@ -153,14 +163,15 @@ The setup script will install Ansible using APT from
 [Ansible PPAs][ansible-ppa] if the `ansible` command is not found on your
 system.
 
+Ubuntu 20.04 LTS will not use Ansible PPAs as the builds for this release
+are missing.
+
 | Version         | PPA                   |
 | --------------- | --------------------- |
-| `2.7`           | [ansible/ansible-2.7] |
-| `2.8` (default) | [ansible/ansible-2.8] |
-| `2.9`           | [ansible/ansible-2.9] |
+| `2.8`           | [ansible/ansible-2.8] |
+| `2.9` (default) | [ansible/ansible-2.9] |
 
 [ansible-ppa]: https://launchpad.net/~ansible
-[ansible/ansible-2.7]: https://launchpad.net/~ansible/+archive/ubuntu/ansible-2.7
 [ansible/ansible-2.8]: https://launchpad.net/~ansible/+archive/ubuntu/ansible-2.8
 [ansible/ansible-2.9]: https://launchpad.net/~ansible/+archive/ubuntu/ansible-2.9
 
@@ -370,6 +381,7 @@ install_monitoring: true
   to `ack`
 - [htop] process viewer for console
 - [pass] — the standard unix password manager
+- [ShellCheck][shellcheck], a static analysis tool for shell scripts
 
 Run the tools playbook:
 
@@ -383,6 +395,7 @@ make tools
 [htop]: https://hisham.hm/htop/
 [ag]: https://github.com/ggreer/the_silver_searcher
 [pass]: https://www.passwordstore.org/
+[shellcheck]: https://github.com/koalaman/shellcheck
 
 ### Visual Studio Code
 
@@ -434,7 +447,8 @@ asdf_plugins:
 
 Use Ubuntu/Debian packages to install Python on the system:
 
-- [Python] v2.7 with `python` package
+- [Python] with `python` package — installed Python version will depend on the
+  OS release version
 - [pip] with `python-pip` package
 - [virtualenv] from PyPI
 
@@ -442,7 +456,7 @@ Use [pyenv] to install and manage Python versions for the current user:
 
 - [pyenv]
 - [pyenv-virtualenv]
-- [Python] v2.7 and v3.7 installed with pyenv
+- [Python] v3.7 installed with pyenv
 
 Run Python playbook:
 
@@ -590,6 +604,29 @@ install_golang: false
 
 [go programming language]: https://golang.org/
 
+Go tools installed for development:
+
+- [golint] is a linter for Go source code
+- [goimports] is a tool for updating your Go import lines
+- [errcheck] is a program for checking for unchecked errors in go programs
+- [go-callvis] is a development tool to help visualize call graph of a Go
+  program using interactive view
+- [gopkgs] is a tool that provides list of available Go packages that can be
+  imported
+- [Stringer][stringer] is a tool to automate the creation of methods that
+  satisfy the fmt.Stringer interface
+- [guru] is a tool for answering questions about Go source code
+- [staticcheck] is a linter for Go source code
+
+[golint]: https://godoc.org/golang.org/x/lint
+[goimports]: https://godoc.org/golang.org/x/tools/cmd/goimports
+[errcheck]: https://github.com/kisielk/errcheck
+[go-callvis]: https://github.com/TrueFurby/go-callvis
+[gopkgs]: https://github.com/uudashr/gopkgs
+[stringer]: https://godoc.org/golang.org/x/tools/cmd/stringer
+[guru]: https://godoc.org/golang.org/x/tools/cmd/guru
+[staticcheck]: https://godoc.org/honnef.co/go/tools/staticcheck
+
 ### Lua
 
 You can install [Lua][lua] programming language by adding the following option
@@ -661,6 +698,8 @@ install_packer: true
 
 ### Terraform
 
+Terraform is installed using [`tfenv`][tfenv] Terraform version manager.
+
 Run Terraform playbook:
 
 ```bash
@@ -673,6 +712,7 @@ Disable [Terraform][terraform] installation with:
 install_terraform: false
 ```
 
+[tfenv]: https://github.com/tfutils/tfenv
 [terraform]: https://www.terraform.io/
 
 ### Amazon Web Services
@@ -779,7 +819,6 @@ make clean-roles
 | [markosamuli.nvm]       | [![Build Status](https://travis-ci.org/markosamuli/ansible-nvm.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-nvm)             |
 | [markosamuli.packer]    | [![Build Status](https://travis-ci.org/markosamuli/ansible-packer.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-packer)       |
 | [markosamuli.pyenv]     | [![Build Status](https://travis-ci.org/markosamuli/ansible-pyenv.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-pyenv)         |
-| [markosamuli.terraform] | [![Build Status](https://travis-ci.org/markosamuli/ansible-terraform.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-terraform) |
 | [markosamuli.vagrant]   | [![Build Status](https://travis-ci.org/markosamuli/ansible-vagrant.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-vagrant)     |
 | [markosamuli.hyper]     | [![Build Status](https://travis-ci.org/markosamuli/ansible-hyper.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-hyper)         |
 
@@ -792,11 +831,13 @@ make clean-roles
 [markosamuli.nvm]: https://github.com/markosamuli/ansible-nvm
 [markosamuli.packer]: https://github.com/markosamuli/ansible-packer
 [markosamuli.pyenv]: https://github.com/markosamuli/ansible-pyenv
-[markosamuli.terraform]: https://github.com/markosamuli/ansible-terraform
 [markosamuli.vagrant]: https://github.com/markosamuli/ansible-vagrant
 [requirements.yml]: requirements.yml
 
 ## Development
+
+You should have Python 3.7 or newer installed for the development tools and
+pre-commit hooks to work.
 
 Install [pre-commit] hooks:
 

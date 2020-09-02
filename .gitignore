@@ -5,7 +5,10 @@
 playbooks/roles/*
 !playbooks/roles/docker
 !playbooks/roles/lynis
+!playbooks/roles/python
+!playbooks/roles/shellcheck
 !playbooks/roles/terminus
+!playbooks/roles/tfenv
 !playbooks/roles/user_home_permissions
 
 # IDEs
@@ -27,3 +30,7 @@ __pycache__
 
 # Prettier config files in any directory
 !.prettierrc.yaml
+
+# Golang
+go.mod
+go.sum
