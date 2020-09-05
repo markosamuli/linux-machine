@@ -102,8 +102,8 @@ Optional system monitoring tools:
 
 #### Golang
 
-- Install Go version 1.13
-- Upgrade [`markosamuli.golang`][markosamuli.golang] from v1.2.1 to v1.3.1
+- Install Go version 1.15
+- Upgrade [`markosamuli.golang`][markosamuli.golang] from v1.2.1 to v2.0.0
 
 #### Python
 
