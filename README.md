@@ -213,7 +213,7 @@ install_linuxbrew: true
 To enable and install:
 
 ```bash
-make linuxbrew
+make install-linuxbrew
 ```
 
 Installation will be done using [markosamuli.linuxbrew] Ansible role.
@@ -259,7 +259,7 @@ Installed on non-WSL environments:
 To enable and install:
 
 ```bash
-make productivity
+make install-productivity
 ```
 
 To disable:
@@ -279,7 +279,7 @@ Antivirus software can be installed:
 To enable and install:
 
 ```bash
-make antivirus
+make install-antivirus
 ```
 
 To enable manually:
@@ -299,7 +299,7 @@ Security tools that can be installed:
 To enable and run the security playbook:
 
 ```bash
-make security
+make install-security
 ```
 
 To enable manually:
@@ -322,7 +322,7 @@ Install optional security hardening tools:
 To enable and run the security hardening playbook:
 
 ```bash
-make security-hardening
+make install-security-hardening
 ```
 
 To enable manually:
@@ -345,7 +345,7 @@ Install optional system monitoring tools:
 To enable and run the monitoring playbook:
 
 ```bash
-make monitoring
+make install-monitoring
 ```
 
 To enable manually:
@@ -371,7 +371,7 @@ install_monitoring: true
 Run the tools playbook:
 
 ```bash
-make tools
+make install-tools
 ```
 
 [wget]: https://www.gnu.org/software/wget/
@@ -446,7 +446,7 @@ Use [pyenv] to install and manage Python versions for the current user:
 Run Python playbook:
 
 ```bash
-make python
+make install-python
 ```
 
 You can disable installation by adding the following option to
@@ -484,7 +484,7 @@ This will install:
 Run Ruby playbook:
 
 ```bash
-make ruby
+make install-ruby
 ```
 
 To change the installed rubies and default version, add the following to your
@@ -536,7 +536,7 @@ rust_modify_path: false
 Run Rust playbook:
 
 ```bash
-make rust
+make install-rust
 ```
 
 To uninstall Rust, run:
@@ -556,7 +556,7 @@ rustup self uninstall
 Run Node.js playbook:
 
 ```bash
-make node
+make install-node
 ```
 
 You can disable installation by adding the following option to
@@ -577,7 +577,7 @@ Ansible role.
 Run Go playbook:
 
 ```bash
-make golang
+make install-golang
 ```
 
 You can disable installation by adding the following option to
@@ -624,7 +624,7 @@ install_lua: true
 Run Lua playbook:
 
 ```bash
-make lua
+make install-lua
 ```
 
 This will also install [LuaRocks][luarocks] package manager and [luacheck]
@@ -660,7 +660,7 @@ install_vagrant: true
 Run Docker playbook:
 
 ```bash
-make docker
+make install-docker
 ```
 
 To disable installation, add:
@@ -688,7 +688,7 @@ Terraform is installed using [`tfenv`][tfenv] Terraform version manager.
 Run Terraform playbook:
 
 ```bash
-make terraform
+make install-terraform
 ```
 
 Disable [Terraform][terraform] installation with:
@@ -725,7 +725,7 @@ directory.
 Run Google Cloud SDK playbook:
 
 ```bash
-make gcloud
+make install-gcloud
 ```
 
 Default install path is in `~/google-cloud-sdk`, but you can
@@ -827,7 +827,7 @@ pre-commit hooks to work.
 Install [pre-commit] hooks:
 
 ```bash
-make install-git-hooks
+make setup-git-hooks
 ```
 
 Lint code and configuration:
