@@ -3,100 +3,129 @@
 # Self-documented help from:
 # https://marmelab.com/blog/2016/02/29/auto-documented-makefile.html
 
-.PHONY: default
-default: help
+###
+# Makefile configuration
+###
 
-.PHONY: help
-help:  ## print this help
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+.DEFAULT_GOAL := help
+
+# We want our output silent by default, use VERBOSE=1 make <command> ...
+# to get verbose output.
+ifndef VERBOSE
+.SILENT:
+endif
+
+###
+# Define environment variables in the beginning of the file
+###
+
+UNAME_S  := $(shell uname -s)
+BREW_BIN = $(shell command -v brew 2>/dev/null)
+GO_BIN = $(shell command -v go 2>/dev/null)
+PYENV_BIN = $(shell command -v pyenv 2>/dev/null)
+PRE_COMMIT_BIN = $(shell pre-commit --version 2>&1 | head -1 | grep -q 'pre-commit [12]\.' && command -v pre-commit)
+PYLINT_BIN = $(shell pylint --version 2>&1 | head -1 | grep -q 'pylint 2' && command -v pylint)
+SHELLCHECK_BIN = $(shell command -v shellcheck 2>/dev/null)
+SHFMT_BIN = $(shell command -v shfmt 2>/dev/null)
+
+###
+# Define local variables after environment variables
+###
+
+# Paths to supported Git hooks
+pre_commit_hooks = .git/hooks/pre-commit
+pre_push_hooks 	 = .git/hooks/pre-push
+commit_msg_hooks = .git/hooks/commit-msg
+git_hooks = $(pre_commit_hooks) $(pre_push_hooks) $(commit_msg_hooks)
+
+###
+# Setup
+###
 
 .PHONY: setup
-setup:  ## run setup with default options
-	@./setup
+setup: setup-ansible setup-requirements ## setup requirements for running playbooks
 
-.PHONY: update
-update: setup-ansible ## update Ansible roles
-	@./setup --no-install-ansible --update-roles --no-run-playbook
-
-.PHONY: clean
-clean:  ## delete local development dependencies
-	-rm -rf playbooks/roles/markosamuli.*
-	-rm -rf playbooks/roles/zzet.rbenv
-	@./scripts/delete_virtualenv.sh
-
-# Get operating system name
-UNAME_S := $(shell uname -s)
+.PHONY: setup-development
+setup-development: setup setup-git-hooks ## setup requirements for local development
 
 ###
-# Python, pyenv and virtualenv
+# Setup: Python, pyenv and virtualenv
 ###
-
-PYENV_BIN = $(shell command -v pyenv 2>/dev/null)
 
 .PHONY: setup-pyenv
 setup-pyenv:
 ifeq ($(PYENV_BIN),)
-	@$(MAKE) python
+	$(MAKE) python
 endif
 
 .PHONY: setup-pyenv-virtualenv
 setup-pyenv-virtualenv: setup-pyenv
-	@./scripts/create_virtualenv.sh
+	./scripts/create_virtualenv.sh
 
 .PHONY: setup-requirements
 setup-requirements: setup-pyenv-virtualenv
-	@pip install -q -r requirements.txt
+	pip install -q -r requirements.txt
 
 .PHONY: setup-dev-requirements
 setup-dev-requirements: setup-pyenv-virtualenv
-	@pip install -q -r requirements.dev.txt
+	pip install -q -r requirements.dev.txt
 
 ###
-# Homebrew
+# Setup: Homebrew
 ###
-
-BREW_BIN = $(shell command -v brew 2>/dev/null)
 
 .PHONY: setup-homebrew
 setup-homebrew:
 ifeq ($(BREW_BIN),)
 ifeq ($(UNAME_S),Linux)
-	@$(MAKE) linuxbrew
+	$(MAKE) linuxbrew
 endif
 ifeq ($(UNAME_S),Darwin)
-	@./setup --no-install-ansible --no-run-playbook --no-install-roles
+	./setup --no-install-ansible --no-run-playbook --no-install-roles
 endif
 endif
 
 ###
-# pre-commit
+# Setup: pre-commit and Git hooks
 ###
-
-PRE_COMMIT_INSTALLED = $(shell pre-commit --version 2>&1 | head -1 | grep -q 'pre-commit 1' && echo true)
 
 .PHONY: setup-pre-commit
 setup-pre-commit:
-ifneq ($(PRE_COMMIT_INSTALLED),true)
-	@$(MAKE) setup-dev-requirements
+ifeq ($(PRE_COMMIT_BIN),)
+	$(MAKE) setup-dev-requirements
 endif
 
-###
-# Go
-###
+.PHONY: setup-git-hooks
+setup-git-hooks: $(git_hooks)
 
-GO_BIN = $(shell command -v go 2>/dev/null)
+$(pre_commit_hooks): | setup-pre-commit
+	pre-commit install --install-hooks
+
+$(pre_push_hooks): | setup-pre-commit
+	pre-commit install --install-hooks -t pre-push
+
+$(commit_msg_hooks): | setup-pre-commit
+	pre-commit install --install-hooks -t commit-msg
+
+###
+# Setup: Go
+###
 
 .PHONY: setup-golang
 setup-golang:
 ifeq ($(GO_BIN),)
-	@$(MAKE) golang
+	$(MAKE) golang
 endif
 
 ###
-# shfmt
+# Setup: Shellcheck and shfmt
 ###
 
-SHFMT_BIN = $(shell command -v shfmt 2>/dev/null)
+.PHONY: setup-shellcheck
+setup-shellcheck:
+ifeq ($(SHELLCHECK_BIN),)
+	./setup -q -t shellcheck
+endif
 
 .PHONY: setup-shfmt
 setup-shfmt: setup-golang
@@ -105,28 +134,25 @@ ifeq ($(SHFMT_BIN),)
 endif
 
 ###
-# shellcheck
-###
-
-SHELLCHECK_BIN = $(shell command -v shellcheck 2>/dev/null)
-
-.PHONY: setup-shellcheck
-setup-shellcheck:
-ifeq ($(SHELLCHECK_BIN),)
-	@./setup -q -t shellcheck
-endif
-
-###
 # pylint
 ###
 
-PYLINT_INSTALLED = $(shell pylint --version 2>&1 | head -1 | grep -q 'pylint 2' && echo true)
 
 .PHONY: setup-pylint
 setup-pylint:
-ifneq ($(PYLINT_INSTALLED),true)
-	@$(MAKE) setup-dev-requirements
+ifeq ($(PYLINT_BIN),)
+	$(MAKE) setup-dev-requirements
 endif
+
+###
+# Setup: Ansible roles
+###
+
+playbooks/roles/zzet.rbenv:
+	./setup --no-run-playbook
+
+playbooks/roles/markosamuli.%:
+	./setup --no-run-playbook
 
 ###
 # Linting and formatting
@@ -134,25 +160,25 @@ endif
 
 .PHONY: lint
 lint: setup-pre-commit setup-shfmt setup-shellcheck setup-pylint  ## run pre-commit hooks on all files
-	@pre-commit run -a
+	pre-commit run -a
 
-.PHONY: python-format
-python-format: setup-pre-commit  ## format Python files
-	@-pre-commit run -a requirements-txt-fixer
-	@-pre-commit run -a yapf
+.PHONY: format-python
+format-python:setup-pre-commit  ## format Python files
+	-pre-commit run -a requirements-txt-fixer
+	-pre-commit run -a yapf
 
-.PHONY: python-lint
-python-lint: setup-pre-commit setup-pylint python-format  ## lint and format Python files
-	@pre-commit run -a check-ast
-	@pre-commit run -a flake8
-	@pre-commit run -a pylint
+.PHONY: lint-python
+lint-python: setup-pre-commit setup-pylint format-python  ## lint and format Python files
+	pre-commit run -a check-ast
+	pre-commit run -a flake8
+	pre-commit run -a pylint
 
-.PHONY: travis-lint
-travis-lint: setup-pre-commit  ## lint .travis.yml file
-	@pre-commit run -a travis-lint
+.PHONY: lint-travis
+lint-travis: setup-pre-commit  ## lint .travis.yml file
+	pre-commit run -a travis-lint
 
 ###
-# Ansible setup
+# Setup: Ansible
 ###
 
 ANSIBLE_INSTALLED = $(shell ansible --version 2>&1 | head -1 | grep -q 'ansible 2' && echo true)
@@ -160,31 +186,31 @@ ANSIBLE_INSTALLED = $(shell ansible --version 2>&1 | head -1 | grep -q 'ansible 
 .PHONY: setup-ansible
 setup-ansible:
 ifneq ($(ANSIBLE_INSTALLED),true)
-	@$(MAKE) install-ansible
+	$(MAKE) install-ansible
 endif
 
 .PHONY: install-ansible
 install-ansible:  ## install Ansible without roles or running playbooks
-	@./setup \
+	./setup \
 		--install-ansible \
 		--no-run-playbook \
 		--no-install-roles
 
 .PHONY: install-roles
 install-roles:  ## install Ansible roles
-	@./setup --no-run-playbook
+	./setup --no-run-playbook
 
 .PHONY: list-tags
 list-tags:  # list Ansible tags
-	@./setup --no-run-playbook --no-install-roles -l
+	./setup --no-run-playbook --no-install-roles -l
 
 .PHONY: clean-roles
 clean-roles: setup-requirements  ## remove outdated Ansible roles
-	@./scripts/clean_roles.py
+	./scripts/clean_roles.py
 
 .PHONY: update-roles
-update-roles: setup-requirements  ## update Ansible roles in the requirements.yml file
-	@./scripts/update_roles.py
+update-roles: setup-ansible ## update Ansible roles in the requirements.yml file
+	./setup --no-install-ansible --update-roles --no-run-playbook
 
 .PHONY: latest-roles
 latest-roles: update-roles clean-roles install-roles  # update Ansible roles and install new versions
@@ -194,159 +220,202 @@ latest-roles: update-roles clean-roles install-roles  # update Ansible roles and
 ###
 
 .PHONY: audit
-audit: security  ## audit system with Lynis
+audit: install-security  ## audit system with Lynis
 	sudo lynis audit system
 
 ###
-# Initialise requirements for running playbooks
+# Configure system with the playbooks
 ###
 
-.PHONY: init
-init: setup-ansible setup-requirements
-
-###
-# Playbooks
-###
+.PHONY: install
+install:  ## install everything with default options
+	./setup
 
 .PHONY: antivirus
-antivirus: init ## install antivirus software
-	@./scripts/configure.py install_antivirus true
-	@./setup -q -t antivirus
+antivirus: install-antivirus
+
+.PHONY: install-antivirus
+install-antivirus: setup ## install antivirus software
+	./scripts/configure.py install_antivirus true
+	./setup -q -t antivirus
 
 .PHONY: aws
-aws: init playbooks/roles/markosamuli.aws_tools  ## install AWS tools
-	@./scripts/configure.py install_aws true
-	@./setup -q -t aws
+aws: install-aws
+
+.PHONY: install-aws
+install-aws: setup playbooks/roles/markosamuli.aws_tools  ## install AWS tools
+	./scripts/configure.py install_aws true
+	./setup -q -t aws
 
 .PHONY: docker
-docker: init ## install Docker
-	@./scripts/configure.py install_docker true
-	@./setup -q -t docker
+docker: install-docker
+
+.PHONY: install-docker
+install-docker: setup ## install Docker
+	./scripts/configure.py install_docker true
+	./setup -q -t docker
 
 .PHONY: editors
-editors: init ## install IDEs and code editors
-	@./setup -q -t editors
+editors: install-editors
+
+.PHONY: install-editors
+install-editors: setup ## install IDEs and code editors
+	./setup -q -t editors
 
 .PHONY: gcloud
-gcloud: init playbooks/roles/markosamuli.gcloud  ## install Google Cloud SDK
-	@./scripts/configure.py install_gcloud true
-	@./setup -q -t gcloud
+gcloud: install-gcloud
+
+.PHONY: install-gcloud
+install-gcloud: setup playbooks/roles/markosamuli.gcloud  ## install Google Cloud SDK
+	./scripts/configure.py install_gcloud true
+	./setup -q -t gcloud
+
+.PHONY: go
+go: install-golang
+
+.PHONY: golang
+golang: install-golang
+
+.PHONY: install-golang
+install-golang: setup playbooks/roles/markosamuli.golang  ## install Go programming language
+	./scripts/configure.py install_golang true
+	./setup -q -t golang
 
 .PHONY: linuxbrew
-linuxbrew: init playbooks/roles/markosamuli.linuxbrew  ## install Homebrew on Linux
+linuxbrew: install-linuxbrew
+
+.PHONY: install-linuxbrew
+install-linuxbrew: setup playbooks/roles/markosamuli.linuxbrew  ## install Homebrew on Linux
 ifeq ($(UNAME_S),Linux)
-	@./scripts/configure.py install_linuxbrew true
-	@./setup -q -t linuxbrew
+	./scripts/configure.py install_linuxbrew true
+	./setup -q -t linuxbrew
 else
 	$(error "operating system $(UNAME_S) not supported")
 endif
 
-.PHONY: golang
-golang: init playbooks/roles/markosamuli.golang  ## install Go programming language
-	@./scripts/configure.py install_golang true
-	@./setup -q -t golang
-
 .PHONY: lua
-lua: init ## install Lua programming language
-	@./scripts/configure.py install_lua true
-	@./setup -q -t lua
+lua: install-lua
+
+.PHONY: install-lua
+install-lua: setup ## install Lua programming language
+	./scripts/configure.py install_lua true
+	./setup -q -t lua
 
 .PHONY: monitoring
-monitoring: init ## install monitoring tools
-	@./scripts/configure.py install_monitoring true
-	@./setup -q -t monitoring
+monitoring: install-monitoring
+
+.PHONY: install-monitoring
+install-monitoring: setup ## install monitoring tools
+	./scripts/configure.py install_monitoring true
+	./setup -q -t monitoring
 
 .PHONY: node
-node: init playbooks/roles/markosamuli.nvm ## install Node.js with NVM
-	@./scripts/configure.py install_nodejs true
-	@./setup -q -t node,nvm
+node: install-node
+
+.PHONY: install-node
+install-node: setup playbooks/roles/markosamuli.nvm ## install Node.js with NVM
+	./scripts/configure.py install_nodejs true
+	./setup -q -t node,nvm
 
 .PHONY: permissions
-permissions: init ## fix permissions in user home directory
-	@USER_HOME_FIX_PERMISSIONS=true ./setup -q -t permissions
+permissions: fix-permissions
+
+.PHONY: fix-permissions
+fix-permissions: setup ## fix permissions in user home directory
+	USER_HOME_FIX_PERMISSIONS=true ./setup -q -t permissions
 
 .PHONY: productivity
-productivity: init ## install productivity tools
-	@./scripts/configure.py install_productivity true
-	@./setup -q -t productivity
+productivity: install-productivity
+
+.PHONY: install-productivity
+install-productivity: setup ## install productivity tools
+	./scripts/configure.py install_productivity true
+	./setup -q -t productivity
+
+.PHONY: python
+python: install-python
 
 # Do not create virtualenv if Python is not installed yet
-.PHONY: python
-python: setup-ansible playbooks/roles/markosamuli.pyenv ## install Python with pyenv
-	@./setup -q -t python,pyenv
+.PHONY: install-python
+install-python: setup-ansible playbooks/roles/markosamuli.pyenv ## install Python with pyenv
+	./setup -q -t python,pyenv
 
 .PHONY: ruby
-ruby: init playbooks/roles/zzet.rbenv ## install Ruby with rbenv
-	@./scripts/configure.py install_ruby true
-	@./setup -q -t ruby,rbenv
+ruby: install-ruby
+
+.PHONY: install-ruby
+install-ruby: setup playbooks/roles/zzet.rbenv ## install Ruby with rbenv
+	./scripts/configure.py install_ruby true
+	./setup -q -t ruby,rbenv
 
 .PHONY: rust
-rust: init playbooks/roles/markosamuli.rust ## install Rust programming language
-	@./scripts/configure.py install_rust true
-	@./setup -q -t rust
+rust: install-rust
+
+.PHONY: install-rust
+install-rust: setup playbooks/roles/markosamuli.rust ## install Rust programming language
+	./scripts/configure.py install_rust true
+	./setup -q -t rust
 
 .PHONY: security
-security: init ## install security tools
-	@./scripts/configure.py install_security true
-	@./setup -q -t security
+security: install-security
 
-.PHONY: security-hardening
-security-hardening: init ## install security hardening software
-	@./scripts/configure.py install_security_hardening true
-	@./setup -q -t security-hardening
+.PHONY: install-security
+install-security: setup ## install security tools
+	./scripts/configure.py install_security true
+	./setup -q -t security
+
+.PHONY: security
+security: install-security-hardening
+
+.PHONY: install-security-hardening
+install-security-hardening: setup ## install security hardening software
+	./scripts/configure.py install_security_hardening true
+	./setup -q -t security-hardening
 
 .PHONY: shellcheck
-shellcheck: init ## install shellcheck
-	@./setup -q -t shellcheck
+shellcheck: install-shellcheck
+
+.PHONY: install-shellcheck
+install-shellcheck: setup ## install shellcheck
+	./setup -q -t shellcheck
 
 .PHONY: terraform
-terraform: init playbooks/roles/markosamuli.terraform  ## install Terraform
-	@./scripts/configure.py install_terraform true
-	@./setup -q -t terraform
+terraform: install-terraform
+
+.PHONY: install-terraform
+install-terraform: setup playbooks/roles/markosamuli.terraform  ## install Terraform
+	./scripts/configure.py install_terraform true
+	./setup -q -t terraform
 
 .PHONY: tools
-tools: init ## install tools
-	@./setup -q -t tools
+tools: install-tools
+
+.PHONY: install-tools
+install-tools: setup ## install tools
+	./setup -q -t tools
 
 .PHONY: zsh
-zsh: init ## install zsh
-	@./scripts/configure.py install_zsh true
-	@./setup -q -t zsh
+zsh: install-zsh
+
+.PHONY: install-zsh
+install-zsh: setup ## install zsh
+	./scripts/configure.py install_zsh true
+	./setup -q -t zsh
 
 ###
-# Aliases for the playbooks
+# Clean
 ###
 
-.PHONY: go
-go: golang
+.PHONY: clean
+clean:  ## delete local development dependencies
+	-rm -rf playbooks/roles/markosamuli.*
+	-rm -rf playbooks/roles/zzet.rbenv
+	./scripts/delete_virtualenv.sh
 
 ###
-# Ansible roles
+# This Makefile uses self-documenting help commands
 ###
 
-playbooks/roles/zzet.rbenv:
-	@./setup --no-run-playbook
-
-playbooks/roles/markosamuli.%:
-	@./setup --no-run-playbook
-
-###
-# Git hooks
-###
-
-PRE_COMMIT_HOOKS = .git/hooks/pre-commit
-PRE_PUSH_HOOKS = .git/hooks/pre-push
-COMMIT_MSG_HOOKS = .git/hooks/commit-msg
-GIT_HOOKS = $(PRE_COMMIT_HOOKS) $(PRE_PUSH_HOOKS) $(COMMIT_MSG_HOOKS)
-
-.PHONY: install-git-hooks
-install-git-hooks: $(GIT_HOOKS) ## install Git hooks
-
-$(PRE_COMMIT_HOOKS): setup-pre-commit
-	@pre-commit install --install-hooks
-
-$(PRE_PUSH_HOOKS): setup-pre-commit
-	@pre-commit install --install-hooks -t pre-push
-
-$(COMMIT_MSG_HOOKS): setup-pre-commit
-	@pre-commit install --install-hooks -t commit-msg
+.PHONY: help
+help:  ## print this help
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort -d | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'

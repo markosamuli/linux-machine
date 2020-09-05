@@ -13,6 +13,8 @@
   to include support for installing software via [snap] packages
 - I'm no longer testing the playbooks on Pengwin Linux environments
 - I'm no longer testing the playbooks on WSL1 environments
+- Running `make setup` will only install dependencies
+- Running `make install` will run the playbooks
 
 [ansible28]: https://docs.ansible.com/ansible/2.8/index.html
 [snap]: https://snapcraft.io/
@@ -132,6 +134,7 @@ These development tools are not required for setting up a system with my
 playbooks, but are required if making changes to the codebase to ensure
 consistent coding style.
 
+- Changes to Makefile. Run `make help` to see the available commands.
 - Install [shfmt] and [shellcheck] as a dependency in the Makefile
 - Use [`pre-commit`][pre-commit] v2.7.0
 - Use [`flake8`][flake8] v3.8.3 to lint Python code
