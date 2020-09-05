@@ -19,8 +19,8 @@ Read my [Machine Setup Guide][machine-setup-guide] for instructions.
 [travis]: https://travis-ci.org/markosamuli/linux-machine/branches
 [travis-master]: https://travis-ci.org/markosamuli/linux-machine.svg?branch=master
 [travis-develop]: https://travis-ci.org/markosamuli/linux-machine.svg?branch=develop
-[cs-master]: https://github.com/markosamuli/linux-machine/workflows/Test/badge.svg?branch=master
-[cs-develop]: https://github.com/markosamuli/linux-machine/workflows/Test/badge.svg?branch=develop
+[cs-master]: https://github.com/markosamuli/linux-machine/workflows/Code%20Quality/badge.svg?branch=master
+[cs-develop]: https://github.com/markosamuli/linux-machine/workflows/Code%20Quality/badge.svg?branch=develop
 
 ## Requirements
 
