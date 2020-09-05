@@ -53,8 +53,11 @@ The older Ubuntu versions are only tested using Travis CI builds.
 
 ### Ubuntu on WSL
 
-I've also used this playbook to install packages on Ubuntu running on
+I've used this playbook to install packages on Ubuntu running on
 [Windows Subsystem for Linux][wsl] on Windows 10.
+
+I'm currently running Ubuntu 20.04 LTS on WSL2 and will not be testing any
+future configuration on WSL1.
 
 Some packages are known not to work so I've added custom fact `is_wsl`
 that can be used to check if we're running Linux on Windows and these
@@ -64,26 +67,8 @@ will be skipped during the set up.
 
 ### Pengwin on WSL
 
-I've tried installing some of the packages on [Pengwin][pengwin] distribution.
-
-Ansible installation should be compatible with [pengwin-setup] as found
-in the `development` branch.
-
-Tested packages:
-
-- Neovim
-- Terraform
-- Node.js with NVM
-- Python
-
-Known conflicts:
-
-- Pengwin installs Terraform in `/usr/bin/terraform`
-- Pengwin installs Node.js with [n npm][tjn] instead of NVM
-
-[pengwin]: https://github.com/WhitewaterFoundry/Pengwin
-[pengwin-setup]: https://github.com/WhitewaterFoundry/pengwin-setup
-[tjn]: https://github.com/tj/n
+I'm no longer using or testing the playbooks on Pengwin Linux since I've
+upgraded to WSL2 and Ubuntu 20.04 LTS on my Windows 10 environment.
 
 ## Install
 

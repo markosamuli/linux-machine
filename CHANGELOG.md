@@ -11,6 +11,8 @@
   `markosamuli.terraform` role or `asdf` version manager
 - The setup script and Ansible playbooks will require [Ansible 2.8][ansible28]
   to include support for installing software via [snap] packages
+- I'm no longer testing the playbooks on Pengwin Linux environments
+- I'm no longer testing the playbooks on WSL1 environments
 
 [ansible28]: https://docs.ansible.com/ansible/2.8/index.html
 [snap]: https://snapcraft.io/
