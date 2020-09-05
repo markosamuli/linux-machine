@@ -1,141 +1,27 @@
 # Changelog
 
-## Ubuntu 20.04 LTS and WSL2 - 2020-09-02
-
-Changes in the `feature/ubuntu-20.04lts` branch while testing the current
-playbooks on Ubuntu 20.04 LTS and WSL2.
+## [Unreleased][unreleased] - 2020-09-05
 
 ### Breaking changes
 
 - Remove support for installing Python 2.7 using APT packages
-- Require Ansible 2.9 on Ubuntu 20.04 LTS
 - Require Python 3 or newer for local development and running any of the Python
   scripts
 - Remove existing conflicting Terraform installations using the
   `markosamuli.terraform` role or `asdf` version manager
-
-### Fixed
-
-Role updates:
-
-- Use [`markosamuli.golang`][markosamuli.golang] v1.3.1
-- Use [`markosamuli.rust`][markosamuli.rust] v1.0.1
-
-Fixes for WSL2:
-
-- Detect WSL2 installations using `/run/WSL` directory
-
-Fixes for Ubuntu 20.04 LTS:
-
-- Install `make` as it was missing on my environment
-- Set `ansible_python_interpreter` to `auto` to detect the Python 3 version
-  correctly
-- Do not install Ansible from PPA as it's not available and the default
-  APT package already has Ansible v2.9
-- Do not install `shellcheck` from Snap
-
-Fixes in the setup script:
-
-- Update APT cache before installing Ansible, even if PPA packages are not being
-  changed
-
-### Changed
-
-Changes to the setup script:
-
-- Install Ansible 2.9 as the default version
-
-Playbook changes:
-
-- Install Python using `python3` and `python3-pip` packages instead of `python`
-  and `python-pip`
-- Using local `python` role for installing Python
-- Using local `shellcheck` role for installing Shellcheck
-- Install `shellcheck` from APT instead of using Snap
-- Install Terraform with `tfenv`
-
-Role changes:
-
-- Use [`markosamuli.pyenv`][markosamuli.pyenv] v4.0.0
-
-Development tool changes:
-
-- Use [`pre-commit`][pre-commit] v2.7.0
-- Use [`flake8`][flake8] v3.8.3 to lint Python code
-- Use [`pylint`][pylint] v2.6.0 to lint Python code
-- Use [`ansible-lint`][ansible-lint] v4.3.3 to lint Ansible playbooks and roles
-
-[pre-commit]: https://pre-commit.com/
-[flake8]: https://gitlab.com/pycqa/flake8
-[pylint]: https://github.com/PyCQA/pylint
-[ansible-lint]: https://github.com/ansible/ansible-lint
-
-## Ubuntu 19.10 and Ansible 2.8 - 2020-02-16
-
-This includes changes in the `feature/ansible2.8` branch that were never
-released or merged into the `develop` branch.
-
-### Breaking changes
-
 - The setup script and Ansible playbooks will require [Ansible 2.8][ansible28]
-  to include support for installing software via [snap] packages.
-- Use [markosamuli.pyenv] v3.0.0 and remove Python 2.7 support
+  to include support for installing software via [snap] packages
 
 [ansible28]: https://docs.ansible.com/ansible/2.8/index.html
 [snap]: https://snapcraft.io/
 
 ### Added
 
-Shell:
+#### Shell
 
-- Install Zsh by default
+- Install Zsh
 
-New developer CLI tools:
-
-- Install [ShellCheck][shellcheck] via snap
-
-[shellcheck]: https://github.com/koalaman/shellcheck
-
-New developer tools for desktop use:
-
-- Install [Terminus][terminus] terminal application
-- Install [Meld][meld], a visual diff and merge tool
-
-[terminus]: https://eugeny.github.io/terminus/
-[meld]: https://meldmerge.org/
-
-Productivity tools for desktop use:
-
-- Install [LibreOffice][libreoffice] productivity suite
-
-[libreoffice]: https://www.libreoffice.org/
-
-Antivirus and security tools:
-
-- Install [ClamAV][clamav] antivirus software
-- Install [Lynis][lynis] security tool for auditing the system
-
-[clamav]: https://www.clamav.net/
-[lynis]: https://cisofy.com/lynis/
-
-Optional security hardening tools:
-
-- [passwdqc][passwdqc] for password/passphrase strength checking and enforcement
-- [USBGuard][usbguard] for protecting system against rogue USB devices
-- [debsums][debsums] tool for verification of installed package files against
-  MD5 checksums
-
-[passwdqc]: https://www.openwall.com/passwdqc/
-[usbguard]: https://usbguard.github.io/
-[debsums]: https://packages.ubuntu.com/eoan/debsums
-
-Optional system monitoring tools:
-
-- [GNU Accounting utilities][acct] for process and login accounting
-- [sysstat] - Performance monitoring tools for Linux
-
-[acct]: https://www.gnu.org/software/acct/
-[sysstat]: https://github.com/sysstat/sysstat
+#### Go
 
 Install additional Go tools for development:
 
@@ -150,40 +36,156 @@ Install additional Go tools for development:
 - [staticcheck] is a linter for Go source code
 
 [errcheck]: https://github.com/kisielk/errcheck
-[go-callvis]: https://github.com/TrueFurby/go-callvis
+[go-callvis]: https://github.com/ofabry/go-callvis
 [gopkgs]: https://github.com/uudashr/gopkgs
 [stringer]: https://godoc.org/golang.org/x/tools/cmd/stringer
 [guru]: https://godoc.org/golang.org/x/tools/cmd/guru
 [staticcheck]: https://godoc.org/honnef.co/go/tools/staticcheck
 
+#### Development
+
+- Install [ShellCheck][shellcheck], a tool for analysing Bash scripts
+- Install [Terminus][terminus] terminal application
+- Install [Meld][meld], a visual diff and merge tool
+
+[shellcheck]: https://github.com/koalaman/shellcheck
+[terminus]: https://eugeny.github.io/terminus/
+[meld]: https://meldmerge.org/
+
+#### Productivity
+
+- Install [LibreOffice][libreoffice] productivity suite
+
+[libreoffice]: https://www.libreoffice.org/
+
+#### Security
+
+- Install [ClamAV][clamav] antivirus software
+- Install [Lynis][lynis] security tool for auditing the system
+
+[clamav]: https://www.clamav.net/
+[lynis]: https://cisofy.com/lynis/
+
+#### Security hardening
+
+Optional security hardening tools:
+
+- [passwdqc][passwdqc] for password/passphrase strength checking and enforcement
+- [USBGuard][usbguard] for protecting system against rogue USB devices
+- [debsums][debsums] tool for verification of installed package files against
+  MD5 checksums
+
+[passwdqc]: https://www.openwall.com/passwdqc/
+[usbguard]: https://usbguard.github.io/
+[debsums]: https://packages.ubuntu.com/eoan/debsums
+
+#### System monitoring
+
+Optional system monitoring tools:
+
+- [GNU Accounting utilities][acct] for process and login accounting
+- [sysstat] - Performance monitoring tools for Linux
+
+[acct]: https://www.gnu.org/software/acct/
+[sysstat]: https://github.com/sysstat/sysstat
+
+#### Configuration
+
+- Added my Linux configuration file `machine.msk.yaml`
+- Added my WSL configuration file `machine.wsl.yaml`
+
+### Changed
+
+#### Ansible
+
+- Install Ansible 2.9 as the default version
+
+#### Golang
+
+- Install Go version 1.13
+- Upgrade [`markosamuli.golang`][markosamuli.golang] from v1.2.1 to v1.3.1
+
+#### Python
+
+- Install Python 3.7.8 and 3.8.5
+- Using local `python` role for installing distribution Python packages
+- Install Python using `python3` and `python3-pip` packages instead of `python`
+  and `python-pip`
+- Upgrade [`markosamuli.pyenv`][markosamuli.pyenv] from v2.1.1 to v4.0.0
+
+#### Terraform
+
+- Install Terraform with `tfenv`
+
+#### Development
+
+These development tools are not required for setting up a system with my
+playbooks, but are required if making changes to the codebase to ensure
+consistent coding style.
+
+- Install [shfmt] and [shellcheck] as a dependency in the Makefile
+- Use [`pre-commit`][pre-commit] v2.7.0
+- Use [`flake8`][flake8] v3.8.3 to lint Python code
+- Use [`pylint`][pylint] v2.6.0 to lint Python code
+- Use [`ansible-lint`][ansible-lint] v4.3.3 to lint Ansible playbooks and roles
+- Use [shfmt] v3 for formatting bash scripts
+- Use [Prettier][prettier] for formatting JSON, Markdown and YAML files
+
+[pre-commit]: https://pre-commit.com/
+[flake8]: https://gitlab.com/pycqa/flake8
+[pylint]: https://github.com/PyCQA/pylint
+[ansible-lint]: https://github.com/ansible/ansible-lint
+[prettier]: https://prettier.io/
+
 ### Fixed
 
-Issues fixed in this release:
+#### Setup
 
-- Suppress errors in `Makefile` when `pyenv` is not installed
-- Prevent [pre-commit] from being upgraded to version 2
+Fixes in the setup script:
+
+- Update APT cache before installing Ansible, even if PPA packages are not being
+  changed.
+
+### Rust
+
+- Upgrade [`markosamuli.rust`][markosamuli.rust] from v1.0.0 to v1.0.1
+- Remove `rustup-init` script checksum verification
+
+#### Windows Subsystem for Linux (WSL)
+
+Fixes for WSL2:
+
+- Detect WSL2 installations using `/run/WSL` directory
+
+#### Ubuntu 20.04 LTS
+
+Fixes for Ubuntu 20.04 LTS:
+
+- Install `make` as it was missing on my environment
+- Set `ansible_python_interpreter` to `auto` to detect the Python 3 version
+  correctly
+- Do not install Ansible from PPA as it's not available and the default
+  APT package already has Ansible v2.9
+- Do not install `shellcheck` from Snap
+
+#### Configuration
+
 - Use the correct `nvm_shell_init` variable instead of `nvm_init_shell` in the
   `machine.msk.yaml` config file
 
-### Changes
+#### Development
 
-The following changes have been made to the development and setup tooling:
+Fixes in the development tools:
 
-- Install [shfmt] and [shellcheck] as a dependency in the Makefile
-- Use [shfmt] v3 for formatting bash scripts
-- Added `make editors` command
-- Use [Prettier][prettier] for formatting JSON, Markdown and YAML files
-- Added my current `machine.yaml` configuration file into the repository
-- Added script for automatic `machine.yaml` file configuration
+- Prevent [pre-commit] from being upgraded to version 2
+- Suppress errors in `Makefile` when `pyenv` is not installed
 
-Node.js and Python versions:
+### Removed
 
-- Install Node.js v12.x
-- Install Python 3.7.6
+- Do not install Python 2.7 with `pyenv`
+- Remove unused `markosamuli.terraform` role
 
-[prettier]: https://prettier.io/
-
-## [2.1.0] - 2019-11-24
+## [2.0.0] - 2019-11-24
 
 ### Added
 
@@ -387,7 +389,6 @@ symbolic links to `/usr/local/bin`. These will be removed automatically.
 
 First release.
 
-[unreleased changes]: https://github.com/markosamuli/linux-machine/commits/develop
-[2.1.0]: https://github.com/markosamuli/linux-machine/releases/tag/v2.1.0
+[unreleased]: https://github.com/markosamuli/linux-machine/commits/develop
 [2.0.0]: https://github.com/markosamuli/linux-machine/releases/tag/v2.0.0
 [1.0.0]: https://github.com/markosamuli/linux-machine/releases/tag/v1.0.0
