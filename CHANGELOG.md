@@ -158,7 +158,7 @@ Fixes in the setup script:
 - Update APT cache before installing Ansible, even if PPA packages are not being
   changed.
 
-### Rust
+#### Rust
 
 - Upgrade [`markosamuli.rust`][markosamuli.rust] from v1.0.0 to v1.0.1
 - Remove `rustup-init` script checksum verification
