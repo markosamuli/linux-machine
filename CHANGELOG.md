@@ -163,6 +163,10 @@ Fixes in the setup script:
 - Upgrade [`markosamuli.rust`][markosamuli.rust] from v1.0.0 to v1.0.1
 - Remove `rustup-init` script checksum verification
 
+#### Homebrew
+
+- Upgrade [`markosamuli.linuxbrew`][markosamuli.linuxbrew] from v1.2.0 to v1.2.1
+
 #### Windows Subsystem for Linux (WSL)
 
 Fixes for WSL2:
