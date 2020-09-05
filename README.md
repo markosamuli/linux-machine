@@ -27,8 +27,8 @@ Read my [Machine Setup Guide][machine-setup-guide] for instructions.
 - [Ubuntu][ubuntu] or another supported operating system
 - Git installed
 - Bash shell
-- [Ansible][ansible] 2.7 or newer (some features require Ansible 2.8)
-- [Python][python] 2.7 or 3.7 as required by Ansible
+- [Ansible][ansible] 2.8 or newer
+- [Python][python] 3.7 or newer as required by Ansible
 
 See [markosamuli/macos-machine] for my macOS setup.
 
@@ -38,18 +38,18 @@ See [markosamuli/macos-machine] for my macOS setup.
 
 ### Ubuntu
 
-This setup has been tested on the following Ubuntu releases:
+This setup has been tested on the following Ubuntu LTS releases:
 
 - Ubuntu [16.04 LTS (Xenial Xerus)][xenial]
 - Ubuntu [18.04 LTS (Bionic Beaver)][bionic]
-- Ubuntu [19.10 (Eoan Ermine)][eoan]
+- Ubuntu [20.04 LTS (Focal Fossa)][focal]
 
-Travis CI builds are running on Ubuntu 16.04.
+The older Ubuntu versions are only tested using Travis CI builds.
 
 [ubuntu]: https://www.ubuntu.com/
 [xenial]: http://releases.ubuntu.com/16.04/
 [bionic]: http://releases.ubuntu.com/18.04/
-[eoan]: http://releases.ubuntu.com/19.10/
+[focal]: http://releases.ubuntu.com/20.04/
 
 ### Ubuntu on WSL
 
