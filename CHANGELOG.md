@@ -113,6 +113,13 @@ Optional system monitoring tools:
   and `python-pip`
 - Upgrade [`markosamuli.pyenv`][markosamuli.pyenv] from v2.1.1 to v4.0.0
 
+### Node.js
+
+- Upgrade [`nvm`][nvm] from v0.35.1 to v0.35.3
+- Upgrade [`markosamuli.nvm`][markosamuli.nvm] from v1.4.1 to v1.4.2
+
+[nvm]: https://github.com/nvm-sh/nvm
+
 #### Terraform
 
 - Install Terraform with `tfenv`
