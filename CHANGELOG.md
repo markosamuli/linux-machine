@@ -142,12 +142,14 @@ consistent coding style.
 - Use [`ansible-lint`][ansible-lint] v4.3.3 to lint Ansible playbooks and roles
 - Use [shfmt] v3 for formatting bash scripts
 - Use [Prettier][prettier] for formatting JSON, Markdown and YAML files
+- Format Python code with [`black`][black]
 
 [pre-commit]: https://pre-commit.com/
 [flake8]: https://gitlab.com/pycqa/flake8
 [pylint]: https://github.com/PyCQA/pylint
 [ansible-lint]: https://github.com/ansible/ansible-lint
 [prettier]: https://prettier.io/
+[black]: https://github.com/psf/black
 
 ### Fixed
 

@@ -17,6 +17,7 @@ except ValueError:  # Already removed
 # pylint: disable=import-error
 # pylint: disable=wrong-import-position
 from machine.playbook import get_tags_from_playbook  # noqa: E402
+
 # pylint: enable=wrong-import-position
 # pylint: enable=import-error
 
@@ -27,10 +28,10 @@ def print_tags_from_playbook(playbook_file):
         print(tag)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     if len(sys.argv) > 1:
         print_tags_from_playbook(sys.argv[1])
     else:
-        print('error: playbook name missing')
-        print('usage: %s [playbook]' % sys.argv[0])
+        print("error: playbook name missing")
+        print("usage: %s [playbook]" % sys.argv[0])
         sys.exit(1)
