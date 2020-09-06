@@ -115,7 +115,7 @@ Optional system monitoring tools:
 - Using local `python` role for installing distribution Python packages
 - Install Python using `python3` and `python3-pip` packages instead of `python`
   and `python-pip`
-- Upgrade [`markosamuli.pyenv`][markosamuli.pyenv] from v2.1.1 to v4.0.0
+- Upgrade [`markosamuli.pyenv`][markosamuli.pyenv] from v2.1.1 to v4.0.1
 
 ### Node.js
 
