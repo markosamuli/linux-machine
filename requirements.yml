@@ -12,7 +12,8 @@
   src: https://github.com/markosamuli/ansible-hyper
   version: v1.2.0
 - name: markosamuli.linuxbrew
-  version: v1.2.0
+  src: https://github.com/markosamuli/ansible-linuxbrew
+  version: v1.2.1
 - name: markosamuli.nvm
   version: v1.4.2
 - name: markosamuli.packer
