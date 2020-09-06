@@ -134,9 +134,8 @@ ifeq ($(SHFMT_BIN),)
 endif
 
 ###
-# pylint
+# Setup: pylint
 ###
-
 
 .PHONY: setup-pylint
 setup-pylint:
@@ -163,7 +162,7 @@ lint: setup-pre-commit setup-shfmt setup-shellcheck setup-pylint  ## run pre-com
 	pre-commit run -a
 
 .PHONY: format-python
-format-python:setup-pre-commit  ## format Python files
+format-python: setup-pre-commit  ## format Python files
 	-pre-commit run -a requirements-txt-fixer
 	-pre-commit run -a yapf
 
@@ -222,6 +221,13 @@ latest-roles: update-roles clean-roles install-roles  # update Ansible roles and
 .PHONY: audit
 audit: install-security  ## audit system with Lynis
 	sudo lynis audit system
+
+.PHONY: permissions
+permissions: fix-permissions
+
+.PHONY: fix-permissions
+fix-permissions: setup ## fix permissions in user home directory
+	USER_HOME_FIX_PERMISSIONS=true ./setup -q -t permissions
 
 ###
 # Configure system with the playbooks
@@ -317,13 +323,6 @@ install-node: setup playbooks/roles/markosamuli.nvm ## install Node.js with NVM
 	./scripts/configure.py install_nodejs true
 	./setup -q -t node,nvm
 
-.PHONY: permissions
-permissions: fix-permissions
-
-.PHONY: fix-permissions
-fix-permissions: setup ## fix permissions in user home directory
-	USER_HOME_FIX_PERMISSIONS=true ./setup -q -t permissions
-
 .PHONY: productivity
 productivity: install-productivity
 
@@ -383,7 +382,7 @@ install-shellcheck: setup ## install shellcheck
 terraform: install-terraform
 
 .PHONY: install-terraform
-install-terraform: setup playbooks/roles/markosamuli.terraform  ## install Terraform
+install-terraform: setup ## install Terraform
 	./scripts/configure.py install_terraform true
 	./setup -q -t terraform
 
