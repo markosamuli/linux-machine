@@ -9,6 +9,19 @@
         - "os/{{ ansible_os_family }}.yml"
       paths: vars
 
+- name: Load variables for WSL systems
+  include_vars: "wsl.yml"
+  when: is_wsl | default(false)
+
 - name: Debian-based system
   include_tasks: Debian.yml
   when: ansible_os_family == 'Debian'
+
+- name: Create custom.prf file
+  become: true
+  template:
+    dest: /etc/lynis/custom.prf
+    src: "custom.prf.j2"
+    owner: root
+    group: root
+    mode: "0644"
