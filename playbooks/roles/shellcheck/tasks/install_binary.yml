@@ -1,0 +1,75 @@
+---
+- name: Remove Shellcheck installed using any package manager
+  become: true
+  package:
+    name: shellcheck
+    state: absent
+
+- name: Check for an existing Shellcheck installation
+  become: true
+  stat:
+    path: "{{ shellcheck_bin_path }}"
+  register: shellcheck_bin_st
+
+- name: Check installed Shellcheck version
+  shell: |
+    set -o pipefail
+    {{ shellcheck_bin_path }} --version | grep -o 'version: \([0-9]*\.[0-9]*\.[0-9]*\)' | sed 's/version: //'
+  register: shellcheck_bin_version
+  when:
+    - shellcheck_bin_st.stat.exists
+  changed_when: false
+
+- name: Install Shellcheck if binary is missing
+  set_fact:
+    shellcheck_bin_install: true
+  when:
+    - not shellcheck_bin_st.stat.exists
+
+- name: Install Shellcheck if version does not match
+  set_fact:
+    shellcheck_bin_install: true
+  when:
+    - shellcheck_bin_st.stat.exists
+    - shellcheck_bin_version is defined
+    - shellcheck_bin_version.stdout is version(shellcheck_version | regex_replace('^v(.*)$', '\\1'), '<')
+
+- name: Install Shellcheck from binary package
+  become: true
+  when: shellcheck_bin_install | default(false)
+  block:
+    - name: Shellcheck binary installation dependencies
+      apt:
+        name: xz-utils
+        state: present
+
+    - name: Create temporary directory
+      tempfile:
+        state: directory
+        suffix: shellcheck
+      register: shellcheck_temp
+
+    - name: Download Shellcheck binary package
+      get_url:
+        url: "{{ shellcheck_url }}"
+        dest: "{{ shellcheck_temp.path }}/{{ shellcheck_file }}"
+        checksum: "{{ shellcheck_checksum }}"
+        mode: "0644"
+
+    - name: Extract Shellcheck binary package
+      unarchive:
+        src: "{{ shellcheck_temp.path }}/{{ shellcheck_file }}"
+        dest: "{{ shellcheck_temp.path }}"
+        remote_src: yes
+        creates: "{{ shellcheck_temp.path }}/shellcheck-{{ shellcheck_version }}/shellcheck"
+        mode: "0755"
+
+    - name: Move Shellcheck installation
+      command: "mv {{ shellcheck_temp.path }}/shellcheck-{{ shellcheck_version }}/shellcheck {{ shellcheck_bin_path }}"
+      args:
+        creates: "{{ shellcheck_bin_path }}"
+
+    - name: Delete temporary directory
+      file:
+        path: "{{ shellcheck_temp.path }}"
+        state: absent

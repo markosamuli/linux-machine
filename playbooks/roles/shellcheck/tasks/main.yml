@@ -1,20 +1,30 @@
 ---
-- name: Install shellcheck via APT on Debian
+- name: Load variables for the target system
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "os/{{ ansible_distribution }}/{{ ansible_distribution_release }}.yml"
+    - "os/{{ ansible_distribution }}.yml"
+
+- name: Snap Store is not supported on WSL environments
   set_fact:
     shellcheck_snap: false
-  when: ansible_distribution == 'Debian'
+  when:
+    - is_wsl | bool
+    - shellcheck_snap | bool
 
-- name: Install shellcheck via APT on Ubuntu 20.04 LTS
-  set_fact:
-    shellcheck_snap: false
-  when: ansible_distribution == 'Ubuntu' and ansible_distribution_release == "focal"
+- name: Install shellcheck using APT
+  include_tasks: install_apt.yml
+  when:
+    - shellcheck_apt | bool
 
-- name: Install shellcheck (snap)
-  snap:
-    name: shellcheck
-  when: shellcheck_snap
+- name: Install shellcheck from Snap Store
+  include_tasks: install_snap.yml
+  when:
+    - shellcheck_snap | bool
+    - not shellcheck_apt | bool
 
-- name: Install shellcheck (apt)
-  package:
-    name: shellcheck
-  when: not shellcheck_snap
+- name: Install shellcheck from binary package
+  include_tasks: install_binary.yml
+  when:
+    - not shellcheck_snap | bool
+    - not shellcheck_apt | bool
