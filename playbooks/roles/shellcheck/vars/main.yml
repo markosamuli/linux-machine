@@ -1,0 +1,9 @@
+---
+shellcheck_install_prefix: "/usr/local"
+shellcheck_bin_path: "{{ shellcheck_install_prefix }}/bin/shellcheck"
+
+shellcheck_version: "v0.7.1"
+shellcheck_repo: https://github.com/koalaman/shellcheck
+shellcheck_file: "shellcheck-{{ shellcheck_version }}.linux.x86_64.tar.xz"
+shellcheck_url: "{{ shellcheck_repo }}/releases/download/{{ shellcheck_version }}/{{ shellcheck_file }}"
+shellcheck_checksum: "sha256:64f17152d96d7ec261ad3086ed42d18232fcb65148b44571b564d688269d36c8"

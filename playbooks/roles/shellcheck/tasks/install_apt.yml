@@ -1,0 +1,6 @@
+---
+- name: Install shellcheck via APT
+  become: true
+  package:
+    name: shellcheck
+    state: present

@@ -1,0 +1,6 @@
+---
+- name: Install shellcheck from Snap Store
+  become: true
+  snap:
+    name: shellcheck
+    state: present
