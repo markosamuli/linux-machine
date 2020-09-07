@@ -20,3 +20,13 @@
     - name: Install Lynis
       package:
         name: "{{ lynis_package }}={{ lynis_version }}"
+
+    - name: Check for Lynis updates
+      command: lynis update check
+      register: lynis_update
+      changed_when: false
+
+    - name: Check that Lynis is up-to-date
+      assert:
+        that:
+          - lynis_update.stdout == "status=up-to-date"

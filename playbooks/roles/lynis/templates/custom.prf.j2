@@ -1,0 +1,4 @@
+# {{ ansible_managed }}
+{% for skip_test in lynis_skip_tests %}
+skip-test={{ skip_test }}
+{% endfor %}
