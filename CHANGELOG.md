@@ -167,7 +167,8 @@ Fixes in the setup script:
 
 #### Homebrew
 
-- Upgrade [`markosamuli.linuxbrew`][markosamuli.linuxbrew] from v1.2.0 to v1.2.1
+- Linuxbrew repositories have been migrated into the Homebrew repositories
+- Upgrade [`markosamuli.linuxbrew`][markosamuli.linuxbrew] from v1.2.0 to v1.2.2
 
 #### Windows Subsystem for Linux (WSL)
 
