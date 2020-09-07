@@ -1,0 +1,12 @@
+---
+- name: Check Debian requirements
+  hosts: all
+  tags:
+    - always
+    - debian
+  tasks:
+    - name: Check that we're running Debian
+      assert:
+        that:
+          - ansible_distribution == 'Debian'
+        msg: "This playbook only supports Debian systems"

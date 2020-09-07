@@ -79,6 +79,7 @@ upgrade_ansible=0     # Upgrade Ansible to the latest version
 is_macos=""        # macOS
 is_linux=""        # Linux
 is_ubuntu=""       # Ubuntu
+is_debian=""       # Debian
 is_pengwin=""      # Pengwin
 is_wsl=""          # Windows Subsystem for Linux
 distrib_release="" # OS release codename
@@ -294,6 +295,7 @@ install_homebrew() {
 
 # Install Ansible
 install_ansible() {
+    debug "install Ansible"
     if is_true "${is_macos}"; then
         install_ansible_on_macos
     elif is_true "${is_linux}"; then
@@ -306,6 +308,7 @@ install_ansible() {
 
 # Upgrade existing Ansible installation to the latest version
 upgrade_ansible() {
+    debug "upgrade Ansible"
     if is_true "${is_macos}"; then
         upgrade_ansible_on_macos
     elif is_true "${is_linux}"; then
@@ -378,6 +381,10 @@ install_ansible_on_linux() {
     if is_ansible_apt_enabled; then
         if is_true "${is_ubuntu}"; then
             if install_ansible_with_apt_on_ubuntu; then
+                return 0
+            fi
+        elif is_true "${is_debian}"; then
+            if install_ansible_with_apt_on_debian; then
                 return 0
             fi
         elif is_true "${is_pengwin}"; then
@@ -644,6 +651,7 @@ install_ansible_in_virtualenv() {
 # Install missing APT package
 install_apt_package() {
     local package="$1"
+    debug "APT package ${package} is required"
     if ! is_apt_package_installed "${package}"; then
         echo "*** Install ${package}..."
         sudo apt-get install -y "${package}" || {
@@ -703,7 +711,7 @@ remove_ansible_installations() {
     fi
 
     # Remove APT installations on Ubuntu and Debian-based systems
-    if is_true "${is_ubuntu}" || is_true "${is_pengwin}"; then
+    if is_true "${is_ubuntu}" || is_true "${is_pengwin}" || is_true "${is_debian}"; then
         remove_apt_package "ansible"
         remove_ansible_apt_sources_list
     fi
@@ -787,7 +795,10 @@ install_ansible_with_apt_on_ubuntu() {
 # Install Ansible PPA on Debian
 install_ansible_ppa_on_debian() {
 
+    install_apt_package "gnupg2"
+
     local deb_url="http://ppa.launchpad.net/${ansible_ppa}/ubuntu"
+    local deb_release="trusty"
     local apt_list="/etc/apt/sources.list.d/ansible.list"
 
     if [ -e "${apt_list}" ]; then
@@ -796,10 +807,10 @@ install_ansible_ppa_on_debian() {
             return 0
         fi
         echo "*** Updating ${ansible_ppa} PPA repository..."
-        sudo sh -c "echo 'deb ${deb_url} trusty main' > ${apt_list}"
+        sudo sh -c "echo 'deb ${deb_url} ${deb_release} main' > ${apt_list}"
     else
         echo "*** Add ${ansible_ppa} PPA repository..."
-        sudo sh -c "echo 'deb ${deb_url} trusty main' > ${apt_list}"
+        sudo sh -c "echo 'deb ${deb_url} ${deb_release} main' > ${apt_list}"
     fi
 
     add_ansible_ppa_key
@@ -918,12 +929,15 @@ update_ansible_roles() {
 # Detect if we're running macOS or Linux
 detect_os() {
     if test "$(uname)" = "Darwin"; then
+        debug "macOS found"
         is_macos=1
         is_linux=0
     elif test "$(uname)" = "Linux"; then
+        debug "Linux found"
         is_linux=1
         is_macos=0
         detect_ubuntu
+        detect_debian
         detect_pengwin
         detect_wsl
     else
@@ -964,6 +978,28 @@ detect_ubuntu() {
     local codename
     codename=$(grep "DISTRIB_CODENAME=" /etc/lsb-release | cut -d= -f2)
     if [ -n "${codename}" ]; then
+        debug "release: ${codename}"
+        # shellcheck disable=SC2034
+        distrib_release="${codename}"
+    fi
+}
+
+# Detect Debian
+detect_debian() {
+    if ! test -f /etc/os-release; then
+        is_debian=0
+        return
+    fi
+    if ! grep -q Debian /etc/os-release; then
+        is_debian=0
+        return
+    fi
+    echo "*** Debian detected"
+    is_debian=1
+    local codename
+    codename=$(grep "VERSION_CODENAME=" /etc/os-release | cut -d= -f2)
+    if [ -n "${codename}" ]; then
+        debug "release: ${codename}"
         # shellcheck disable=SC2034
         distrib_release="${codename}"
     fi
@@ -972,15 +1008,15 @@ detect_ubuntu() {
 # Detect Pengwin
 detect_pengwin() {
     if test -f /etc/os-release; then
-        if grep -q Pengwin /etc/os-release; then
-            echo "*** Pengwin detected"
-            is_pengwin=1
-        else
-            is_pengwin=0
-        fi
-    else
         is_pengwin=0
+        return
     fi
+    if ! grep -q Pengwin /etc/os-release; then
+        is_pengwin=0
+        return
+    fi
+    echo "*** Pengwin detected"
+    is_pengwin=1
 }
 
 # Execute command with pyenv version

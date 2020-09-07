@@ -8,13 +8,13 @@
     - name: Check that we're running Ubuntu
       assert:
         that:
-          - "ansible_distribution == 'Ubuntu'"
+          - ansible_distribution == 'Ubuntu'
         msg: "This playbook only supports Ubuntu systems"
 
     - name: Check that we're running Ubuntu 16.04 or newer distribution
       assert:
         that:
-          - "ansible_distribution_version|int >= 16"
+          - ansible_distribution_version|int >= 16
         msg: "This playbook only supports Ubuntu 16.04 and newer distributions"
 
 - name: Install common Ubuntu applications and packages
