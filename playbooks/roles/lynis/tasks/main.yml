@@ -4,17 +4,15 @@
 - name: Load variables for the target system
   include_vars: "{{ item }}"
   with_first_found:
-    - files:
-        - "os/{{ ansible_distribution }}.yml"
-        - "os/{{ ansible_os_family }}.yml"
-      paths: vars
+    - "os/{{ ansible_distribution }}/{{ ansible_distribution_release }}.yml"
+    - "os/{{ ansible_distribution }}.yml"
 
 - name: Load variables for WSL systems
   include_vars: "wsl.yml"
   when: is_wsl | default(false)
 
-- name: Debian-based system
-  include_tasks: Debian.yml
+- name: Install using APT
+  include_tasks: install_apt.yml
   when: ansible_os_family == 'Debian'
 
 - name: Create custom.prf file

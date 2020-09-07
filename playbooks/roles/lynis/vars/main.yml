@@ -1,2 +1,8 @@
 ---
 lynis_skip_tests: []
+
+lynis_package: lynis
+lynis_version: 3.0.0-100
+
+lynis_apt_keyserver: keyserver.ubuntu.com
+lynis_apt_key_id: C80E383C3DE9F082E01391A0366C67DE91CA5D5F
