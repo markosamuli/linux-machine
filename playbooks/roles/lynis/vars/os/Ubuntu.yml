@@ -1,5 +1,4 @@
 ---
-lynis_repository: "deb https://packages.cisofy.com/community/lynis/deb/ stable main"
 lynis_dependencies:
   - apt-transport-https
-  - bind9-dnsutils
+  - dnsutils

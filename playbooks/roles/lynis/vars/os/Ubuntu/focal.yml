@@ -1,4 +1,4 @@
 ---
 lynis_dependencies:
   - apt-transport-https
-  - dnsutils
+  - bind9-dnsutils
