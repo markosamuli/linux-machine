@@ -824,10 +824,10 @@ make clean-roles
 You should have Python 3.7 or newer installed for the development tools and
 pre-commit hooks to work.
 
-Install [pre-commit] hooks:
+Install development environment, including Git [pre-commit] hooks:
 
 ```bash
-make setup-git-hooks
+make setup-dev
 ```
 
 Lint code and configuration:

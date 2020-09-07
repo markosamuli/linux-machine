@@ -47,8 +47,8 @@ git_hooks = $(pre_commit_hooks) $(pre_push_hooks) $(commit_msg_hooks)
 .PHONY: setup
 setup: setup-ansible setup-requirements ## setup requirements for running playbooks
 
-.PHONY: setup-development
-setup-development: setup setup-git-hooks ## setup requirements for local development
+.PHONY: setup-dev
+setup-dev: setup-ansible setup-dev-requirements setup-git-hooks ## setup requirements for local development
 
 ###
 # Setup: Python, pyenv and virtualenv
