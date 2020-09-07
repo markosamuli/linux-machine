@@ -1,0 +1,4 @@
+---
+docker_apt_url: https://download.docker.com/linux/ubuntu
+docker_apt_key_id: 0EBFCD88
+docker_apt_key_url: https://download.docker.com/linux/ubuntu/gpg
