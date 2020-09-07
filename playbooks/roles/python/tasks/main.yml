@@ -1,12 +1,16 @@
 ---
-- name: Install python3
-  package:
-    name: python3
+- name: Load variables for the target system
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "os/{{ ansible_distribution }}/{{ ansible_distribution_release }}.yml"
+    - "os/{{ ansible_distribution }}.yml"
 
-- name: Install python3-pip
+- name: Install Python packages
   package:
-    name: python3-pip
+    name: "{{ python_packages }}"
+    state: present
 
 - name: Install virtualenv
   pip:
     name: virtualenv
+    executable: "{{ python_pip_executable }}"
