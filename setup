@@ -1119,7 +1119,7 @@ run_ansible_playbook_opts() {
 
     local ansible_opts=()
 
-    if [ "${distrib_release}" == "focal" ]; then
+    if [ "${distrib_release}" == "focal" ] || [ "${distrib_release}" == "bionic" ]; then
         ansible_opts+=("-e ansible_python_interpreter=auto")
     fi
 
