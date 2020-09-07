@@ -21,7 +21,7 @@ if [ -z "$PYENV_BIN" ]; then
 fi
 
 # Python version to use for the virtualenv
-PYTHON_VERSION=$(pyenv install --list | sed 's/ //g' | grep "^3\.[7-8]\.[0-9]*\$" | sort -r | head -1)
+PYTHON_VERSION=$(pyenv install --list | sed 's/ //g' | grep -v "3.8.0" | grep "^3\.[7-8]\.[0-9]*\$" | sort -r | head -1)
 if [ -z "${PYTHON_VERSION}" ]; then
     error "Python 3.7 or 3.8 versions are not installed"
     exit 1
