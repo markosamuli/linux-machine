@@ -14,6 +14,10 @@ lynis_skip_tests:
   # Add legal banner to /etc/issue.net, to warn unauthorized users [BANN-7130]
   - BANN-7130
 
+  # Determine why /vmlinuz or /boot/vmlinuz is missing on this Debian/Ubuntu
+  # system. [KRNL-5788]
+  - KRNL-5788
+
   # Could not find any kernel packages via package manager
   - KRNL-5840:1
 
