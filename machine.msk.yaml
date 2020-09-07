@@ -36,7 +36,7 @@ install_rust: true
 # Install security tools
 install_security: true
 
-# Install security hardening software (non-WSL environment only)
+# Install security hardening software
 install_security_hardening: true
 
 # Install Terraform
