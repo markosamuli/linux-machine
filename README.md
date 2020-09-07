@@ -24,7 +24,7 @@ Read my [Machine Setup Guide][machine-setup-guide] for instructions.
 
 ## Requirements
 
-- [Ubuntu][ubuntu] or another supported operating system
+- [Ubuntu][ubuntu] or [Debian][debian] Linux
 - Git installed
 - Bash shell
 - [Ansible][ansible] 2.8 or newer
@@ -33,23 +33,27 @@ Read my [Machine Setup Guide][machine-setup-guide] for instructions.
 See [markosamuli/macos-machine] for my macOS setup.
 
 [ubuntu]: https://www.ubuntu.com
-[ansible]: https://www.ansible.com/
+[debian]: https://www.debian.org
+[ansible]: https://www.ansible.com
 [markosamuli/macos-machine]: https://github.com/markosamuli/macos-machine
 
 ### Ubuntu
 
-This setup has been tested on the following Ubuntu LTS releases:
+This setup has been tested on the following Linux releases:
 
-- Ubuntu [16.04 LTS (Xenial Xerus)][xenial]
-- Ubuntu [18.04 LTS (Bionic Beaver)][bionic]
-- Ubuntu [20.04 LTS (Focal Fossa)][focal]
+- [Ubuntu 20.04 LTS (Focal Fossa)][focal]
+- [Debian 10 "buster"][buster]
 
-The older Ubuntu versions are only tested using Travis CI builds.
+Older releases are only tested using Travis CI builds and might not be fully
+supported:
 
-[ubuntu]: https://www.ubuntu.com/
+- [Ubuntu 18.04 LTS (Bionic Beaver)][bionic]
+- [Ubuntu 16.04 LTS (Xenial Xerus)][xenial]
+
 [xenial]: http://releases.ubuntu.com/16.04/
 [bionic]: http://releases.ubuntu.com/18.04/
 [focal]: http://releases.ubuntu.com/20.04/
+[buster]: https://www.debian.org/releases/buster/
 
 ### Ubuntu on WSL
 
@@ -68,7 +72,8 @@ will be skipped during the set up.
 ### Pengwin on WSL
 
 I'm no longer using or testing the playbooks on Pengwin Linux since I've
-upgraded to WSL2 and Ubuntu 20.04 LTS on my Windows 10 environment.
+upgraded to WSL2 and Ubuntu 20.04 LTS and Debian buster on my Windows 10
+environment.
 
 ## Install
 
@@ -432,16 +437,16 @@ asdf_plugins:
 
 Use Ubuntu/Debian packages to install Python on the system:
 
-- [Python] with `python` package — installed Python version will depend on the
+- [Python] with `python3` package — installed Python version will depend on the
   OS release version
-- [pip] with `python-pip` package
+- [pip] with `python3-pip` package
 - [virtualenv] from PyPI
 
 Use [pyenv] to install and manage Python versions for the current user:
 
 - [pyenv]
 - [pyenv-virtualenv]
-- [Python] v3.7 installed with pyenv
+- [Python] 3.7 and 3.8 installed with pyenv
 
 Run Python playbook:
 

@@ -1,6 +1,21 @@
 # Changelog
 
-## [Unreleased][unreleased] - 2020-09-05
+## [Unreleased][unreleased]
+
+Unreleased changes in the `develop` and `feature/*` branches.
+
+[unreleased]: https://github.com/markosamuli/linux-machine/commits/develop
+
+## [3.0.0] - 2020-09-07
+
+Release targeting [Ubuntu 20.04 LTS (Focal Fossa)][focal] and
+[Debian buster][buster] releases running on
+[Window Subsystem for Linux (WSL) 2][wsl2].
+
+[focal]: https://releases.ubuntu.com/focal/
+[buster]: https://www.debian.org/releases/buster/
+[wsl2]: https://docs.microsoft.com/en-gb/windows/wsl/wsl2-index
+[3.0.0]: https://github.com/markosamuli/linux-machine/releases/tag/v3.0.0
 
 ### Breaking changes
 
@@ -24,6 +39,10 @@
 #### Shell
 
 - Install Zsh
+
+#### Debian
+
+- Support for configuring Debian environments
 
 #### Go
 
@@ -65,7 +84,8 @@ Install additional Go tools for development:
 #### Security
 
 - Install [ClamAV][clamav] antivirus software
-- Install [Lynis][lynis] security tool for auditing the system
+- Install [Lynis][lynis] v3.0.0 security tool for auditing the system
+- Lynis custom configuration for WSL environments
 
 [clamav]: https://www.clamav.net/
 [lynis]: https://cisofy.com/lynis/
@@ -95,8 +115,7 @@ Optional system monitoring tools:
 
 #### Configuration
 
-- Added my Linux configuration file `machine.msk.yaml`
-- Added my WSL configuration file `machine.wsl.yaml`
+- Added my Linux configuration file [`machine.msk.yaml`](machine.msk.yaml)
 
 ### Changed
 
@@ -198,6 +217,7 @@ Fixes in the development tools:
 
 - Prevent [pre-commit] from being upgraded to version 2
 - Suppress errors in `Makefile` when `pyenv` is not installed
+- Ignore Python 3.8.0 when creating virtualenv for local development
 
 ### Removed
 
@@ -205,6 +225,8 @@ Fixes in the development tools:
 - Remove unused `markosamuli.terraform` role
 
 ## [2.0.0] - 2019-11-24
+
+[2.0.0]: https://github.com/markosamuli/linux-machine/releases/tag/v2.0.0
 
 ### Added
 
@@ -276,6 +298,7 @@ Fixes in the development tools:
   environment variable.
 - Added support for uninstalling existing Ansible installations.
 - Added new long command line options in the setup script.
+- Import setup script improvements from the `macos-machine` repository.
 
 #### Default installation options
 
@@ -408,6 +431,4 @@ symbolic links to `/usr/local/bin`. These will be removed automatically.
 
 First release.
 
-[unreleased]: https://github.com/markosamuli/linux-machine/commits/develop
-[2.0.0]: https://github.com/markosamuli/linux-machine/releases/tag/v2.0.0
 [1.0.0]: https://github.com/markosamuli/linux-machine/releases/tag/v1.0.0

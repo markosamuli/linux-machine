@@ -3,6 +3,9 @@
 # Setup script for https://github.com/markosamuli/linux-machine and
 # https://github.com/markosamuli/macos-machine Ansible playbooks.
 #
+# 2020-09-07:
+# - Support for Debian
+#
 # 2020-09-06:
 # - Upgrade outdated Ansible Homebrew formula
 # - Detect installed Ansible Homebrew path correctly during install
