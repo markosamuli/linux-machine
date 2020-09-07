@@ -7,9 +7,9 @@
   when: is_wsl is undefined
 
 - import_playbook: setup/apt.yml
-  when: ansible_distribution == 'Ubuntu' 
-        or ansible_distribution == 'Debian'
-        or ansible_distribution == 'Pengwin'
+  when: ansible_distribution == 'Ubuntu'
+    or ansible_distribution == 'Debian'
+    or ansible_distribution == 'Pengwin'
 
 - import_playbook: setup/ubuntu.yml
   when: ansible_distribution == 'Ubuntu'

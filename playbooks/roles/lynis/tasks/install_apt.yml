@@ -4,9 +4,9 @@
   block:
     - name: Install Lynis dependencies
       package:
-        name: 
+        name:
           - apt-transport-https
-          - dnsutils 
+          - dnsutils
         state: present
 
     - name: Import CISOfy Software GPG key
