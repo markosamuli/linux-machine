@@ -2,6 +2,11 @@
 - name: Lynis software repository
   become: true
   block:
+    - name: Install Lynis dependencies
+      package:
+        name: apt-transport-https
+        state: present
+
     - name: Import CISOfy Software GPG key
       apt_key:
         keyserver: "{{ lynis_apt_keyserver }}"
