@@ -5,6 +5,13 @@ error() {
     echo "$@" 1>&2
 }
 
+debug() {
+    if [ -z "${DEBUG}" ]; then
+        return 0
+    fi
+    echo "DEBUG: $*" 1>&2
+}
+
 # Get paths to pyenv and Python commmands
 PYENV_BIN=$(command -v pyenv 2>/dev/null)
 
@@ -21,14 +28,20 @@ if [ -z "${PYTHON_VERSION}" ]; then
 fi
 PYTHON_VERSION_PATH="${HOME}/.pyenv/versions/${PYTHON_VERSION}"
 
+debug "Python version ${PYTHON_VERSION}"
+
 # Virtualenv name will be generated from the repository name
 PYENV_VIRTUALENV=$(basename "$(pwd)")
 PYENV_VIRTUALENV_PATH="${HOME}/.pyenv/versions/${PYENV_VIRTUALENV}"
+
+debug "pyenv virtualenv ${PYENV_VIRTUALENV}"
 
 # Get local pyenv version
 PYENV_LOCAL=$(pyenv local 2>/dev/null)
 
 if [ -z "${PYENV_LOCAL}" ]; then
+    debug "pyenv local version not defined"
+
     # Local version is not defined
     # 1. Install Python if missing
     if [ ! -d "${PYTHON_VERSION_PATH}" ]; then
