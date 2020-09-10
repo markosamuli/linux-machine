@@ -6,6 +6,10 @@ Unreleased changes in the `develop` and `feature/*` branches.
 
 [unreleased]: https://github.com/markosamuli/linux-machine/commits/develop
 
+### Fixed
+
+- Update [`markosamuli.golang`][markosamuli.golang] to v2.0.1
+
 ## [3.0.0] - 2020-09-07
 
 Release targeting [Ubuntu 20.04 LTS (Focal Fossa)][focal] and
