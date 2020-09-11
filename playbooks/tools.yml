@@ -31,6 +31,32 @@
       package:
         name: pass
 
+    - name: Install asciinema
+      package:
+        name: asciinema
+
+    - name: Install ncdu (disk usage analyzer)
+      package:
+        name: ncdu
+
+    - name: Install fd (alternative to find)
+      apt:
+        deb: https://github.com/sharkdp/fd/releases/download/v8.1.1/fd_8.1.1_amd64.deb
+
+    - name: Install fzf (command-line fuzzy finder)
+      package:
+        name: fzf
+      when: |
+        (ansible_distribution == 'Ubuntu' and ansible_distribution_version|int >= 20)
+        or (ansible_distribution == 'Debian' and ansible_distribution_version|int >= 10)
+
+    - name: Install ripgrep (search tool)
+      package:
+        name: ripgrep
+      when: |
+        (ansible_distribution == 'Ubuntu' and ansible_distribution_version|int >= 20)
+        or (ansible_distribution == 'Debian' and ansible_distribution_version|int >= 10)
+
     - name: GUI tools
       when: not is_wsl
       block:
