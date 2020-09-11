@@ -6,6 +6,30 @@ Unreleased changes in the `develop` and `feature/*` branches.
 
 [unreleased]: https://github.com/markosamuli/linux-machine/commits/develop
 
+### Added
+
+#### Commmand line tools
+
+Useful command line tools:
+
+- [`asciinema`][asciinema] for recording terminal sessions
+- [`ncdu`][ncdu] disk usage analyser
+- [`fd`][fd] alternative to `find`
+
+Supported on Ubuntu 20.04 LTS and Debian buster or newer only:
+
+- [`fzf`][fzf] fuzzy search
+- [ripgrep][ripgrep] (`rg`) alternative to `grep`
+
+Thanks [Sebastian Witowski][switowski] for the tools I haven't used before.
+
+[asciinema]: https://asciinema.org/
+[ncdu]: https://dev.yorhel.nl/ncdu
+[fzf]: https://github.com/junegunn/fzf
+[fd]: https://github.com/sharkdp/fd
+[ripgrep]: https://github.com/BurntSushi/ripgrep
+[switowski]: https://switowski.com/blog/favorite-cli-tools
+
 ### Fixed
 
 - Update [`markosamuli.golang`][markosamuli.golang] to v2.0.1
