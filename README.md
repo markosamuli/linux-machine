@@ -16,9 +16,9 @@ machine.
 Read my [Machine Setup Guide][machine-setup-guide] for instructions.
 
 [machine-setup-guide]: https://machine.msk.io/
-[travis]: https://travis-ci.org/markosamuli/linux-machine/branches
-[travis-master]: https://travis-ci.org/markosamuli/linux-machine.svg?branch=master
-[travis-develop]: https://travis-ci.org/markosamuli/linux-machine.svg?branch=develop
+[travis]: https://travis-ci.com/markosamuli/linux-machine/branches
+[travis-master]: https://travis-ci.com/markosamuli/linux-machine.svg?branch=master
+[travis-develop]: https://travis-ci.com/markosamuli/linux-machine.svg?branch=develop
 [cs-master]: https://github.com/markosamuli/linux-machine/workflows/Code%20Quality/badge.svg?branch=master
 [cs-develop]: https://github.com/markosamuli/linux-machine/workflows/Code%20Quality/badge.svg?branch=develop
 
@@ -801,16 +801,17 @@ make clean-roles
 
 | Role                    | Build status                                                                                                                                  |
 | ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| [markosamuli.asdf]      | [![Build Status](https://travis-ci.org/markosamuli/ansible-asdf.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-asdf)           |
-| [markosamuli.aws_tools] | [![Build Status](https://travis-ci.org/markosamuli/ansible-aws-tools.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-aws-tools) |
-| [markosamuli.gcloud]    | [![Build Status](https://travis-ci.org/markosamuli/ansible-gcloud.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-gcloud)       |
-| [markosamuli.golang]    | [![Build Status](https://travis-ci.org/markosamuli/ansible-golang.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-golang)       |
-| [markosamuli.linuxbrew] | [![Build Status](https://travis-ci.org/markosamuli/ansible-linuxbrew.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-linuxbrew) |
-| [markosamuli.nvm]       | [![Build Status](https://travis-ci.org/markosamuli/ansible-nvm.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-nvm)             |
-| [markosamuli.packer]    | [![Build Status](https://travis-ci.org/markosamuli/ansible-packer.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-packer)       |
-| [markosamuli.pyenv]     | [![Build Status](https://travis-ci.org/markosamuli/ansible-pyenv.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-pyenv)         |
-| [markosamuli.vagrant]   | [![Build Status](https://travis-ci.org/markosamuli/ansible-vagrant.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-vagrant)     |
-| [markosamuli.hyper]     | [![Build Status](https://travis-ci.org/markosamuli/ansible-hyper.svg?branch=master)](https://travis-ci.org/markosamuli/ansible-hyper)         |
+| [markosamuli.asdf]      | [![Build Status](https://travis-ci.com/markosamuli/ansible-asdf.svg?branch=master)](https://travis-ci.com/markosamuli/ansible-asdf)           |
+| [markosamuli.aws_tools] | [![Build Status](https://travis-ci.com/markosamuli/ansible-aws-tools.svg?branch=master)](https://travis-ci.com/markosamuli/ansible-aws-tools) |
+| [markosamuli.gcloud]    | [![Build Status](https://travis-ci.com/markosamuli/ansible-gcloud.svg?branch=master)](https://travis-ci.com/markosamuli/ansible-gcloud)       |
+| [markosamuli.golang]    | [![Build Status](https://travis-ci.com/markosamuli/ansible-golang.svg?branch=master)](https://travis-ci.com/markosamuli/ansible-golang)       |
+| [markosamuli.linuxbrew] | [![Build Status](https://travis-ci.com/markosamuli/ansible-linuxbrew.svg?branch=master)](https://travis-ci.com/markosamuli/ansible-linuxbrew) |
+| [markosamuli.nvm]       | [![Build Status](https://travis-ci.com/markosamuli/ansible-nvm.svg?branch=master)](https://travis-ci.com/markosamuli/ansible-nvm)             |
+| [markosamuli.packer]    | [![Build Status](https://travis-ci.com/markosamuli/ansible-packer.svg?branch=master)](https://travis-ci.com/markosamuli/ansible-packer)       |
+| [markosamuli.pyenv]     | [![Build Status](https://travis-ci.com/markosamuli/ansible-pyenv.svg?branch=master)](https://travis-ci.com/markosamuli/ansible-pyenv)         |
+| [markosamuli.rust]      | [![Build Status](https://travis-ci.com/markosamuli/ansible-rust.svg?branch=master)](https://travis-ci.com/markosamuli/ansible-rust)           |
+| [markosamuli.vagrant]   | [![Build Status](https://travis-ci.com/markosamuli/ansible-vagrant.svg?branch=master)](https://travis-ci.com/markosamuli/ansible-vagrant)     |
+| [markosamuli.hyper]     | [![Build Status](https://travis-ci.com/markosamuli/ansible-hyper.svg?branch=master)](https://travis-ci.com/markosamuli/ansible-hyper)         |
 
 [markosamuli.asdf]: https://github.com/markosamuli/ansible-asdf
 [markosamuli.aws_tools]: https://github.com/markosamuli/ansible-aws-tools
@@ -821,6 +822,7 @@ make clean-roles
 [markosamuli.nvm]: https://github.com/markosamuli/ansible-nvm
 [markosamuli.packer]: https://github.com/markosamuli/ansible-packer
 [markosamuli.pyenv]: https://github.com/markosamuli/ansible-pyenv
+[markosamuli.rust]: https://github.com/markosamuli/ansible-rust
 [markosamuli.vagrant]: https://github.com/markosamuli/ansible-vagrant
 [requirements.yml]: requirements.yml
 
