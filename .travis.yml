@@ -9,74 +9,87 @@ if: |
   type = pull_request OR \
   branch IN (master, develop)
 
-os: linux
-dist: xenial
 language: shell
-
-jobs:
-  include:
-    - name: "Ubuntu 16.04 LTS with Ansible 2.8"
-      os: linux
-      dist: xenial
-      env: MACHINE_ANSIBLE_VERSION=2.8
-    - name: "Ubuntu 18.04 LTS with Ansible 2.8"
-      os: linux
-      dist: bionic
-      env: MACHINE_ANSIBLE_VERSION=2.8
-    - name: "Ubuntu 16.04 LTS with Ansible 2.9"
-      os: linux
-      dist: xenial
-      env: MACHINE_ANSIBLE_VERSION=2.9
-    - name: "Ubuntu 18.04 LTS with Ansible 2.9"
-      os: linux
-      dist: bionic
-      env: MACHINE_ANSIBLE_VERSION=2.9
-    - name: "Ubuntu 20.04 LTS with Ansible 2.9"
-      os: linux
-      dist: focal
-      env: MACHINE_ANSIBLE_VERSION=2.9 UPGRADE_GCC=yes
 
 before_install:
   # Fix broken Travis Ubuntu 20.04 LTS images with GCC 9.2.1
   # https://travis-ci.community/t/please-update-ubuntu-focal-20-04-lts-base-installation-due-to-a-compiling-error-with-gcc-9-2-1/8658
   - >
-    if [[ "$UPGRADE_GCC" == "yes" ]]; then
+    if [[ "${UPGRADE_GCC}" == "yes" ]]; then
       sudo apt-get update
       sudo apt-get install gcc --only-upgrade
     fi
 
-  # Cleanup existing NVM installation
-  - unset NVM_CD_FLAGS
-  - unset NVM_DIR
-  - unset NVM_BIN
-  - rm -rf /home/travis/.nvm
-  - rm -rf /etc/profile.d/travis-nvm.sh
+  # Remove existing NVM installation
+
+  - >
+    if [[ "${UNINSTALL_NVM}" == "yes" ]]; then
+      unset NVM_CD_FLAGS
+      unset NVM_DIR
+      unset NVM_BIN
+      rm -rf /home/travis/.nvm
+      rm -rf /etc/profile.d/travis-nvm.sh
+    fi
 
   # Remove Go versions installed with Gimme
   - >
-    if [[ -d "/home/travis/.gimme" ]]; then
-      rm -rf /home/travis/.gimme
+    if [[ "${UNINSTALL_GIMME}" == "yes" ]]; then
+      if [[ -d "/home/travis/.gimme" ]]; then
+        rm -rf /home/travis/.gimme
+      fi
+      unset GOROOT
+      unset GIMME_ENV
+      export PATH=$(echo "${PATH}" | sed 's~/home/travis/.gimme/versions/\([^/]*\)/bin:~~')
     fi
-
-  # Unset GOROOT and GIMME_ENV variables
-  - unset GOROOT
-  - unset GIMME_ENV
-
-  # Remove Gimme installed Go version from the PATH
-  - export PATH=$(echo "${PATH}" | sed 's~/home/travis/.gimme/versions/\([^/]*\)/bin:~~')
 
 script:
   # Use Travis test configuration
   - cp machine.travis.yaml machine.yaml
 
-  # Install roles
-  - ./setup -n || travis_terminate 1
+  # Install Ansible and roles
+  - ./setup --no-run-playbook || travis_terminate 1
 
   # Check syntax of the Ansible playbooks
   - ./setup -s || travis_terminate 1
 
-  # Run playbooks without installing roles
-  - ./setup -q || travis_terminate 1
+  # Run playbooks without tasks using external roles
+  - ./setup -q -v -i asdf,aws,gcloud,golang,hyper,linuxbrew,nvm,packer,pyenv,ruby,rust,vagrant || travis_terminate 1
+
+  # Run asdf setup
+  - ./setup -q -v -t asdf || travis_terminate 1
+
+  # Run aws setup
+  - ./setup -q -v -t aws || travis_terminate 1
+
+  # Run Google Cloud SDK setup
+  - ./setup -q -v -t gcloud || travis_terminate 1
+
+  # Run golang setup
+  - ./setup -q -v -t golang || travis_terminate 1
+
+  # Run hyper setup
+  - ./setup -q -v -t hyper || travis_terminate 1
+
+  # Run linuxbrew setup
+  - ./setup -q -v -t linuxbrew || travis_terminate 1
+
+  # Run nvm setup
+  - ./setup -q -v -t nvm || travis_terminate 1
+
+  # Run packer setup
+  - ./setup -q -v -t packer || travis_terminate 1
+
+  # Run pyenv setup
+  - ./setup -q -v -t pyenv || travis_terminate 1
+
+  # Run ruby setup
+  - ./setup -q -v -t ruby || travis_terminate 1
+
+  # Run rust setup
+  - ./setup -q -v -t rust || travis_terminate 1
+
+  # Run vagrant setup
+  - ./setup -q -v -t vagrant || travis_terminate 1
 
   # Avoid updating apt cache during idempotence tests
   - >
@@ -88,3 +101,77 @@ script:
       | grep -q 'changed=0.*failed=0' \
       && (echo 'Idempotence test: pass' && exit 0) \
       || (echo 'Idempotence test: fail' && exit 1)
+
+stages:
+  - validate
+  - test
+
+jobs:
+  include:
+    - stage: validate
+      name: Validate with pre-commit
+      os: linux
+      dist: focal
+      language: python
+      python: 3.8
+      cache:
+        directories:
+          - $HOME/.cache/pre-commit/
+      before_cache:
+        - rm -f $HOME/.cache/pre-commit/pre-commit.log
+      install:
+        - pip3 install -r requirements.dev.txt
+        - python --version
+        - shfmt -version
+        - shellcheck --version
+        - pre-commit --version
+      script:
+        # shfmt version is too old
+        - export SKIP=shfmt
+        - pre-commit run -a
+
+    - stage: test
+      name: "Ubuntu 20.04 LTS with Ansible 2.9"
+      os: linux
+      dist: focal
+      env: >-
+        MACHINE_ANSIBLE_VERSION=2.9
+        UPGRADE_GCC=yes
+        UNINSTALL_NVM=yes
+        UNINSTALL_GIMME=yes
+
+    - stage: test
+      name: "Ubuntu 18.04 LTS with Ansible 2.9"
+      os: linux
+      dist: bionic
+      env: >-
+        MACHINE_ANSIBLE_VERSION=2.9
+        UNINSTALL_NVM=yes
+        UNINSTALL_GIMME=yes
+
+    - stage: test
+      name: "Ubuntu 18.04 LTS with Ansible 2.8"
+      os: linux
+      dist: bionic
+      env: >-
+        MACHINE_ANSIBLE_VERSION=2.8
+        UNINSTALL_NVM=yes
+        UNINSTALL_GIMME=yes
+
+    - stage: test
+      name: "Ubuntu 16.04 LTS with Ansible 2.9"
+      os: linux
+      dist: xenial
+      env: >-
+        MACHINE_ANSIBLE_VERSION=2.9
+        UNINSTALL_NVM=yes
+        UNINSTALL_GIMME=yes
+
+    - stage: test
+      name: "Ubuntu 16.04 LTS with Ansible 2.8"
+      os: linux
+      dist: xenial
+      env: >-
+        MACHINE_ANSIBLE_VERSION=2.8
+        UNINSTALL_NVM=yes
+        UNINSTALL_GIMME=yes
