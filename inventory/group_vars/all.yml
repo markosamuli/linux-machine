@@ -81,3 +81,6 @@ install_security_hardening: false
 
 # Install monitoring tools
 install_monitoring: false
+
+# USBGuard is not production ready
+install_usbguard: false

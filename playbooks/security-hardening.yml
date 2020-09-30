@@ -3,11 +3,6 @@
   hosts: all
   tags: security-hardening
   tasks:
-    - name: Install USBGuard
-      when: not is_wsl | bool
-      apt:
-        name: usbguard
-
     - name: Install passwdqc - password/passphrase strength checking and enforcement
       apt:
         name:
