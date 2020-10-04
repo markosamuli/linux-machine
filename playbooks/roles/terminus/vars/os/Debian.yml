@@ -1,6 +1,6 @@
 ---
-terminus_version: "1.0.101"
+terminus_version: "1.0.120"
 terminus_deb_file: "terminus-{{ terminus_version }}-linux.deb"
 # yamllint disable-line rule:line-length
 terminus_deb_url: "https://github.com/Eugeny/terminus/releases/download/v{{ terminus_version }}/{{ terminus_deb_file }}"
-terminus_deb_checksum: "sha256:f5f9e0a10a1e115eaa69534863f01b1035fa0fd0e4166197bf493fea471ab394"
+terminus_deb_checksum: "sha256:67121ac1c4cd29e70a1e14660efd9018bb02463389945cbdcd5239071fade4b0"
