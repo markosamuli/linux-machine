@@ -10,6 +10,10 @@ Unreleased changes in the `develop` and `feature/*` branches.
 
 #### Commmand line tools
 
+Developer tools:
+
+- [`gh`][gh] GitHub CLI
+
 Useful command line tools:
 
 - [`asciinema`][asciinema] for recording terminal sessions
@@ -23,6 +27,7 @@ Supported on Ubuntu 20.04 LTS and Debian buster or newer only:
 
 Thanks [Sebastian Witowski][switowski] for the tools I haven't used before.
 
+[gh]: https://github.com/cli/cli
 [asciinema]: https://asciinema.org/
 [ncdu]: https://dev.yorhel.nl/ncdu
 [fzf]: https://github.com/junegunn/fzf

@@ -4,6 +4,7 @@
 # Ansible roles
 playbooks/roles/*
 !playbooks/roles/docker
+!playbooks/roles/gh
 !playbooks/roles/lynis
 !playbooks/roles/python
 !playbooks/roles/shellcheck

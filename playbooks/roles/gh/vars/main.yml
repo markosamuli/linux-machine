@@ -1,0 +1,5 @@
+---
+gh_apt_package: gh
+gh_apt_repository: "deb https://cli.github.com/packages {{ ansible_distribution_release }} main"
+gh_apt_keyserver: keyserver.ubuntu.com
+gh_apt_key_id: C99B11DEB97541F0

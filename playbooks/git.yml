@@ -6,3 +6,11 @@
     - name: Installing Git
       package:
         name: git
+
+- name: GitHub CLI
+  hosts: all
+  tags:
+    - git
+    - github
+  roles:
+    - role: gh
