@@ -1,0 +1,22 @@
+---
+- name: GitHub CLI
+  become: true
+  block:
+    - name: Install dependencies
+      package:
+        name: "{{ gh_dependencies }}"
+        state: present
+
+    - name: Import GitHub APT key
+      apt_key:
+        keyserver: "{{ gh_apt_keyserver }}"
+        id: "{{ gh_apt_key_id }}"
+
+    - name: Add GitHub CLI repository
+      apt_repository:
+        repo: "{{ gh_apt_repository }}"
+        filename: github-cli
+
+    - name: Install GitHub CLI
+      package:
+        name: "{{ gh_apt_package }}"
